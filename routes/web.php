@@ -16,6 +16,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('/sensor/read', 'SensorController@read');
+Route::get('/sensor/push/{hash}', 'SensorController@push');
 
 Route::get('/sensor/show', 'SensorController@show');
