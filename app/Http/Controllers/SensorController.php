@@ -9,7 +9,7 @@ class SensorController extends Controller
 {
     public function show()
     {
-        $events = DB::table('events')->orderBy('added_on', 'desc')->limit(20)->get();
+        $events = DB::table('events')->orderBy('added_on', 'desc')->paginate(20);
         return View('sensors.show', ['events' => $events]);
     }
     

@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Pixel Home - List</title>
   </head>
   <body>
     
@@ -46,11 +46,19 @@
     @endforeach
   </tbody>
 </table>
+
+
+
     </div>
   </div>
 
-    
-    
+ <div class="row">
+    <div class="col-md">
+      <div class="d-flex justify-content-center">
+      {{ $events->links() }}
+      </div>
+    </div>
+ </div>
     </div>
 
     <!-- Optional JavaScript -->
