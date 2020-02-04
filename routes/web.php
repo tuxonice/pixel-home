@@ -11,11 +11,19 @@
 |
 */
 
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('dashboard');
 });
 
+Auth::routes();
 
 Route::get('/sensor/push/{hash}', 'SensorController@push');
 
-Route::get('/sensor/show', 'SensorController@show');
+Route::middleware('auth')->group(function () {
+
+    Route::get('/users/list', 'UserController@list');
+    Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/sensor/show', 'SensorController@show');
+});
