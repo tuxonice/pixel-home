@@ -26,4 +26,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/users/list', 'UserController@list');
     Route::get('/dashboard', 'DashboardController@index');
     Route::get('/sensor/show', 'SensorController@show');
+    Route::get('/sensor/graph', 'SensorController@graph');
 });

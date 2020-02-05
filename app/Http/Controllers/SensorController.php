@@ -12,6 +12,26 @@ class SensorController extends Controller
         $events = DB::table('events')->orderBy('added_on', 'desc')->paginate(20);
         return View('sensors.show', ['events' => $events]);
     }
+
+    public function graph()
+    {
+        $events = DB::table('events')->where('sensor', 'HT01')->orderBy('added_on', 'desc')->limit(40)->get();
+
+        $yAxis = [];
+        $xAxis = [];
+        $count = 0;
+        foreach ($events as $event) {
+            $yAxis[] = $event->temperature;
+            //$xAxis[] = $event->added_on;
+            $xAxis[] = $count++;
+        }
+
+        $yAxis = implode(',', $yAxis);
+        $xAxis = implode(',', $xAxis);
+
+        return View('sensors.graph', ['events' => $events, 'yAxis' => $yAxis, 'xAxis' => $xAxis]);
+    }
+
     
     public function push(Request $request, $hash)
     {
