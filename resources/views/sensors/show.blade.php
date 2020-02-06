@@ -3,6 +3,34 @@
 
 @section('content')
 
+<div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Search</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" method="GET">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="sensor">Sensor</label>
+                    <input type="text" class="form-control" id="sensor" name="sensor" placeholder="Sensor name" value="{{$sensorName}}">
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+</div>
+
+
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -10,7 +38,7 @@
                     <h3 class="card-title">Sensor Events</h3>
 
                     <div class="card-tools">
-                        {{ $events->links() }}
+                        {{ $events->appends(['sensor' => $sensorName])->links() }}
                     </div>
                 </div>
                 <!-- /.card-header -->

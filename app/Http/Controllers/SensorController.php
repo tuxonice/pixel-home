@@ -7,10 +7,17 @@ use Illuminate\Support\Facades\DB;
 
 class SensorController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
-        $events = DB::table('events')->orderBy('added_on', 'desc')->paginate(20);
-        return View('sensors.show', ['events' => $events]);
+        $sensorName = $request->input('sensor', null);
+
+        $events = DB::table('events');
+        if($sensorName) {
+            $events = $events->where('sensor',$sensorName);
+        }
+        $events = $events->orderBy('added_on', 'desc')->paginate(20);
+
+        return View('sensors.show', ['events' => $events, 'sensorName' => $sensorName]);
     }
 
     public function graph()
