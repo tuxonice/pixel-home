@@ -20,23 +20,50 @@ class SensorController extends Controller
         return View('sensors.show', ['events' => $events, 'sensorName' => $sensorName]);
     }
 
-    public function graph()
+    public function graph(Request $request)
     {
-        $events = DB::table('events')->where('sensor', 'HT01')->orderBy('added_on', 'desc')->limit(40)->get();
+        //dd($request->all());
+        
+        $startDate = '2020-01-25 00:00:00';
+        $endDate = '2020-02-02 00:00:00';
+        
+        $events = DB::table('events')->where([
+            ['sensor', 'HT01'],
+            ['added_on', '>=', $startDate],
+            ['added_on', '<=', $endDate]
+            ])->orderBy('added_on', 'asc')->limit(20)->get();
 
-        $yAxis = [];
-        $xAxis = [];
-        $count = 0;
-        foreach ($events as $event) {
-            $yAxis[] = $event->temperature;
-            //$xAxis[] = $event->added_on;
-            $xAxis[] = $count++;
-        }
+        $ht01 = array_map(function($elem) {
+            return ['x' => $elem->added_on ,'y' => $elem->temperature];
+        }, $events->toArray());
 
-        $yAxis = implode(',', $yAxis);
-        $xAxis = implode(',', $xAxis);
+        $events = DB::table('events')->where([
+            ['sensor', 'FL01'],
+            ['added_on', '>=', $startDate],
+            ['added_on', '<=', $endDate]
+            ])->orderBy('added_on', 'asc')->limit(20)->get();
 
-        return View('sensors.graph', ['events' => $events, 'yAxis' => $yAxis, 'xAxis' => $xAxis]);
+        $fl01 = array_map(function($elem) {
+            return ['x' => $elem->added_on ,'y' => $elem->temperature];
+        }, $events->toArray());
+        
+        $events = DB::table('events')->where([
+            ['sensor', 'FL02'],
+            ['added_on', '>=', $startDate],
+            ['added_on', '<=', $endDate]
+            ])->orderBy('added_on', 'asc')->limit(20)->get();
+
+        $fl02 = array_map(function($elem) {
+            return ['x' => $elem->added_on ,'y' => $elem->temperature];
+        }, $events->toArray());
+
+        
+        
+        return View('sensors.graph', [
+            'ht01' => json_encode($ht01),
+            'fl01' => json_encode($fl01),
+            'fl02' => json_encode($fl02),
+            ]);
     }
 
     
