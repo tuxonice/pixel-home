@@ -24,14 +24,14 @@ class SensorController extends Controller
     {
         //dd($request->all());
         
-        $startDate = '2020-01-25 00:00:00';
-        $endDate = '2020-02-02 00:00:00';
+        $startDate = '2020-02-01 00:00:00';
+        $endDate = '2020-02-08 23:59:59';
         
         $events = DB::table('events')->where([
             ['sensor', 'HT01'],
             ['added_on', '>=', $startDate],
             ['added_on', '<=', $endDate]
-            ])->orderBy('added_on', 'asc')->limit(20)->get();
+            ])->orderBy('added_on', 'asc')->get();
 
         $ht01 = array_map(function($elem) {
             return ['x' => $elem->added_on ,'y' => $elem->temperature];
@@ -41,7 +41,7 @@ class SensorController extends Controller
             ['sensor', 'FL01'],
             ['added_on', '>=', $startDate],
             ['added_on', '<=', $endDate]
-            ])->orderBy('added_on', 'asc')->limit(20)->get();
+            ])->orderBy('added_on', 'asc')->get();
 
         $fl01 = array_map(function($elem) {
             return ['x' => $elem->added_on ,'y' => $elem->temperature];
@@ -51,7 +51,7 @@ class SensorController extends Controller
             ['sensor', 'FL02'],
             ['added_on', '>=', $startDate],
             ['added_on', '<=', $endDate]
-            ])->orderBy('added_on', 'asc')->limit(20)->get();
+            ])->orderBy('added_on', 'asc')->get();
 
         $fl02 = array_map(function($elem) {
             return ['x' => $elem->added_on ,'y' => $elem->temperature];

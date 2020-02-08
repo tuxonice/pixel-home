@@ -79,12 +79,12 @@
     <script>
         $(function () {
             $('#reservationtime').daterangepicker({
-      timePicker: true,
-      timePickerIncrement: 30,
       locale: {
-        format: 'MM/DD/YYYY hh:mm A'
+        format: 'DD/MM/YYYY hh:mm A'
       }
-    });
+    }, function(start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
             
             
             let ctx = document.getElementById('lineChart').getContext('2d');
