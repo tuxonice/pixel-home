@@ -19,7 +19,12 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="sensor">Sensor</label>
-                    <input type="text" class="form-control" id="sensor" name="sensor" placeholder="Sensor name" value="{{ $sensor }}">
+                    <select class="form-control" id="sensor" name="sensor">
+                        <option value=""> All sensors </option>
+                        @foreach($sensorList as $sensor)
+                          <option value="{{$sensor}}" {{ $selectedSensor == $sensor ? 'selected="selected"' : '' }}>{{$sensor}}</option>
+                        @endforeach
+                        </select>
                   </div>
                   
                   <div class="form-group">
@@ -103,7 +108,7 @@
                     @foreach($events as $key => $value)
                       {
                         label: '{{$key}}',
-                        borderColor: 'rgb(255, 99, 132)',
+                        borderColor: "rgb(<?php echo(implode(',', $graphColor[$key])); ?>)",
                         data: [
                             @foreach($value as $data)
                             {

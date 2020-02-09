@@ -182,12 +182,12 @@ return [
         [
             'text' => 'Events',
             'url'  => 'sensor/show',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-list-ul',
         ],
         [
-            'text' => 'Graph',
+            'text' => 'Chart',
             'url'  => 'sensor/graph',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-chart-area',
         ],
         ['header' => 'settings'],
         [

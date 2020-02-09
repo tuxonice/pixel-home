@@ -15,7 +15,12 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="sensor">Sensor</label>
-                    <input type="text" class="form-control" id="sensor" name="sensor" placeholder="Sensor name" value="{{$sensorName}}">
+                    <select class="form-control" id="sensor" name="sensor">
+                        <option value=""> All sensors </option>
+                        @foreach($sensorList as $sensor)
+                          <option value="{{$sensor}}" {{ $selectedSensor == $sensor ? 'selected="selected"' : '' }}>{{$sensor}}</option>
+                        @endforeach
+                        </select>
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -28,17 +33,13 @@
             <!-- /.card -->
 </div>
 
-
-
-
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Sensor Events</h3>
-
                     <div class="card-tools">
-                        {{ $events->appends(['sensor' => $sensorName])->links() }}
+                        {{ $events->appends(['sensor' => $selectedSensor])->links() }}
                     </div>
                 </div>
                 <!-- /.card-header -->
