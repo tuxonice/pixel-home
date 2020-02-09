@@ -22,47 +22,41 @@ class SensorController extends Controller
 
     public function graph(Request $request)
     {
-        //dd($request->all());
-        
-        $startDate = '2020-02-01 00:00:00';
-        $endDate = '2020-02-08 23:59:59';
-        
-        $events = DB::table('events')->where([
-            ['sensor', 'HT01'],
-            ['added_on', '>=', $startDate],
-            ['added_on', '<=', $endDate]
-            ])->orderBy('added_on', 'asc')->get();
+        $sensor = $request->query('sensor', null);
+        $startDate = $request->query('start-date', date("Y-m-d",
+            mktime(0, 0, 0, date("m"), date("d")-2, date("Y"))));
+        $endDate = $request->query('end-date', date("Y-m-d"));
 
-        $ht01 = array_map(function($elem) {
-            return ['x' => $elem->added_on ,'y' => $elem->temperature];
-        }, $events->toArray());
+        $constraints = [];
 
-        $events = DB::table('events')->where([
-            ['sensor', 'FL01'],
-            ['added_on', '>=', $startDate],
-            ['added_on', '<=', $endDate]
-            ])->orderBy('added_on', 'asc')->get();
+        if ($sensor) {
+            $constraints[] = ['sensor', $sensor];
+        }
 
-        $fl01 = array_map(function($elem) {
-            return ['x' => $elem->added_on ,'y' => $elem->temperature];
-        }, $events->toArray());
-        
-        $events = DB::table('events')->where([
-            ['sensor', 'FL02'],
-            ['added_on', '>=', $startDate],
-            ['added_on', '<=', $endDate]
-            ])->orderBy('added_on', 'asc')->get();
+        if ($startDate) {
+            $constraints[] = ['added_on', '>=', $startDate];
+        }
 
-        $fl02 = array_map(function($elem) {
-            return ['x' => $elem->added_on ,'y' => $elem->temperature];
-        }, $events->toArray());
+        if ($endDate) {
+            $constraints[] = ['added_on', '<=', $endDate];
+        }
 
-        
-        
+        $events = DB::table('events');
+        if(!empty($constraints)) {
+            $events = $events->where($constraints);
+        }
+
+        $events = $events->orderBy('added_on', 'asc')->get();
+
+        $grouped = $events->mapToGroups(function ($item, $key) {
+            return [$item->sensor => $item];
+        });
+
         return View('sensors.graph', [
-            'ht01' => json_encode($ht01),
-            'fl01' => json_encode($fl01),
-            'fl02' => json_encode($fl02),
+            'events' => $grouped,
+            'sensor' => $sensor,
+            'startDate' => $startDate,
+            'endDate' => $endDate
             ]);
     }
 

@@ -19,17 +19,19 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="sensor">Sensor</label>
-                    <input type="text" class="form-control" id="sensor" name="sensor" placeholder="Sensor name" value="">
+                    <input type="text" class="form-control" id="sensor" name="sensor" placeholder="Sensor name" value="{{ $sensor }}">
                   </div>
                   
                   <div class="form-group">
-                  <label>Date and time range:</label>
+                  <label>Date range:</label>
 
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-clock"></i></span>
                     </div>
-                    <input type="text" class="form-control float-right" name="reservationtime" id="reservationtime">
+                    <input type="text" class="form-control float-right" id="range-date" value="{{ $startDate }} - {{ $endDate }}">
+                    <input type="hidden" name="start-date" id="start-date" value="{{ $startDate }}">
+                    <input type="hidden" name="end-date" id="end-date" value="{{ $endDate }}">
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -78,12 +80,15 @@
 
     <script>
         $(function () {
-            $('#reservationtime').daterangepicker({
-      locale: {
-        format: 'DD/MM/YYYY hh:mm A'
-      }
-    }, function(start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            $('#range-date').daterangepicker({
+                startDate: '{{ $startDate }}',
+                endDate: '{{ $endDate }}',
+                locale: {
+                    format: 'YYYY-MM-DD'
+                }
+        }, function(start, end, label) {
+            $("#start-date").val(start.format('YYYY-MM-DD'));
+            $("#end-date").val(end.format('YYYY-MM-DD'));
             });
             
             
@@ -95,21 +100,20 @@
                 // The data for our dataset
                 data: {
                     datasets: [
+                    @foreach($events as $key => $value)
                       {
-                        label: 'HT01',
+                        label: '{{$key}}',
                         borderColor: 'rgb(255, 99, 132)',
-                        data: {!! $ht01 !!}
+                        data: [
+                            @foreach($value as $data)
+                            {
+                                x: '{{$data->added_on}}',
+                                y: '{{$data->temperature}}'
+                            },
+                            @endforeach
+                        ]
                       },
-                      {
-                        label: 'FL01',
-                        borderColor: 'rgb(255, 132, 99)',
-                        data: {!! $fl01 !!}
-                      },
-                      {
-                        label: 'FL02',
-                        borderColor: 'rgb(99, 255, 132)',
-                        data: {!! $fl02 !!}
-                      }
+                    @endforeach
                     ]
                 },
 

@@ -184,6 +184,11 @@ return [
             'url'  => 'sensor/show',
             'icon' => 'fas fa-fw fa-user',
         ],
+        [
+            'text' => 'Graph',
+            'url'  => 'sensor/graph',
+            'icon' => 'fas fa-fw fa-user',
+        ],
         ['header' => 'settings'],
         [
             'text' => 'Users',
