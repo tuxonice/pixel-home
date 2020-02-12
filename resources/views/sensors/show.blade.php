@@ -1,70 +1,79 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <title>Pixel Home - List</title>
-  </head>
-  <body>
-    
-    
-    <div class="container">
-  <!-- Content here -->
-<h1>Pixel Home</h1>
+@extends('adminlte::page')
 
 
-<div class="row">
-    <div class="col-md">
-      <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Sensor</th>
-      <th scope="col">Temperature</th>
-      <th scope="col">Humidity</th>
-      <th scope="col">Flood</th>
-      <th scope="col">Battert</th>
-      <th scope="col">Date</th>
-    </tr>
-  </thead>
-  <tbody>
-	  @foreach($events as $event)
-    <tr>
-      <th scope="row">{{ $event->id }}</th>
-      <td>{{ $event->sensor }}</td>
-      <td>{{ $event->temperature }}</td>
-      <td>{{ $event->humidity }}</td>
-      <td>{{ $event->flood }}</td>
-      <td>{{ $event->battery }}</td>
-      <td>{{ $event->added_on }}</td>
-    </tr>
-    @endforeach
-  </tbody>
-</table>
+@section('content')
 
+<div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Search</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" method="GET">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="sensor">Sensor</label>
+                    <select class="form-control" id="sensor" name="sensor">
+                        <option value=""> All sensors </option>
+                        @foreach($sensorList as $sensor)
+                          <option value="{{$sensor}}" {{ $selectedSensor == $sensor ? 'selected="selected"' : '' }}>{{$sensor}}</option>
+                        @endforeach
+                        </select>
+                  </div>
+                </div>
+                <!-- /.card-body -->
 
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+</div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Sensor Events</h3>
+                    <div class="card-tools">
+                        {{ $events->appends(['sensor' => $selectedSensor])->links() }}
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>Sensor</th>
+                            <th>Temperature</th>
+                            <th>Humidity</th>
+                            <th>Flood</th>
+                            <th>Battery</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($events as $event)
+                            <tr>
+                                <th scope="row">{{ $event->id }}</th>
+                                <td>{{ $event->sensor }}</td>
+                                <td>{{ $event->temperature }}</td>
+                                <td>{{ $event->humidity }}</td>
+                                <td>{{ $event->flood }}</td>
+                                <td>{{ $event->battery }}</td>
+                                <td>{{ $event->added_on }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+        <!-- /.col -->
     </div>
-  </div>
-
- <div class="row">
-    <div class="col-md">
-      <div class="d-flex justify-content-center">
-      {{ $events->links() }}
-      </div>
-    </div>
- </div>
-    </div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
-</html>
+@stop

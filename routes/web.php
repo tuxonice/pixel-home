@@ -11,11 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes([
+  'register' => false, // Registration Routes...
+  'reset' => false, // Password Reset Routes...
+  'verify' => false, // Email Verification Routes...
+]);
 
+Route::get('/', function () {
+    return redirect('dashboard');
+});
 
 Route::get('/sensor/push/{hash}', 'SensorController@push');
 
-Route::get('/sensor/show', 'SensorController@show');
+Route::middleware('auth')->group(function () {
+
+    Route::get('/users/list', 'UserController@list');
+    Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/sensor/show', 'SensorController@show');
+    Route::get('/sensor/graph', 'SensorController@graph');
+});
