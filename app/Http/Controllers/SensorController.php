@@ -33,7 +33,7 @@ class SensorController extends Controller
     {
         $selectedSensor = $request->query('sensor', null);
         $startDate = $request->query('start-date', date("Y-m-d",
-            mktime(0, 0, 0, date("m"), date("d")-7, date("Y"))));
+            mktime(0, 0, 0, date("m"), date("d")-3, date("Y"))));
         $endDate = $request->query('end-date', date("Y-m-d"));
 
         $constraints = [];
@@ -47,7 +47,7 @@ class SensorController extends Controller
         }
 
         if ($endDate) {
-            $constraints[] = ['added_on', '<=', $endDate];
+            $constraints[] = ['added_on', '<=', $endDate . ' 23:59:59'];
         }
 
         $sensors = DB::table('events')->select('sensor')->distinct()->get();
