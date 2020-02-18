@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Mail\SensorAlert;
+use Illuminate\Support\Facades\Mail;
 
 class SensorController extends Controller
 {
@@ -110,6 +112,10 @@ class SensorController extends Controller
                 'battery' => $battery
             ]
         );
+        
+        if($flood) {
+            Mail::to(env('MAIL_TO'))->send(new SensorAlert($sensor));
+        }
         
     }
     
