@@ -21,12 +21,26 @@ Route::get('/', function () {
     return redirect('dashboard');
 });
 
-Route::get('/sensor/push/{hash}', 'SensorController@push');
+Route::get('/event/store/{hash}', 'EventController@store');
 
 Route::middleware('auth')->group(function () {
 
     Route::get('/users/list', 'UserController@list');
     Route::get('/dashboard', 'DashboardController@index');
-    Route::get('/sensor/show', 'SensorController@show');
-    Route::get('/sensor/graph', 'SensorController@graph');
+    Route::get('/event/list', 'EventController@list');
+    Route::get('/graph/show', 'GraphController@show');
+    
+    Route::get('/sensor/list', 'SensorController@list');
+    Route::get('/sensor/create', 'SensorController@create');
+    Route::post('/sensor/create', 'SensorController@store');
+    Route::get('/sensor/edit', 'SensorController@edit');
+    Route::post('/sensor/edit', 'SensorController@update');
+    
+    Route::get('/alert/list', 'AlertController@list');
+    Route::get('/alert/create', 'AlertController@create');
+    Route::post('/alert/create', 'AlertController@store');
+    Route::get('/alert/edit', 'AlertController@edit');
+    Route::post('/alert/edit', 'AlertController@update');
+    
+    
 });

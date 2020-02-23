@@ -18,4 +18,6 @@ return [
     'information'                   => 'Information',
     'sensors'                       => 'SENSORS',
     'settings'                       => 'SETTINGS',
+    'events'                       => 'EVENTS',
+    'alerts'                       => 'ALERTS',
 ];

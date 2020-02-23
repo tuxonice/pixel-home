@@ -18,6 +18,7 @@ class CreateAlertsTable extends Migration
             $table->integer('sensor_id')->unsigned();
             $table->timestamp('alert_on')->nullable();
             $table->timestamp('reset_on')->nullable();
+            $table->foreign('sensor_id')->references('id')->on('sensors');
         });
     }
 
