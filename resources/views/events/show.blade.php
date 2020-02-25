@@ -16,9 +16,9 @@
                   <div class="form-group">
                     <label for="sensor">Sensor</label>
                     <select class="form-control" id="sensor" name="sensor">
-                        <option value=""> All sensors </option>
+                        <option value=""> --All sensors-- </option>
                         @foreach($sensorList as $sensor)
-                          <option value="{{$sensor}}" {{ $selectedSensor == $sensor ? 'selected="selected"' : '' }}>{{$sensor}}</option>
+                          <option value="{{$sensor->id}}" {{ $selectedSensor == $sensor->id ? 'selected="selected"' : '' }}>{{$sensor->name}}</option>
                         @endforeach
                         </select>
                   </div>
@@ -53,6 +53,7 @@
                             <th>Humidity</th>
                             <th>Flood</th>
                             <th>Battery</th>
+                            <th>Type</th>
                             <th>Date</th>
                         </tr>
                         </thead>
@@ -60,11 +61,12 @@
                         @foreach($events as $event)
                             <tr>
                                 <th scope="row">{{ $event->id }}</th>
-                                <td>{{ $event->sensor }}</td>
+                                <td>{{ $event->name }}</td>
                                 <td>{{ $event->temperature }}</td>
                                 <td>{{ $event->humidity }}</td>
                                 <td>{{ $event->flood }}</td>
                                 <td>{{ $event->battery }}</td>
+                                <td>{{ $event->type }}</td>
                                 <td>{{ $event->added_on }}</td>
                             </tr>
                         @endforeach

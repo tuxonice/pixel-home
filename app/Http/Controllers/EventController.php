@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,17 +19,18 @@ class EventController extends Controller
     {
         $selectedSensor = $request->input('sensor', null);
         
-        $sensors = DB::table('events')->select('sensor')->distinct()->get();
-        $sensorList = array_map(function($elem) {
-            return $elem->sensor; 
-        }, $sensors->toArray());
-
+        $sensorList = DB::table('events')->select('sensors.id','sensors.name')
+        ->join('sensors', 'events.sensor_id', '=', 'sensors.id')
+        ->distinct()->orderBy('sensors.name', 'asc')->get();
+        
         $events = DB::table('events');
         if($selectedSensor) {
-            $events = $events->where('sensor',$selectedSensor);
+            $events = $events->where('events.sensor_id',$selectedSensor);
         }
-        $events = $events->orderBy('added_on', 'desc')->paginate(20);
-
+        $events = $events->join('sensors', 'events.sensor_id', '=', 'sensors.id')
+            ->select('events.*', 'sensors.name', 'sensors.type')
+            ->orderBy('events.added_on', 'desc')->paginate(20);
+        
         return View('events.show', [
             'events' => $events, 
             'selectedSensor' => $selectedSensor,
@@ -45,31 +47,37 @@ class EventController extends Controller
      */
     public function store(Request $request, $hash)
     {
-        // /index.php?sensor=1&hum=79&temp=17.00
-        // /index.php?sensor=2&temp=17.62&flood=0&batV=2.98
+        // /event/store/{hash}/index.php?sensor=1&hum=79&temp=17.00
+        // /event/store/{hash}/index.php?sensor=2&temp=17.62&flood=0&batV=2.98
+
+        $sensorCode = $request->query('sensor', null);
+        if(is_null($sensorCode)) {
+            abort(401);
+        }
 
         if ($hash !== env('HASH_KEY')) {
             abort(401);
         }
-
-        $sensor = $request->query('sensor', null);
-        if(is_null($sensor)) {
-            return;
+        
+        $sensor = Sensor::where([['hash', $hash], ['code', $sensorCode]])->first();
+        if(!$sensor) {
+            abort(401);
         }
+        
         $temperature = $request->query('temp', null);
         $flood = $request->query('flood', null);
         $humidity = $request->query('hum', null);
         $battery = $request->query('batV', null);
         
-        DB::table('events')->insert(
-            [
-                'sensor' => $sensor, 
-                'temperature' => $temperature,
-                'humidity' => $humidity,
-                'flood' => $flood,
-                'battery' => $battery
-            ]
-        );
+        $event = new Event;
+        $event->sensor = $sensor->code; //TODO: remove when delete the database column 
+        $event->sensor_id = $sensor->id;
+        $event->temperature = $temperature;
+        $event->humidity = $humidity;
+        $event->flood = $flood;
+        $event->battery = $battery;
+
+        $event->save();
         
         if($flood) {
             Mail::to(env('MAIL_TO'))->send(new SensorAlert($sensor));
