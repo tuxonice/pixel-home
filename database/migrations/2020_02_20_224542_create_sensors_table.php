@@ -17,6 +17,7 @@ class CreateSensorsTable extends Migration
             $table->increments('id');
             $table->string('code', 32);
             $table->string('name', 64);
+            $table->string('location', 128)->nullable();
             $table->string('type', 32);
             $table->string('hash', 32)->nullable();
             $table->unique('code');

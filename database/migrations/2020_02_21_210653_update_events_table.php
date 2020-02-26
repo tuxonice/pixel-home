@@ -15,6 +15,7 @@ class UpdateEventsTable extends Migration
     {
         Schema::table('events', function (Blueprint $table) {
             $table->integer('sensor_id')->unsigned()->after('sensor')->nullable();
+            $table->string('location', 128)->after('battery')->nullable();
             $table->foreign('sensor_id')->references('id')->on('sensors');
         });
     }
