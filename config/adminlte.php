@@ -178,16 +178,26 @@ return [
             'search' => false,
             'topnav' => false,
         ],
-        ['header' => 'sensors'],
+        ['header' => 'events'],
         [
-            'text' => 'Events',
-            'url'  => 'sensor/show',
+            'text' => 'List Events',
+            'url'  => 'event/list',
             'icon' => 'fas fa-fw fa-list-ul',
         ],
         [
-            'text' => 'Chart',
-            'url'  => 'sensor/graph',
+            'text' => 'Events Graph',
+            'url'  => 'graph/show',
             'icon' => 'fas fa-fw fa-chart-area',
+        ],
+        [
+            'text' => 'List Sensors',
+            'url'  => 'sensor/list',
+            'icon' => 'fas fa-fw fa-list-ul',
+        ],
+        [
+            'text' => 'List Alerts',
+            'url'  => 'alert/list',
+            'icon' => 'fas fa-fw fa-list-ul',
         ],
         ['header' => 'settings'],
         [

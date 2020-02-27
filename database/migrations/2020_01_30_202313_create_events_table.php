@@ -20,7 +20,7 @@ class CreateEventsTable extends Migration
             $table->float('humidity', 4, 2)->nullable();
             $table->boolean('flood')->nullable();
             $table->float('battery', 4, 2)->nullable();
-            $table->timestamp('added_on', 0);
+            $table->timestamp('added_on')->useCurrent()->nullable();
         });
     }
 
