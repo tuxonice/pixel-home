@@ -18,15 +18,25 @@ class EventController extends Controller
     public function list(Request $request)
     {
         $selectedSensor = $request->input('sensor', null);
+        $selectedLocation = $request->input('location', null);
+        
         
         $sensorList = DB::table('events')->select('sensors.id','sensors.name')
         ->join('sensors', 'events.sensor_id', '=', 'sensors.id')
         ->distinct()->orderBy('sensors.name', 'asc')->get();
         
+        $locationList = DB::table('events')->select('events.location AS name')
+        ->where('events.location', '!=', 'null')->distinct()->get();
+        
         $events = DB::table('events');
         if($selectedSensor) {
             $events = $events->where('events.sensor_id',$selectedSensor);
         }
+        
+        if($selectedLocation) {
+            $events = $events->where('events.location',$selectedLocation);
+        }
+        
         $events = $events->join('sensors', 'events.sensor_id', '=', 'sensors.id')
             ->select('events.*', 'sensors.name', 'sensors.type')
             ->orderBy('events.added_on', 'desc')->paginate(20);
@@ -34,7 +44,9 @@ class EventController extends Controller
         return View('events.show', [
             'events' => $events, 
             'selectedSensor' => $selectedSensor,
-            'sensorList' => $sensorList
+            'selectedLocation' => $selectedLocation,
+            'sensorList' => $sensorList,
+            'locationList' => $locationList
             ]);
     }
 
@@ -45,10 +57,10 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $hash)
+    public function push(Request $request, $hash)
     {
-        // /event/store/{hash}/index.php?sensor=1&hum=79&temp=17.00
-        // /event/store/{hash}/index.php?sensor=2&temp=17.62&flood=0&batV=2.98
+        // /event/push/{hash}/index.php?sensor=1&hum=79&temp=17.00
+        // /event/push/{hash}/index.php?sensor=2&temp=17.62&flood=0&batV=2.98
 
         $sensorCode = $request->query('sensor', null);
         if(is_null($sensorCode)) {
@@ -72,6 +84,7 @@ class EventController extends Controller
         $event->humidity = $humidity;
         $event->flood = $flood;
         $event->battery = $battery;
+        $event->location = $sensor->location;
 
         $event->save();
         

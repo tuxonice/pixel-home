@@ -22,6 +22,15 @@
                         @endforeach
                         </select>
                   </div>
+                  <div class="form-group">
+                    <label for="sensor">Location</label>
+                    <select class="form-control" id="location" name="location">
+                        <option value=""> --All locations-- </option>
+                        @foreach($locationList as $location)
+                          <option value="{{ $location->name }}" {{ $selectedLocation == $location->name ? 'selected="selected"' : '' }}>{{ $location->name }}</option>
+                        @endforeach
+                        </select>
+                  </div>
                 </div>
                 <!-- /.card-body -->
 
@@ -59,19 +68,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($events as $event)
+                        @if(count($events) > 0)    
+                            @foreach($events as $event)
+                                <tr>
+                                    <th scope="row">{{ $event->id }}</th>
+                                    <td>{{ $event->name }}</td>
+                                    <td>{{ $event->temperature }}</td>
+                                    <td>{{ $event->humidity }}</td>
+                                    <td>{{ $event->flood }}</td>
+                                    <td>{{ $event->battery }}</td>
+                                    <td>{{ $event->type }}</td>
+                                    <td>{{ $event->location }}</td>
+                                    <td>{{ $event->added_on }}</td>
+                                </tr>
+                            @endforeach
+                        @else
                             <tr>
-                                <th scope="row">{{ $event->id }}</th>
-                                <td>{{ $event->name }}</td>
-                                <td>{{ $event->temperature }}</td>
-                                <td>{{ $event->humidity }}</td>
-                                <td>{{ $event->flood }}</td>
-                                <td>{{ $event->battery }}</td>
-                                <td>{{ $event->type }}</td>
-                                <td>{{ $event->location }}</td>
-                                <td>{{ $event->added_on }}</td>
+                                <td colspan="9" class="text-center"><b>No records to show</b></td>
                             </tr>
-                        @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>
