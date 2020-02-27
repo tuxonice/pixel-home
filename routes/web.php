@@ -22,6 +22,8 @@ Route::get('/', function () {
 });
 
 Route::get('/event/store/{hash}', 'EventController@store');
+//TODO: remove after change endpoint in all sensors
+Route::get('/sensor/push/{hash}', 'EventController@store');
 
 Route::middleware('auth')->group(function () {
 

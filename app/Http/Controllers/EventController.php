@@ -55,10 +55,6 @@ class EventController extends Controller
             abort(401);
         }
 
-        if ($hash !== env('HASH_KEY')) {
-            abort(401);
-        }
-        
         $sensor = Sensor::where([['hash', $hash], ['code', $sensorCode]])->first();
         if(!$sensor) {
             abort(401);

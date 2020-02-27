@@ -54,6 +54,7 @@
                             <th>Flood</th>
                             <th>Battery</th>
                             <th>Type</th>
+                            <th>Location</th>
                             <th>Date</th>
                         </tr>
                         </thead>
@@ -67,6 +68,7 @@
                                 <td>{{ $event->flood }}</td>
                                 <td>{{ $event->battery }}</td>
                                 <td>{{ $event->type }}</td>
+                                <td>{{ $event->location }}</td>
                                 <td>{{ $event->added_on }}</td>
                             </tr>
                         @endforeach
