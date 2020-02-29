@@ -13,9 +13,11 @@ class SensorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function index()
     {
-        return View('sensors.show');
+        $sensors = Sensor::paginate(10);
+        
+        return View('sensors.index', ['sensors' => $sensors]);
     }
 
     /**
@@ -25,7 +27,8 @@ class SensorController extends Controller
      */
     public function create()
     {
-        return View('sensors.create');
+        $hash = rand(1000,9999);
+        return View('sensors.create', ['hash' => $hash]);
     }
 
     /**
@@ -36,7 +39,15 @@ class SensorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sensor = new Sensor;
+        $sensor->code = $request->code;
+        $sensor->name = $request->name;
+        $sensor->location = $request->location;
+        $sensor->type = $request->type;
+        $sensor->hash = $request->hash;
+        $sensor->save();
+        
+        return redirect()->route('sensor.list');
     }
 
     /**
@@ -58,7 +69,8 @@ class SensorController extends Controller
      */
     public function edit(Sensor $sensor)
     {
-        //
+        $pushEndPoint = route('event.push', ['hash' => $sensor->hash, 'sensor' => $sensor->code]);
+        return View('sensors.edit', ['sensor' => $sensor, 'pushEndPoint' => $pushEndPoint]);
     }
 
     /**
@@ -70,7 +82,14 @@ class SensorController extends Controller
      */
     public function update(Request $request, Sensor $sensor)
     {
-        //
+        $sensor->code = $request->code;
+        $sensor->name = $request->name;
+        $sensor->location = $request->location;
+        $sensor->type = $request->type;
+        $sensor->hash = $request->hash;
+        $sensor->update();
+        
+        return redirect()->route('sensor.list');
     }
 
     /**
@@ -81,6 +100,7 @@ class SensorController extends Controller
      */
     public function destroy(Sensor $sensor)
     {
-        //
+        $sensor->delete();
+        return redirect()->route('sensor.list');
     }
 }

@@ -21,9 +21,9 @@ Route::get('/', function () {
     return redirect('dashboard');
 });
 
-Route::get('/event/store/{hash}', 'EventController@store');
+Route::get('/event/push/{hash}', 'EventController@push')->name('event.push');
 //TODO: remove after change endpoint in all sensors
-Route::get('/sensor/push/{hash}', 'EventController@store');
+Route::get('/sensor/push/{hash}', 'EventController@push');
 
 Route::middleware('auth')->group(function () {
 
@@ -32,11 +32,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/event/list', 'EventController@list');
     Route::get('/graph/show', 'GraphController@show');
     
-    Route::get('/sensor/list', 'SensorController@list');
-    Route::get('/sensor/create', 'SensorController@create');
-    Route::post('/sensor/create', 'SensorController@store');
-    Route::get('/sensor/edit', 'SensorController@edit');
-    Route::post('/sensor/edit', 'SensorController@update');
+    Route::get('/sensor/list', 'SensorController@index')->name('sensor.list');
+    Route::get('/sensor/create', 'SensorController@create')->name('sensor.new');
+    Route::post('/sensor', 'SensorController@store')->name('sensor.save');
+    Route::get('/sensor/{sensor}/edit', 'SensorController@edit')->name('sensor.edit');
+    Route::patch('/sensor/{sensor}', 'SensorController@update')->name('sensor.update');
+    Route::delete('/sensor/{sensor}', 'SensorController@destroy')->name('sensor.delete');
     
     Route::get('/alert/list', 'AlertController@list');
     Route::get('/alert/create', 'AlertController@create');
