@@ -12,8 +12,7 @@ class Event extends Model
      * @var bool
      */
     public $timestamps = false;
-    
-    
+
     /**
      * Get the sensor record associated with the event.
      */
