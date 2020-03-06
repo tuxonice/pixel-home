@@ -11,8 +11,9 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" method="POST">
+              <form role="form" method="POST" action="{{ route('sensor.update', ['sensor' => $sensor->id]) }}">
                 @csrf
+                @method('PATCH')
                 <div class="card-body">
                   <div class="form-group">
                     <label for="code">Code</label>
