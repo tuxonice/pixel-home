@@ -17,15 +17,15 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="code">Code</label>
-                    <input type="text" class="form-control" name="code" id="code" value="{{ $sensor->code }}" placeholder="Sensor Code">
+                    <input type="text" class="form-control" name="code" onKeyUp='updateEndpoint(this);' id="code" value="{{ $sensor->code }}" placeholder="Sensor Code" required>
                   </div>
                   <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Sensor Name" value="{{ $sensor->name }}">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Sensor Name" value="{{ $sensor->name }}" required>
                   </div>
                   <div class="form-group">
                     <label for="location">Location</label>
-                    <input type="text" class="form-control" name="location" id="location" placeholder="Sensor Location" value="{{ $sensor->location }}">
+                    <input type="text" class="form-control" name="location" id="location" placeholder="Sensor Location" value="{{ $sensor->location }}" required>
                   </div>
                   <div class="form-group">
                     <label for="type">Sensor Type</label>
@@ -36,11 +36,11 @@
                   </div>
                   <div class="form-group">
                     <label for="hash">Hash</label>
-                    <input type="text" class="form-control" name="hash" id="hash" value="{{ $sensor->hash }}">
+                    <input type="text" class="form-control" name="hash" onKeyUp='updateEndpoint(this);' id="hash" value="{{ $sensor->hash }}" required>
                   </div>
                   <div class="form-group">
                     <label for="endpoint">Push Endpoint</label>
-                    <input type="text" class="form-control" value="{{ $pushEndPoint }}" readonly="readonly">
+                    <input type="text" class="form-control" id="endpoint" value="{{ $pushEndPoint }}" readonly="readonly">
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -67,7 +67,7 @@
                 @csrf
                 <div class="card-body">
                   <div class="form-group">
-                    <input type="checkbox" />
+                    <input type="checkbox" onchange='handleChange(this);'/>
                     <label>Yes, I want to delete this sensor</label>
                     
                   </div>
@@ -75,11 +75,38 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-danger">Delete</button>
+                  <button type="submit" class="btn btn-danger" id="delete-sensor" disabled="disabled">Delete</button>
                 </div>
               </form>
             </div>
             <!-- /.card -->
 </div>
 
+@stop
+@section('js')
+<script>
+  function handleChange(checkbox) {
+    if(checkbox.checked === true){
+        document.getElementById("delete-sensor").removeAttribute("disabled");
+        return;
+    }
+    
+    document.getElementById("delete-sensor").setAttribute("disabled", "disabled");
+   }
+   
+   function updateEndpoint() {
+     
+     let codeElem = document.getElementById("code");
+     let hashElem = document.getElementById("hash");
+     
+     let endPoint = '{{ request()->getSchemeAndHttpHost() }}/event/push/' + hashElem.value + '?sensor=' + codeElem.value
+     
+     document.getElementById("endpoint").value = endPoint;
+     
+     
+     
+     
+   }
+   
+</script>
 @stop
