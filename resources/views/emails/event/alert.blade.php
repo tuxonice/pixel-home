@@ -332,7 +332,6 @@
           <div class="content">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader">Sensor: {!! $sensorName !!}</span>
             <table role="presentation" class="main">
 
               <!-- START MAIN CONTENT AREA -->
@@ -341,8 +340,11 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <h1>{!! $sensorName !!}</h1>
-                        <p>Flood Alert</p>
+                        <h1>Flood Alert</h1>
+                        <p>Sensor: {{ $sensorName }}</p>
+                        <p>Location: {{ $location }}</p>
+                        <p>Temperature: {{ $temperature }}</p>
+                        <p>Date: {{ $timestamp }}</p>
                       </td>
                     </tr>
                   </table>

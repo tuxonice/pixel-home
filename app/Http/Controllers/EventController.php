@@ -6,6 +6,8 @@ use App\Event;
 use App\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EventAlert;
 
 class EventController extends Controller
 {
@@ -85,11 +87,11 @@ class EventController extends Controller
         $event->flood = $flood;
         $event->battery = $battery;
         $event->location = $sensor->location;
-
+        $event->added_on = date("Y-m-d H:i:s");
         $event->save();
         
         if($flood) {
-            Mail::to(env('MAIL_TO'))->send(new SensorAlert($sensor));
+            Mail::to(env('MAIL_TO'))->send(new EventAlert($event));
         }
     }
 
