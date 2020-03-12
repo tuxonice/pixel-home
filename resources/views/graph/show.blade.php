@@ -19,10 +19,10 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="sensor">Sensor</label>
-                    <select class="form-control" id="sensor" name="sensor">
+                    <select class="form-control" id="sensor-id" name="sensor-id">
                         <option value=""> All sensors </option>
                         @foreach($sensorList as $sensor)
-                          <option value="{{$sensor}}" {{ $selectedSensor == $sensor ? 'selected="selected"' : '' }}>{{$sensor}}</option>
+                          <option value="{{$sensor->id}}" {{ $selectedSensorId == $sensor->id ? 'selected="selected"' : '' }}>{{$sensor->name}} ({{$sensor->location}})</option>
                         @endforeach
                         </select>
                   </div>
@@ -58,15 +58,27 @@
                 <!-- LINE CHART -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Line Chart</h3>
+                        <h3 class="box-title">Temperature</h3>
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <canvas id="lineChart" height="100" width="500"></canvas>
+                            <canvas id="temperatureChart" height="100" width="500"></canvas>
                         </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
-
+                
+                @if($showHumidityGraph)
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Humidity</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="humidityChart" height="100" width="500"></canvas>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+                @endif
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->
 
@@ -97,8 +109,13 @@
             });
             
             
-            let ctx = document.getElementById('lineChart').getContext('2d');
-            let chart = new Chart(ctx, {
+            let temperatureChartElem = document.getElementById('temperatureChart').getContext('2d');
+            
+            @if($showHumidityGraph)
+            let humidityChartElem = document.getElementById('humidityChart').getContext('2d');
+            @endif
+            
+            let temperatureChart = new Chart(temperatureChartElem, {
                 // The type of chart we want to create
                 type: 'line',
 
@@ -137,6 +154,48 @@
                     }
                 }
             });
+            
+            @if($showHumidityGraph)
+            let humidityChart = new Chart(humidityChartElem, {
+                // The type of chart we want to create
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                    datasets: [
+                    @foreach($events as $key => $value)
+                      {
+                        label: '{{$key}}',
+                        borderColor: "rgb(<?php echo(implode(',', $graphColor[$key])); ?>)",
+                        data: [
+                            @foreach($value as $data)
+                            {
+                                x: '{{$data->added_on}}',
+                                y: '{{$data->humidity}}'
+                            },
+                            @endforeach
+                        ]
+                      },
+                    @endforeach
+                    ]
+                },
+
+                // Configuration options go here
+                options: {
+                    scales: {
+                        xAxes: [
+                            {
+                                type: 'time',
+                                distribution: 'series',
+                                time: {
+                                    unit: 'day'
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+            @endif
       });
     </script>
 @stop
