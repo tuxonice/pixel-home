@@ -58,8 +58,8 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>Sensor</th>
-                            <th>Temperature</th>
-                            <th>Humidity</th>
+                            <th>Temperature (ºC)</th>
+                            <th>Humidity (%)</th>
                             <th>Flood</th>
                             <th>Battery</th>
                             <th>Type</th>
@@ -73,13 +73,25 @@
                                 <tr>
                                     <th scope="row">{{ $event->id }}</th>
                                     <td>{{ $event->name }}</td>
-                                    <td>{{ $event->temperature }}</td>
-                                    <td>{{ $event->humidity }}</td>
+                                    <td>{{ number_format($event->temperature, 2, '.', ' ') }} 
+                                    @if($event->diffTemperature)
+                                        <small style="color: {{$event->diffTemperature < 0 ? 'red':'green'}}">({{ $event->diffTemperature }})</small>
+                                    @endif
+                                    </td>
+                                    <td>{{ $event->humidity }} 
+                                    @if($event->type === 'HT' && $event->diffHumidity)
+                                        <small style="color: {{$event->diffHumidity < 0 ? 'red':'green'}}">({{ $event->diffHumidity }})</small>
+                                    @endif
+                                    </td>
                                     <td>{{ $event->flood }}</td>
-                                    <td>{{ $event->battery }}</td>
+                                    <td>{{ $event->battery }} </td>
                                     <td>{{ $event->type }}</td>
                                     <td>{{ $event->location }}</td>
-                                    <td>{{ $event->added_on }}</td>
+                                    <td>{{ $event->added_on }}
+                                    @if($event->diffTime)
+                                        <small style="color: blue">({{ $event->diffTime }})</small>
+                                    @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         @else
