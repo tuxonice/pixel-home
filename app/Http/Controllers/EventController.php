@@ -110,7 +110,6 @@ class EventController extends Controller
         $battery = $request->query('batV', null);
         
         $event = new Event;
-        $event->sensor = $sensor->code; //TODO: remove when delete the database column 
         $event->sensor_id = $sensor->id;
         $event->temperature = $temperature;
         $event->humidity = $humidity;
