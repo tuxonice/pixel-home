@@ -3,63 +3,39 @@
 namespace App\Observers;
 
 use App\Event;
+use Illuminate\Support\Facades\DB;
 
 class EventObserver
 {
     /**
-     * Handle the event "created" event.
+     * Handle the event "saving" event.
      *
      * @param  \App\Event  $event
      * @return void
      */
-    public function created(Event $event)
+    public function saving(Event $event)
     {
-        $event->diff_temperature = 1.5;
+        $lastEvent = DB::table('events')->join('sensors', 'events.sensor_id', '=', 'sensors.id')
+            ->where('events.sensor_id', $event->sensor_id)
+            ->select('events.*', 'sensors.type')
+            ->orderBy('events.added_on', 'desc')
+            ->first();       
+               
+        if(is_null($lastEvent)) {
+            return;
+        }
 
-        $event->save();
+        if ($lastEvent->type === 'HT') {
+            $event->diff_temperature = $event->temperature - $lastEvent->temperature;
+            $event->diff_humidity = $event->humidity - $lastEvent->humidity;
+            $event->diff_time = 0;
+        }
+
+        if ($lastEvent->type === 'FLOOD') {
+            $event->diff_temperature = $event->temperature - $lastEvent->temperature;
+            $event->diff_time = 0;
+        }
+
     }
 
-    /**
-     * Handle the event "updated" event.
-     *
-     * @param  \App\Event  $event
-     * @return void
-     */
-    public function updated(Event $event)
-    {
-        //
-    }
-
-    /**
-     * Handle the event "deleted" event.
-     *
-     * @param  \App\Event  $event
-     * @return void
-     */
-    public function deleted(Event $event)
-    {
-        //
-    }
-
-    /**
-     * Handle the event "restored" event.
-     *
-     * @param  \App\Event  $event
-     * @return void
-     */
-    public function restored(Event $event)
-    {
-        //
-    }
-
-    /**
-     * Handle the event "force deleted" event.
-     *
-     * @param  \App\Event  $event
-     * @return void
-     */
-    public function forceDeleted(Event $event)
-    {
-        //
-    }
 }

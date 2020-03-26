@@ -74,13 +74,13 @@
                                     <th scope="row">{{ $event->id }}</th>
                                     <td>{{ $event->name }}</td>
                                     <td>{{ number_format($event->temperature, 2, '.', ' ') }} 
-                                    @if($event->diffTemperature)
-                                        <small style="color: {{$event->diffTemperature < 0 ? 'red':'green'}}">({{ $event->diffTemperature }})</small>
+                                    @if($event->diff_temperature)
+                                        <small style="color: {{$event->diff_temperature < 0 ? 'red':'green'}}">({{ $event->diff_temperature }})</small>
                                     @endif
                                     </td>
                                     <td>{{ $event->humidity }} 
-                                    @if($event->type === 'HT' && $event->diffHumidity)
-                                        <small style="color: {{$event->diffHumidity < 0 ? 'red':'green'}}">({{ $event->diffHumidity }})</small>
+                                    @if($event->type === 'HT' && $event->diff_humidity)
+                                        <small style="color: {{$event->diff_humidity < 0 ? 'red':'green'}}">({{ $event->diff_humidity }})</small>
                                     @endif
                                     </td>
                                     <td>{{ $event->flood }}</td>
@@ -88,8 +88,8 @@
                                     <td>{{ $event->type }}</td>
                                     <td>{{ $event->location }}</td>
                                     <td>{{ $event->added_on }}
-                                    @if($event->diffTime)
-                                        <small style="color: blue">({{ $event->diffTime }})</small>
+                                    @if($event->diff_time)
+                                        <small style="color: blue">({{ $event->diff_time }})</small>
                                     @endif
                                     </td>
                                 </tr>

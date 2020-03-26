@@ -15,8 +15,17 @@ class UpdateEventFields extends Migration
     {
         Schema::table('events', function (Blueprint $table) {
             $table->float('diff_temperature', 4, 2)->default(0.0)->after('temperature');
+        });
+        
+        Schema::table('events', function (Blueprint $table) {
             $table->float('diff_humidity', 4, 2)->default(0.0)->after('humidity');
-            $table->integer('diff_time')->default(0.0)->after('added_on');
+        });
+        
+        Schema::table('events', function (Blueprint $table) {
+            $table->integer('diff_time')->default(0)->after('added_on');
+        });
+        
+        Schema::table('events', function (Blueprint $table) {
             $table->dropColumn('sensor');
         });
     }
@@ -28,6 +37,6 @@ class UpdateEventFields extends Migration
      */
     public function down()
     {
-        
+        //
     }
 }

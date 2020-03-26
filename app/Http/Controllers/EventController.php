@@ -43,8 +43,6 @@ class EventController extends Controller
             ->select('events.*', 'sensors.name', 'sensors.type')
             ->orderBy('events.added_on', 'desc')->paginate(20);
 
-        $events = $this->processDiffs($events);
-        
         return View('events.show', [
             'events' => $events, 
             'selectedSensor' => $selectedSensor,
@@ -54,34 +52,6 @@ class EventController extends Controller
             ]);
     }
 
-    private function processDiffs($events)
-    {
-        $sensors = [];
-        foreach(array_reverse($events->items()) as &$event) {
-            if(!isset($sensors[$event->sensor_id])) {
-                $sensors[$event->sensor_id]['temperature'] = $event->temperature;
-                $sensors[$event->sensor_id]['time'] = $event->added_on;
-                if($event->type == 'HT') {
-                    $sensors[$event->sensor_id]['humidity'] = $event->humidity; 
-                }
-            }
-            
-            $event->diffTemperature = $event->temperature - $sensors[$event->sensor_id]['temperature'];
-            $sensors[$event->sensor_id]['temperature'] = $event->temperature;
-            
-            $event->diffTime = Carbon::parse($event->added_on)->diffForHumans(Carbon::parse($sensors[$event->sensor_id]['time']),['parts' => 2]);
-            $event->diffTime = str_replace([' after',' before'], '', $event->diffTime);
-            $sensors[$event->sensor_id]['time'] = $event->added_on;
-            
-            if($event->type == 'HT') {
-                $event->diffHumidity = $event->humidity - $sensors[$event->sensor_id]['humidity'];
-                $sensors[$event->sensor_id]['humidity'] = $event->humidity; 
-            }
-               
-        }
-        
-        return $events;
-    }
     
     /**
      * Store a newly created resource in storage.
