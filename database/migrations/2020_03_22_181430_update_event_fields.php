@@ -37,6 +37,21 @@ class UpdateEventFields extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('events', function (Blueprint $table) {
+            $table->string('sensor', 64);
+        });
+
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropColumn('diff_time');
+        });
+
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropColumn('diff_humidity');
+        });
+
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropColumn('diff_temperature');
+        });
+
     }
 }
