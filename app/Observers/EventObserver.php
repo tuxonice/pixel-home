@@ -25,17 +25,12 @@ class EventObserver
             return;
         }
 
+        $event->diff_time = Carbon::parse($event->added_on)->diffInMinutes($lastEvent->added_on);
+        $event->diff_temperature = $event->temperature - $lastEvent->temperature;
+
         if ($lastEvent->type === 'HT') {
-            $event->diff_temperature = $event->temperature - $lastEvent->temperature;
             $event->diff_humidity = $event->humidity - $lastEvent->humidity;
-            $event->diff_time = 0;
         }
-
-        if ($lastEvent->type === 'FLOOD') {
-            $event->diff_temperature = $event->temperature - $lastEvent->temperature;
-            $event->diff_time = 0;
-        }
-
     }
 
 }

@@ -89,7 +89,9 @@
                                     <td>{{ $event->location }}</td>
                                     <td>{{ $event->added_on }}
                                     @if($event->diff_time)
-                                        <small style="color: blue">({{ $event->diff_time }})</small>
+                                        <small style="color: blue">(
+                                        {{ Carbon\CarbonInterval::minutes($event->diff_time)->cascade()->forHumans() }}
+                                        )</small>
                                     @endif
                                     </td>
                                 </tr>
