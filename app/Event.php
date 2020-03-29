@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\EventSaving;
 
 /**
  * App\Event
@@ -37,6 +38,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Event extends Model
 {
+    
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saving' => EventSaving::class,
+    ];
+    
     /**
      * Indicates if the model should be timestamped.
      *

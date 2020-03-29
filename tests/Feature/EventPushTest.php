@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\Sensor;
+use App\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Events\EventSaving;
 
 class EventPushTest extends TestCase
 {
@@ -23,6 +25,24 @@ class EventPushTest extends TestCase
         $response = $this->get('/event/push/12345?sensor=HT01&hum=79&temp=17.00');
         $response->assertStatus(200);
     }
+    
+    
+    /**
+     * 
+     *
+     * @return void
+     */
+    public function testDiffValuesAreCalculated()
+    {
+        \Illuminate\Support\Facades\Event::fake();
+        
+        $event = factory(Event::class)->create();
+        
+        \Illuminate\Support\Facades\Event::assertDispatched(EventSaving::class, function ($e) use ($event) {
+            return $e->event->id === $event->id;
+        });
+    }
+    
     
     /**
      * Can push FLOOD sensor data without flood
