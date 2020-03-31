@@ -40,6 +40,13 @@
                   </div>
                   <!-- /.input group -->
                 </div>
+                
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="time-distribution" value="linear" {{ $timeDistribution === 'linear' ? 'checked="checked"' : '' }}/> Linear Time Distribution
+                  </label>
+                </div>
+                
                 </div>
                 <!-- /.card-body -->
 
@@ -145,7 +152,7 @@
                         xAxes: [
                             {
                                 type: 'time',
-                                distribution: 'series',
+                                distribution: '{{ $timeDistribution }}',
                                 time: {
                                     unit: 'day'
                                 }
@@ -186,7 +193,7 @@
                         xAxes: [
                             {
                                 type: 'time',
-                                distribution: 'series',
+                                distribution: '{{ $timeDistribution }}',
                                 time: {
                                     unit: 'day'
                                 }

@@ -10,10 +10,15 @@ class GraphController extends Controller
 {
     public function show(Request $request)
     {
+        $timeDistribution = $request->query('time-distribution', 'series');
         $selectedSensorId = $request->query('sensor-id', null);
         $startDate = $request->query('start-date', date("Y-m-d",
             mktime(0, 0, 0, date("m"), date("d")-3, date("Y"))));
         $endDate = $request->query('end-date', date("Y-m-d"));
+
+        if(!in_array($timeDistribution , ['series','linear'])) {
+            $timeDistribution = 'series';
+        }
 
         $sensorList = Sensor::get();
 
@@ -55,7 +60,8 @@ class GraphController extends Controller
             'startDate' => $startDate,
             'endDate' => $endDate,
             'graphColor' => $graphColor,
-            'sensorList' => $sensorList
+            'sensorList' => $sensorList,
+            'timeDistribution' => $timeDistribution
             ]);
     }
 
