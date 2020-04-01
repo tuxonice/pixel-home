@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Sensor;
 use App\Event;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Events\EventSaving;
@@ -28,19 +29,23 @@ class EventPushTest extends TestCase
     
     
     /**
-     * 
+     * Can Calculate diff values for temperature, humidity and time
      *
      * @return void
      */
     public function testDiffValuesAreCalculated()
     {
-        \Illuminate\Support\Facades\Event::fake();
-        
-        $event = factory(Event::class)->create();
-        
-        \Illuminate\Support\Facades\Event::assertDispatched(EventSaving::class, function ($e) use ($event) {
-            return $e->event->id === $event->id;
-        });
+        factory(Sensor::class)->create();
+        $dt = Carbon::create();
+
+        factory(Event::class)->create(['temperature' => 16.5, 'humidity' => 70, 'added_on' => $dt->toDateTimeString()]);
+
+        /** @var Event $secondEvent */
+        $secondEvent = factory(Event::class)->create(['temperature' => 17.6, 'humidity' => 65, 'added_on' => $dt->addMinutes(5)->toDateTimeString()]);
+
+        $this->assertEquals($secondEvent->diff_temperature, 1.1);
+        $this->assertEquals($secondEvent->diff_humidity, -5);
+        $this->assertEquals($secondEvent->diff_time, 5);
     }
     
     
@@ -56,11 +61,12 @@ class EventPushTest extends TestCase
         $response = $this->get('/event/push/12345?sensor=FL01&temp=17.62&flood=0&batV=2.98');
         $response->assertStatus(200);
     }
-    
+
     /**
      * Can push FLOOD sensor data with flood
      *
      * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function testCanPushFloodEventsWithFlood()
     {
