@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class SoftDeleteSensor extends Migration
+class CreateDataPointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class SoftDeleteSensor extends Migration
      */
     public function up()
     {
-        Schema::table('sensors', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::create('data_points', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('sensor_id');
+            $table->float('value',8,2)->default(0.0);
+            $table->timestampTz('added_on');
+            
         });
     }
 
@@ -25,6 +29,6 @@ class SoftDeleteSensor extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('data_points');
     }
 }

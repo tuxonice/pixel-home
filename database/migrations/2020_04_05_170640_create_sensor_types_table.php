@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateEventsTable extends Migration
+class CreateSensorTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class UpdateEventsTable extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->integer('sensor_id')->unsigned()->after('sensor')->nullable();
-            $table->string('location', 128)->after('battery')->nullable();
-            $table->foreign('sensor_id')->references('id')->on('sensors');
+        Schema::create('sensor_types', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 128);
         });
     }
 
@@ -27,6 +26,6 @@ class UpdateEventsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('sensor_types');
     }
 }

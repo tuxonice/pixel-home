@@ -2,11 +2,11 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\alert;
+use App\SensorTypes;
 use Faker\Generator as Faker;
 
-$factory->define(alert::class, function (Faker $faker) {
+$factory->define(SensorTypes::class, function (Faker $faker) {
     return [
-        //
+        'name' => $faker->word;
     ];
 });

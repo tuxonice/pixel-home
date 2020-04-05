@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAlertsTable extends Migration
+class CreateForeignKeys extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,17 @@ class CreateAlertsTable extends Migration
      */
     public function up()
     {
-        Schema::create('alerts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('sensor_id')->unsigned();
-            $table->timestamp('alert_on')->nullable();
-            $table->timestamp('reset_on')->nullable();
+        
+        Schema::table('data_points', function (Blueprint $table) {
             $table->foreign('sensor_id')->references('id')->on('sensors');
         });
+        
+
+        Schema::table('sensors', function (Blueprint $table) {
+            $table->foreign('sensor_type_id')->references('id')->on('sensor_types');
+            $table->foreign('device_id')->references('id')->on('devices');
+        });
+
     }
 
     /**
@@ -29,6 +33,6 @@ class CreateAlertsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alert');
+        //
     }
 }
