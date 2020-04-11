@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 class SensorTypesTableSeeder extends Seeder
 {
+    use DataMapping;
     /**
      * Run the database seeds.
      *
@@ -12,14 +13,12 @@ class SensorTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('sensor_types')->insert([
-            ['name' => 'Temperature'],
-            ['name' => 'Humidity'],
-            ['name' => 'CO2'],
-            ['name' => 'Voltage'],
-            ['name' => 'Current'],
-            ['name' => 'Wind'],
-            ['name' => 'Resistence'],
-        ]);
+        
+        $records = [];
+        foreach ($this->sensorTypes as $sensorType) {
+            $records[] = ['name' => $sensorType['name']];
+        }
+        
+        DB::table('sensor_types')->insert($records);
     }
 }
