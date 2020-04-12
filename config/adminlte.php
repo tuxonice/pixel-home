@@ -178,6 +178,18 @@ return [
             'search' => false,
             'topnav' => false,
         ],
+        ['header' => 'devices'],
+        [
+            'text' => 'List Devices',
+            'url'  => 'device/list',
+            'icon' => 'fas fa-fw fa-list-ul',
+        ],
+        ['header' => 'sensor_types'],
+        [
+            'text' => 'List Sensor Types',
+            'url'  => 'sensor-type/list',
+            'icon' => 'fas fa-fw fa-list-ul',
+        ],
         ['header' => 'events'],
         [
             'text' => 'List Events',

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(
             [
-                //UsersTableSeeder::class,
+                UsersTableSeeder::class,
                 SensorTypesTableSeeder::class,
                 DevicesTableSeeder::class,
                 SensorsTableSeeder::class,

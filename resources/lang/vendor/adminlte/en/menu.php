@@ -20,4 +20,6 @@ return [
     'settings'                       => 'SETTINGS',
     'events'                       => 'EVENTS',
     'alerts'                       => 'ALERTS',
+    'devices'                       => 'DEVICES',
+    'sensor_types'                  => 'SENSOR TYPES',
 ];
