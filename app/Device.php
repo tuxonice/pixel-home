@@ -10,5 +10,10 @@ class Device extends Model
     use SoftDeletes;
     
     public $timestamps = false;
+
+    public function sensors()
+    {
+        return $this->hasMany('App\Sensor');
+    }
     
 }

@@ -36,7 +36,11 @@ class SensorTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sensorType = new SensorType;
+        $sensorType->name = $request->name;
+        $sensorType->save();
+        
+        return redirect()->route('sensor.type.list');
     }
 
     /**
@@ -47,40 +51,45 @@ class SensorTypeController extends Controller
      */
     public function show($id)
     {
-        //
+        // Not Used
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  SensorType  $sensorType
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SensorType $sensorType)
     {
-        //
+        return View('sensors.types.edit', ['sensorType' => $sensorType]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  SensorType  $sensorType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SensorType $sensorType)
     {
-        //
+        $sensorType->name = $request->name;
+        $sensorType->update();
+        
+        return redirect()->route('sensor.type.list');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  SensorType $sensorType
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SensorType $sensorType)
     {
-        //
+        $sensorType->delete();
+        
+        return redirect()->route('sensor.type.list');
     }
 }

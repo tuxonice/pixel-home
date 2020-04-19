@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSensorTypesTable extends Migration
+class CreateDeviceSensorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateSensorTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sensor_types', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', 128);
+        Schema::create('device_sensor', function (Blueprint $table) {
+            $table->unsignedBigInteger('device_id');
+            $table->unsignedBigInteger('sensor_id');
         });
     }
 
@@ -26,6 +26,6 @@ class CreateSensorTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sensor_types');
+        Schema::dropIfExists('device_sensor');
     }
 }

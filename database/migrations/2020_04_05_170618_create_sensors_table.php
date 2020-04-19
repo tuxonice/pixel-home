@@ -15,15 +15,11 @@ class CreateSensorsTable extends Migration
     {
         Schema::create('sensors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('sensor_type_id');
-            $table->unsignedBigInteger('device_id');
             $table->string('name', 128);
             $table->string('unit', 64)->comment('i.e. temperature, humidity');
             $table->string('unit_symbol', 64)->comment('i.e. ºC, %');
             $table->boolean('active')->default(0);
             $table->softDeletes('deleted_at');
-            
-            
         });
     }
 

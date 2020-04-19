@@ -5,8 +5,6 @@ use Illuminate\Support\Facades\DB;
 
 class SensorsTableSeeder extends Seeder
 {
-    use DataMapping;
-    
     /**
      * Run the database seeds.
      *
@@ -14,34 +12,68 @@ class SensorsTableSeeder extends Seeder
      */
     public function run()
     {
-        //Read Device list
-        $devices = DB::table('devices')->select('id')->get();
-        
-        $deviceList = array_map(function($elem) { return $elem->id; }, $devices->toArray());
-        $records = [];
-        foreach ($deviceList as $deviceId) {
-            $sensorCountForDevice = rand(1,4);
-            $sensorTypeKeys = array_rand($this->sensorTypes, $sensorCountForDevice);
-            
-            $sensorTypeKeys = is_array($sensorTypeKeys) ? $sensorTypeKeys : [$sensorTypeKeys];
-            
-            for ($i=0; $i < count($sensorTypeKeys); $i++) {
-                
-                $sensorTypeKey = $sensorTypeKeys[$i];
-                $sensorTypeName = $this->sensorTypes[$sensorTypeKey]['name'];
-                $sensorTypeUnits = $this->sensorTypes[$sensorTypeKey]['units'][array_rand($this->sensorTypes[$sensorTypeKey]['units'])];
-                
-                $records[] = [
-                    'sensor_type_id' => 1,
-                    'device_id' => $deviceId,
-                    'name' => $sensorTypeName.' Sensor',
-                    'unit' => $sensorTypeUnits[0],
-                    'unit_symbol' => $sensorTypeUnits[1],
-                    'active' => rand(1,100) > 20 ? 1 : 0,
-                ];
-            }
-            
-        }
+        $records = [
+            [
+                'name' => 'Temperature',
+                'unit' => 'Celsius degrees',
+                'unit_symbol' => 'ºC',
+                'active' => rand(1,100) > 20 ? 1 : 0,
+            ],
+            [
+                'name' => 'Humidity',
+                'unit' => 'Percentage',
+                'unit_symbol' => '%',
+                'active' => rand(1,100) > 20 ? 1 : 0,
+            ],
+            [
+                'name' => 'Current',
+                'unit' => 'Ampere',
+                'unit_symbol' => 'A',
+                'active' => rand(1,100) > 20 ? 1 : 0,
+            ],
+            [
+                'name' => 'Voltage',
+                'unit' => 'Volt',
+                'unit_symbol' => 'V',
+                'active' => rand(1,100) > 20 ? 1 : 0,
+            ],
+            [
+                'name' => 'Rotation',
+                'unit' => 'rpm',
+                'unit_symbol' => 'rpm',
+                'active' => rand(1,100) > 20 ? 1 : 0,
+            ],
+            [
+                'name' => 'Wind Speed',
+                'unit' => 'meter per second',
+                'unit_symbol' => 'm/s',
+                'active' => rand(1,100) > 20 ? 1 : 0,
+            ],
+            [
+                'name' => 'Energy',
+                'unit' => 'Kilowatt-hour',
+                'unit_symbol' => 'Kwh',
+                'active' => rand(1,100) > 20 ? 1 : 0,
+            ],
+            [
+                'name' => 'Power',
+                'unit' => 'Watt',
+                'unit_symbol' => 'W',
+                'active' => rand(1,100) > 20 ? 1 : 0,
+            ],
+            [
+                'name' => 'Resistence',
+                'unit' => 'Ohm',
+                'unit_symbol' => 'Ohm',
+                'active' => rand(1,100) > 20 ? 1 : 0,
+            ],
+            [
+                'name' => 'CO2',
+                'unit' => 'Parts-per-million',
+                'unit_symbol' => 'ppm',
+                'active' => rand(1,100) > 20 ? 1 : 0,
+            ],
+        ];
         
         DB::table('sensors')->insert($records);
     }
