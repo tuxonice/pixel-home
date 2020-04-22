@@ -11,7 +11,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" method="POST">
+              <form role="form" method="POST" action="{{ route('sensor.save') }}">
                 @csrf  
                 <div class="card-body">
                   <div class="form-group">
