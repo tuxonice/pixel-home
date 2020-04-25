@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EventAlert;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -42,6 +43,15 @@ class EventController extends Controller
         $events = $events->join('sensors', 'events.sensor_id', '=', 'sensors.id')
             ->select('events.*', 'sensors.name', 'sensors.type')
             ->orderBy('events.added_on', 'desc')->paginate(20);
+
+        $userTimezone = Auth::user()->timezone;
+
+        $events->setCollection($events->getCollection()->map(function ($item, $key) use($userTimezone) {
+            $item->added_on = Carbon::createFromFormat('Y-m-d H:i:s', $item->added_on, timezone_open('UTC'))
+                ->setTimezone($userTimezone)
+                ->toDateTimeString();
+            return $item;
+        }));
 
         return View('events.show', [
             'events' => $events, 
