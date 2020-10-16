@@ -28,6 +28,15 @@
                     <input type="text" class="form-control" name="code" id="code" value="{{ $device->code }}" placeholder="Device Code" required>
                   </div>
                   <div class="form-group">
+                    <label for="sensor">Add new Sensor</label>
+                    <select class="form-control" name="sensor_id">
+                    <option option="0">-- Select --</option>
+                    @foreach($sensors as $sensor)
+                    <option value="{{$sensor->id}}">{{$sensor->name}} ({{$sensor->unit_symbol}})</option>
+                    @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group">
                     <input type="checkbox" name="active" id="active" value="1" {{ $device->active ? 'checked="checked"' : '' }}/>
                     <label>Active</label>
                   </div>
@@ -57,7 +66,6 @@
                             <th style="width: 10px">#</th>
                             <th>Name</th>
                             <th>Unit</th>
-                            <th>Type</th>
                             <th>Active</th>
                             <th>&nbsp</th>
                         </tr>
@@ -68,19 +76,14 @@
                                 <th scope="row">{{ $sensor->id }}</th>
                                 <td>{{ $sensor->name }}</td>
                                 <td>{{ $sensor->unit }} ({{ $sensor->unit_symbol }})</td>
-                                <td>{{ $sensor->sensorType()->first()->name }}</td>
                                 <td>{{ $sensor->active }}</td>
-                                <td><a href="{{ url("/sensor/{$sensor->id}/edit") }}"><i class="far fa-edit"></i></a></td>
+                                <td><button type="button" class="btn btn-danger">Remove Sensor</button></td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer">
-                        
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new-sensor">
-  Add new Sensor
-</button>
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -116,44 +119,7 @@
             <!-- /.card -->
 </div>
 
-<div class="modal fade" id="new-sensor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">New Sensor</h4>
-      </div>
-      <div class="modal-body">
-      <form role="form" method="POST" action="{{ route('sensor.save', ['device' => $device->id]) }}">
-                @csrf
-                @method('PATCH')
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="location">Location</label>
-                    <input type="text" class="form-control" name="unit" id="unit" placeholder="Unit" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="code">Code</label>
-                    <input type="text" class="form-control" name="unit_symbol" id="unit_symbol" placeholder="Unit Symbol" required>
-                  </div>
-                  <div class="form-group">
-                    <input type="checkbox" name="active" id="active" value="1"/>
-                    <label>Active</label>
-                  </div>
-                </div>
-                </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 @stop
 @section('js')

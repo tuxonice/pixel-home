@@ -14,7 +14,7 @@ class CreateForeignKeys extends Migration
     public function up()
     {
         
-        Schema::table('data_points', function (Blueprint $table) {
+        Schema::table('points', function (Blueprint $table) {
             $table->foreign('sensor_id')->references('id')->on('sensors');
             $table->foreign('device_id')->references('id')->on('devices');
         });

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Device;
+use App\Models\Device;
+use App\Models\Sensor;
 
 class DeviceController extends Controller
 {
@@ -14,7 +15,7 @@ class DeviceController extends Controller
      */
     public function index()
     {
-        $devices = Device::paginate(5);
+        $devices = Device::paginate(15);
         return View('devices.index', ['devices' => $devices]);
     }
 
@@ -26,7 +27,8 @@ class DeviceController extends Controller
     public function create()
     {
         $code = rand(1000,9999);
-        return View('devices.create', ['code' => $code]);
+        $sensors = Sensor::all();
+        return View('devices.create', ['code' => $code, 'sensors' => $sensors]);
     }
 
     /**
@@ -37,14 +39,16 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {
-        $device = new Sensor;
+        $device = new Device;
         $device->name = $request->name;
         $device->location = $request->location;
         $device->code = $request->code;
         $device->active = $request->active;
         $device->save();
+        $device->sensors()->attach($request->sensor_id);
         
-        return redirect()->route('devices.list');
+        
+        return redirect()->route('device.list');
     }
 
     /**
@@ -66,7 +70,8 @@ class DeviceController extends Controller
      */
     public function edit(Device $device)
     {
-        return View('devices.edit', ['device' => $device]);
+        $sensors = Sensor::all();
+        return View('devices.edit', ['device' => $device, 'sensors' => $sensors]);
     }
 
     /**
@@ -82,6 +87,7 @@ class DeviceController extends Controller
         $device->location = $request->location;
         $device->code = $request->code;
         $device->active = $request->has('active') ? 1 : 0;
+        $device->sensors()->attach($request->sensor_id);
         $device->update();
         
         return redirect()->route('device.list');

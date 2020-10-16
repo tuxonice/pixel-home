@@ -184,10 +184,10 @@ return [
             'url'  => 'device/list',
             'icon' => 'fas fa-fw fa-list-ul',
         ],
-        ['header' => 'sensor_types'],
+        ['header' => 'sensors'],
         [
-            'text' => 'List Sensor Types',
-            'url'  => 'sensor-type/list',
+            'text' => 'List Sensors',
+            'url'  => 'sensor/list',
             'icon' => 'fas fa-fw fa-list-ul',
         ],
         ['header' => 'events'],
@@ -200,11 +200,6 @@ return [
             'text' => 'Events Graph',
             'url'  => 'graph/show',
             'icon' => 'fas fa-fw fa-chart-area',
-        ],
-        [
-            'text' => 'List Sensors',
-            'url'  => 'sensor/list',
-            'icon' => 'fas fa-fw fa-list-ul',
         ],
         [
             'text' => 'List Alerts',

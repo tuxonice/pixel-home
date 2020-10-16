@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDataPointsTable extends Migration
+class CreatePointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDataPointsTable extends Migration
      */
     public function up()
     {
-        Schema::create('data_points', function (Blueprint $table) {
+        Schema::create('points', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('device_id');
             $table->unsignedBigInteger('sensor_id');
@@ -29,6 +29,6 @@ class CreateDataPointsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data_points');
+        Schema::dropIfExists('points');
     }
 }

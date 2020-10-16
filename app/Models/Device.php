@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +13,12 @@ class Device extends Model
 
     public function sensors()
     {
-        return $this->hasMany('App\Sensor');
+        return $this->belongsToMany('App\Models\Sensor');
+    }
+
+    public function points()
+    {
+        return $this->hasMany('App\Models\Point');
     }
     
 }

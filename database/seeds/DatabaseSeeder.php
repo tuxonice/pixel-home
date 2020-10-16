@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
                 UsersTableSeeder::class,
                 DevicesTableSeeder::class,
                 SensorsTableSeeder::class,
-                // DataPointsTableSeeder::class,
+                DataPointsTableSeeder::class,
             ]
         );
     }

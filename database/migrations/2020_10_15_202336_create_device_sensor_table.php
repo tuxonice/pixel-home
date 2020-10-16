@@ -16,6 +16,7 @@ class CreateDeviceSensorTable extends Migration
         Schema::create('device_sensor', function (Blueprint $table) {
             $table->unsignedBigInteger('device_id');
             $table->unsignedBigInteger('sensor_id');
+            $table->unique(['device_id', 'sensor_id']);
         });
     }
 
