@@ -27,7 +27,7 @@ class DeviceController extends Controller
     public function create()
     {
         $code = rand(1000,9999);
-        $sensors = Sensor::all();
+        $sensors = Sensor::where('active', 1)->get();
         return View('devices.create', ['code' => $code, 'sensors' => $sensors]);
     }
 
@@ -70,7 +70,7 @@ class DeviceController extends Controller
      */
     public function edit(Device $device)
     {
-        $sensors = Sensor::all();
+        $sensors = Sensor::where('active', 1)->get();
         return View('devices.edit', ['device' => $device, 'sensors' => $sensors]);
     }
 
@@ -87,10 +87,27 @@ class DeviceController extends Controller
         $device->location = $request->location;
         $device->code = $request->code;
         $device->active = $request->has('active') ? 1 : 0;
-        $device->sensors()->attach($request->sensor_id);
+        if((int)$request->sensor_id) {
+            $device->sensors()->attach((int)$request->sensor_id);
+        }
+        
         $device->update();
         
-        return redirect()->route('device.list');
+        return redirect()->route('device.edit', ['device' => $device]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Device  $device
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteSensor(Request $request, Device $device)
+    {
+        $device->sensors()->detach($request->sensor_id);
+        return redirect()->route('device.edit', ['device' => $device]);
+        
     }
 
     /**
@@ -101,6 +118,7 @@ class DeviceController extends Controller
      */
     public function destroy(Device $device)
     {
+        $device->sensors()->detach();
         $device->delete();
         
         return redirect()->route('device.list');

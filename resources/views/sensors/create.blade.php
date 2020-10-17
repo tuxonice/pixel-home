@@ -15,27 +15,20 @@
                 @csrf  
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="code">Code</label>
-                    <input type="text" class="form-control" name="code" id="code" placeholder="Sensor Code" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="code">Name</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="Sensor Name" required>
                   </div>
                   <div class="form-group">
-                    <label for="location">Location</label>
-                    <input type="text" class="form-control" name="location" id="location" placeholder="Sensor Location" required> 
+                    <label for="name">Unit</label>
+                    <input type="text" class="form-control" name="unit" id="unit" placeholder="Sensor Unit" required>
                   </div>
                   <div class="form-group">
-                    <label for="type">Sensor Type</label>
-                    <select class="form-control" name="type">
-						<option value="HT">HT</option>
-						<option value="FLOOD">FLOOD</option>
-                    </select>
+                    <label for="location">Unit Symbol</label>
+                    <input type="text" class="form-control" name="unit_symbol" id="unit_symbol" placeholder="Symbol" required> 
                   </div>
                   <div class="form-group">
-                    <label for="hash">Hash</label>
-                    <input type="text" class="form-control" name="hash" id="hash" value="{{ $hash }}" required>
+                    <input type="checkbox" name="active" id="active" value="1" checked="checked"/>
+                    <label>Active</label>
                   </div>
                 </div>
                 <!-- /.card-body -->

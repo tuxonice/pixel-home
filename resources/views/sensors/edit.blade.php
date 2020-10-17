@@ -16,31 +16,20 @@
                 @method('PATCH')
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="code">Code</label>
-                    <input type="text" class="form-control" name="code" onKeyUp='updateEndpoint(this);' id="code" value="{{ $sensor->code }}" placeholder="Sensor Code" required>
+                    <label for="code">Name</label>
+                    <input type="text" class="form-control" name="name" id="name" value="{{ $sensor->name }}" placeholder="Sensor Code" required>
                   </div>
                   <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Sensor Name" value="{{ $sensor->name }}" required>
+                    <label for="name">Unit</label>
+                    <input type="text" class="form-control" name="unit" id="unit" placeholder="Unit" value="{{ $sensor->unit }}" required>
                   </div>
                   <div class="form-group">
-                    <label for="location">Location</label>
-                    <input type="text" class="form-control" name="location" id="location" placeholder="Sensor Location" value="{{ $sensor->location }}" required>
+                    <label for="location">Unit Symbol</label>
+                    <input type="text" class="form-control" name="unit_symbol" id="unit_symbol" placeholder="Symbol" value="{{ $sensor->unit_symbol }}" required>
                   </div>
                   <div class="form-group">
-                    <label for="type">Sensor Type</label>
-                    <select class="form-control" name="type">
-                      <option value="HT" {{ $sensor->type === 'HT' ? 'selected' : '' }}>HT</option>
-                      <option value="FLOOD" {{ $sensor->type === 'FLOOD' ? 'selected' : '' }}>FLOOD</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="hash">Hash</label>
-                    <input type="text" class="form-control" name="hash" onKeyUp='updateEndpoint(this);' id="hash" value="{{ $sensor->hash }}" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="endpoint">Push Endpoint</label>
-                    <input type="text" class="form-control" id="endpoint" value="{{ $pushEndPoint }}" readonly="readonly">
+                    <input type="checkbox" name="active" id="active" value="1" {{ $sensor->active ? 'checked="checked"' : '' }}/>
+                    <label>Active</label>
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -92,20 +81,6 @@
     }
     
     document.getElementById("delete-sensor").setAttribute("disabled", "disabled");
-   }
-   
-   function updateEndpoint() {
-     
-     let codeElem = document.getElementById("code");
-     let hashElem = document.getElementById("hash");
-     
-     let endPoint = '{{ request()->getSchemeAndHttpHost() }}/event/push/' + hashElem.value + '?sensor=' + codeElem.value
-     
-     document.getElementById("endpoint").value = endPoint;
-     
-     
-     
-     
    }
    
 </script>

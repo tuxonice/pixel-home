@@ -38,15 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/device/{device}/edit', 'DeviceController@edit')->name('device.edit');
     Route::patch('/device/{device}', 'DeviceController@update')->name('device.update');
     Route::delete('/device/{device}', 'DeviceController@destroy')->name('device.delete');
-    
-    /*
-    Route::get('/sensor-type/list', 'SensorTypeController@index')->name('sensor.type.list');
-    Route::get('/sensor-type/create', 'SensorTypeController@create')->name('sensor.type.new');
-    Route::post('/sensor-type', 'SensorTypeController@store')->name('sensor.type.save');
-    Route::get('/sensor-type/{sensorType}/edit', 'SensorTypeController@edit')->name('sensor.type.edit');
-    Route::patch('/sensor-type/{sensorType}', 'SensorTypeController@update')->name('sensor.type.update');
-    Route::delete('/sensor-type/{sensorType}', 'SensorTypeController@destroy')->name('sensor.type.delete');
-    */
+    Route::patch('/device/{device}/sensor/delete', 'DeviceController@deleteSensor')->name('device.delete.sensor');
     
     Route::get('/sensor/list', 'SensorController@index')->name('sensor.list');
     Route::get('/sensor/create', 'SensorController@create')->name('sensor.new');

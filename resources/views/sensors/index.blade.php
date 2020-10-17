@@ -19,10 +19,10 @@
                         <thead>
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th>Code</th>
                             <th>Name</th>
-                            <th>Location</th>
-                            <th>Type</th>
+                            <th>Unit</th>
+                            <th>Symbol</th>
+                            <th>Active</th>
                             <th>&nbsp</th>
                         </tr>
                         </thead>
@@ -30,10 +30,10 @@
                         @foreach($sensors as $sensor)
                             <tr>
                                 <th scope="row">{{ $sensor->id }}</th>
-                                <td>{{ $sensor->code }}</td>
                                 <td>{{ $sensor->name }}</td>
-                                <td>{{ $sensor->location }}</td>
-                                <td>{{ $sensor->type }}</td>
+                                <td>{{ $sensor->unit }}</td>
+                                <td>{{ $sensor->unit_symbol }}</td>
+                                <td>{{ $sensor->active }}</td>
                                 <td><a href="{{ url("/sensor/{$sensor->id}/edit") }}"><i class="far fa-edit"></i></a></td>
                             </tr>
                         @endforeach

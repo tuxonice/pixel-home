@@ -30,7 +30,7 @@
                   <div class="form-group">
                     <label for="sensor">Add new Sensor</label>
                     <select class="form-control" name="sensor_id">
-                    <option option="0">-- Select --</option>
+                    <option value="0">-- Select --</option>
                     @foreach($sensors as $sensor)
                     <option value="{{$sensor->id}}">{{$sensor->name}} ({{$sensor->unit_symbol}})</option>
                     @endforeach
@@ -59,7 +59,13 @@
                     <h3 class="card-title">Sensors</h3>
                 </div>
                 <!-- /.card-header -->
+                <form role="form" method="POST" action="{{ route('device.delete.sensor', ['device' => $device->id]) }}">
+                @csrf
+                @method('PATCH')
                 <div class="card-body p-0">
+                    @if($device->sensors()->count() == 0)
+                    <div class="text-center p-2">No sensors</div>
+                    @else
                     <table class="table">
                         <thead>
                         <tr>
@@ -77,14 +83,16 @@
                                 <td>{{ $sensor->name }}</td>
                                 <td>{{ $sensor->unit }} ({{ $sensor->unit_symbol }})</td>
                                 <td>{{ $sensor->active }}</td>
-                                <td><button type="button" class="btn btn-danger">Remove Sensor</button></td>
+                                <td><button type="submit" name="sensor_id" value="{{ $sensor->id }}" class="btn btn-danger">Remove Sensor</button></td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                    @endif
                 </div>
                 <div class="card-footer">
                 </div>
+                </form>
                 <!-- /.card-body -->
             </div>
         </div>
