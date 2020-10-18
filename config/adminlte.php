@@ -184,27 +184,20 @@ return [
             'url'  => 'device/list',
             'icon' => 'fas fa-fw fa-list-ul',
         ],
-        ['header' => 'sensors'],
         [
             'text' => 'List Sensors',
             'url'  => 'sensor/list',
             'icon' => 'fas fa-fw fa-list-ul',
         ],
-        ['header' => 'events'],
         [
-            'text' => 'List Events',
-            'url'  => 'event/list',
+            'text' => 'Data Points',
+            'url'  => 'data-points/list',
             'icon' => 'fas fa-fw fa-list-ul',
         ],
         [
             'text' => 'Events Graph',
             'url'  => 'graph/show',
             'icon' => 'fas fa-fw fa-chart-area',
-        ],
-        [
-            'text' => 'List Alerts',
-            'url'  => 'alert/list',
-            'icon' => 'fas fa-fw fa-list-ul',
         ],
         ['header' => 'settings'],
         [
