@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/sensor/{sensor}', 'SensorController@destroy')->name('sensor.delete');
     
     Route::get('/data-points/list', 'PointController@index')->name('data-points.list');
+    Route::get('/data-points/push/{code}/{deviceId}/{sensorId}', 'PointController@push')->name('data-points.push');
     
     Route::get('/alert/list', 'AlertController@list');
     Route::get('/alert/create', 'AlertController@create');

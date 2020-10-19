@@ -16,7 +16,15 @@
                   <div class="form-group">
                     <label for="sensor">Device</label>
                     <select class="form-control" id="device" name="device">
-                        <option value=""> --All devices-- </option>
+                    <option value=""> --All devices-- </option>
+                      @foreach($devices as $device)
+                        @if($selectedDevice == $device->id) {
+                          <option value="{{ $device->id }}" selected="selected"> {{ $device->name }} </option>
+                        } @else {
+                          <option value="{{ $device->id }}"> {{ $device->name }} </option>
+                        }
+                        @endif
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group">
@@ -29,7 +37,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Search</button>
                 </div>
               </form>
             </div>
@@ -42,7 +50,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Data Points</h3>
                     <div class="card-tools">
-                        {{ $dataPoints->links() }}
+                        {{ $dataPoints->appends(['device' => $selectedDevice])->links() }}
                     </div>
                 </div>
                 <!-- /.card-header -->
