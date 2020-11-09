@@ -90,3 +90,17 @@
     </div>
 
 @stop
+@section('js')
+<script>
+  $(function () {
+    
+    $("#device").on('change',function(){
+      var deviceId = $("#device").val();
+      $.get("/data-points/getSensor?device-id=" + deviceId, function(data, status){
+      console.log(data);
+      });
+    });      
+  });
+   
+</script>
+@stop

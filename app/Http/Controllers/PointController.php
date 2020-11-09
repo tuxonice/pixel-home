@@ -34,6 +34,16 @@ class PointController extends Controller
         );
     }
 
+    public function getSensor(Request $request)
+    {
+        $deviceId = $request->query('device-id', null);
+        $device = Device::where('id',$deviceId)->first();
+
+        
+
+        return response()->json($device->sensors);
+    }
+
     public function push(Request $request, $code, $deviceId, $sensorId)
     {
         // /point/push/{code}/{deviceId}/{sensorId}?value=10.4

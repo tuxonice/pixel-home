@@ -18,13 +18,19 @@
               <form role="form" method="GET">
                 <div class="card-body">
                   <div class="form-group">
+                    <label for="sensor">Device</label>
+                    <select class="form-control" id="device-id" name="device-id">
+                        <option value="0"> All Devices </option>
+                        @foreach($devices as $device)
+                          <option value="{{$device->id}}" {{ $selectedDeviceId == $device->id ? 'selected="selected"' : '' }}>{{$device->name}}</option>
+                        @endforeach
+                        </select>
+                  </div>
+                  <div class="form-group">
                     <label for="sensor">Sensor</label>
                     <select class="form-control" id="sensor-id" name="sensor-id">
                         <option value=""> All sensors </option>
-                        @foreach($sensorList as $sensor)
-                          <option value="{{$sensor->id}}" {{ $selectedSensorId == $sensor->id ? 'selected="selected"' : '' }}>{{$sensor->name}} ({{$sensor->location}})</option>
-                        @endforeach
-                        </select>
+                    </select>
                   </div>
                   
                   <div class="form-group">
@@ -73,19 +79,6 @@
                         </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
-                
-                @if($showHumidityGraph)
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Humidity</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <canvas id="humidityChart" height="100" width="500"></canvas>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-                @endif
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->
 
@@ -118,10 +111,6 @@
             
             let temperatureChartElem = document.getElementById('temperatureChart').getContext('2d');
             
-            @if($showHumidityGraph)
-            let humidityChartElem = document.getElementById('humidityChart').getContext('2d');
-            @endif
-            
             let temperatureChart = new Chart(temperatureChartElem, {
                 // The type of chart we want to create
                 type: 'line',
@@ -129,20 +118,18 @@
                 // The data for our dataset
                 data: {
                     datasets: [
-                    @foreach($events as $key => $value)
                       {
-                        label: '{{$key}}',
-                        borderColor: "rgb(<?php echo(implode(',', $graphColor[$key])); ?>)",
+                        label: 'Temperature',
+                        borderColor: "rgb(0,0,255)",
                         data: [
-                            @foreach($value as $data)
+                            @foreach($points as $point)
                             {
-                                x: '{{$data->added_on}}',
-                                y: '{{$data->temperature}}'
+                                x: '{{$point->added_on}}',
+                                y: '{{$point->value}}'
                             },
                             @endforeach
                         ]
                       },
-                    @endforeach
                     ]
                 },
 
@@ -161,48 +148,6 @@
                     }
                 }
             });
-            
-            @if($showHumidityGraph)
-            let humidityChart = new Chart(humidityChartElem, {
-                // The type of chart we want to create
-                type: 'line',
-
-                // The data for our dataset
-                data: {
-                    datasets: [
-                    @foreach($events as $key => $value)
-                      {
-                        label: '{{$key}}',
-                        borderColor: "rgb(<?php echo(implode(',', $graphColor[$key])); ?>)",
-                        data: [
-                            @foreach($value as $data)
-                            {
-                                x: '{{$data->added_on}}',
-                                y: '{{$data->humidity}}'
-                            },
-                            @endforeach
-                        ]
-                      },
-                    @endforeach
-                    ]
-                },
-
-                // Configuration options go here
-                options: {
-                    scales: {
-                        xAxes: [
-                            {
-                                type: 'time',
-                                distribution: '{{ $timeDistribution }}',
-                                time: {
-                                    unit: 'day'
-                                }
-                            }
-                        ]
-                    }
-                }
-            });
-            @endif
       });
     </script>
 @stop
