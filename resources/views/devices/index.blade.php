@@ -33,7 +33,7 @@
                                 <td>{{ $device->name }}</td>
                                 <td>{{ $device->location }}</td>
                                 <td>{{ $device->code }}</td>
-                                <td>{{ $device->active }}</td>
+                                <td><i class="fas fa-{{ $device->active ? 'check text-success': 'times text-danger' }}"></i></td>
                                 <td><a href="{{ url("/device/{$device->id}/edit") }}"><i class="far fa-edit"></i></a></td>
                             </tr>
                         @endforeach

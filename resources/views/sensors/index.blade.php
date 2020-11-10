@@ -33,7 +33,7 @@
                                 <td>{{ $sensor->name }}</td>
                                 <td>{{ $sensor->unit }}</td>
                                 <td>{{ $sensor->unit_symbol }}</td>
-                                <td>{{ $sensor->active }}</td>
+                                <td><i class="fas fa-{{ $sensor->active ? 'check text-success': 'times text-danger' }}"></i></td>
                                 <td><a href="{{ url("/sensor/{$sensor->id}/edit") }}"><i class="far fa-edit"></i></a></td>
                             </tr>
                         @endforeach

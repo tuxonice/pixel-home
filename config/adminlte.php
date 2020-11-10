@@ -144,7 +144,7 @@ return [
 
     'password_reset_url' => null,
 
-    'password_email_url' => 'password/email',
+    'password_email_url' => false,
 
     /*
     |--------------------------------------------------------------------------
