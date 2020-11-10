@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DataPointsTableSeeder extends Seeder
 {
@@ -21,7 +22,7 @@ class DataPointsTableSeeder extends Seeder
             $record = [];
             for($i=0;$i<=50;$i++) {
                 $dataPointTime = Carbon::now();
-                $dataPointTime->subDays(rand(1,60))->subHours(0,23)->subMinutes(0,59)->subSeconds(0,59);
+                $dataPointTime->subDays(rand(1,60))->subHours(rand(0,23))->subMinutes(rand(0,59))->subSeconds(rand(0,59));
                 
                 $record[] = [
                 'device_id' => $deviceSensor->device_id,

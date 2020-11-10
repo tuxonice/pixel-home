@@ -20,7 +20,7 @@
                   <div class="form-group">
                     <label for="sensor">Device</label>
                     <select class="form-control" id="device-id" name="device-id">
-                        <option value="0"> All Devices </option>
+                        <option value="0"> Select a device </option>
                         @foreach($devices as $device)
                           <option value="{{$device->id}}" {{ $selectedDeviceId == $device->id ? 'selected="selected"' : '' }}>{{$device->name}}</option>
                         @endforeach
@@ -29,7 +29,16 @@
                   <div class="form-group">
                     <label for="sensor">Sensor</label>
                     <select class="form-control" id="sensor-id" name="sensor-id">
-                        <option value=""> All sensors </option>
+                        <option value=""> Select a sensor </option>
+                        @if($selectedDevice) {
+                          @foreach($selectedDevice->sensors as $sensor)
+                            @if($selectedSensorId == $sensor->id)
+                            <option value="{{ $sensor->id }}" selected="selected"> {{ $sensor->name }} </option>
+                            @else
+                            <option value="{{ $sensor->id }}"> {{ $sensor->name }} </option>
+                            @endif
+                          @endforeach
+                        @endif
                     </select>
                   </div>
                   
@@ -69,16 +78,22 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- LINE CHART -->
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Temperature</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <canvas id="temperatureChart" height="100" width="500"></canvas>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
+                
+                  <div class="box box-info">
+                      @if($selectedDevice && $selectedSensor)
+                      <div class="box-header with-border">
+                          <h3 class="box-title">
+                            {{ $selectedDevice->name }}
+                          </h3>
+                      </div>
+                      <div class="box-body">
+                          <div class="chart">
+                              <canvas id="deviceChart" height="100" width="500"></canvas>
+                          </div>
+                      </div><!-- /.box-body -->
+                      @endif
+                  </div><!-- /.box -->
+                
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->
 
@@ -96,6 +111,25 @@
 <script src="/js/daterangepicker.js"></script>
 
     <script>
+      $(function () {
+    
+    $("#device-id").on('change',function(){
+      var deviceId = $("#device-id").val();
+      if(deviceId) {
+        $.get("/data-points/getSensor?device-id=" + deviceId, function(data, status){
+        $('#sensor-id').empty().append('<option value="0">-- Select a sensor --</option>');
+        $.each(data, function (i, item) {
+          $('#sensor-id').append($('<option>', { 
+            value: item.id,
+            text : item.name 
+          }));
+        });
+      });
+      }
+    });     
+  });
+
+  @if($selectedDevice && $selectedSensor)
         $(function () {
             $('#range-date').daterangepicker({
                 startDate: '{{ $startDate }}',
@@ -109,9 +143,9 @@
             });
             
             
-            let temperatureChartElem = document.getElementById('temperatureChart').getContext('2d');
+            let deviceChartElem = document.getElementById('deviceChart').getContext('2d');
             
-            let temperatureChart = new Chart(temperatureChartElem, {
+            let deviceChart = new Chart(deviceChartElem, {
                 // The type of chart we want to create
                 type: 'line',
 
@@ -119,7 +153,7 @@
                 data: {
                     datasets: [
                       {
-                        label: 'Temperature',
+                        label: '@if($selectedSensor) {{ $selectedSensor->name }} ({{ $selectedSensor->unit_symbol }}) @endif',
                         borderColor: "rgb(0,0,255)",
                         data: [
                             @foreach($points as $point)
@@ -148,6 +182,8 @@
                     }
                 }
             });
+            
       });
+      @endif
     </script>
 @stop

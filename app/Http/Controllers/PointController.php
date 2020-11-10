@@ -16,20 +16,33 @@ class PointController extends Controller
      */
     public function index(Request $request)
     {
-        $selectedDevice = $request->input('device', null);
+        $selectedDeviceId = $request->input('device', null);
+        $selectedSensorId = $request->input('sensor', null);
         
         $devices = Device::where('active', 1)->orderBy('name', 'ASC')->get();
-        if($selectedDevice) {
-            $device = Device::find((int)$selectedDevice);
-            $dataPoints = Point::where('device_id', $device->id)->orderBy('added_on', 'DESC')->paginate(15);
+
+        if ($selectedDeviceId) {
+            $constraints[] = ['device_id', $selectedDeviceId];
+        }
+
+        if ($selectedSensorId) {
+            $constraints[] = ['sensor_id', $selectedSensorId];
+        }
+
+        if($selectedDeviceId) {
+            $selectedDevice = Device::find((int)$selectedDeviceId);
+            $dataPoints = Point::where($constraints)->orderBy('added_on', 'DESC')->paginate(15);
         } else {
+            $selectedDevice = null;
             $dataPoints = Point::orderBy('added_on', 'DESC')->paginate(15);
         }
         
         return View('points.index', [
             'dataPoints' => $dataPoints, 
             'devices' => $devices, 
-            'selectedDevice' => $selectedDevice
+            'selectedDevice' => $selectedDevice,
+            'selectedSensorId' => $selectedSensorId,
+            'selectedDeviceId' => $selectedDeviceId,
             ]
         );
     }

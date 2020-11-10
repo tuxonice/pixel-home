@@ -18,7 +18,7 @@
                     <select class="form-control" id="device" name="device">
                     <option value=""> --All devices-- </option>
                       @foreach($devices as $device)
-                        @if($selectedDevice == $device->id) {
+                        @if($selectedDevice && $selectedDevice->id == $device->id) {
                           <option value="{{ $device->id }}" selected="selected"> {{ $device->name }} </option>
                         } @else {
                           <option value="{{ $device->id }}"> {{ $device->name }} </option>
@@ -31,6 +31,15 @@
                     <label for="sensor">Sensor</label>
                     <select class="form-control" id="sensor" name="sensor">
                         <option value=""> --Select-- </option>
+                        @if($selectedDevice) {
+                          @foreach($selectedDevice->sensors as $sensor)
+                            @if($selectedSensorId == $sensor->id)
+                            <option value="{{ $sensor->id }}" selected="selected"> {{ $sensor->name }} </option>
+                            @else
+                            <option value="{{ $sensor->id }}"> {{ $sensor->name }} </option>
+                            @endif
+                          @endforeach
+                        @endif
                     </select>
                   </div>
                 </div>
@@ -50,7 +59,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Data Points</h3>
                     <div class="card-tools">
-                        {{ $dataPoints->appends(['device' => $selectedDevice])->links() }}
+                        {{ $dataPoints->appends(['device' => $selectedDeviceId, 'sensor' => $selectedSensorId])->links() }}
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -96,10 +105,18 @@
     
     $("#device").on('change',function(){
       var deviceId = $("#device").val();
-      $.get("/data-points/getSensor?device-id=" + deviceId, function(data, status){
-      console.log(data);
+      if(deviceId) {
+        $.get("/data-points/getSensor?device-id=" + deviceId, function(data, status){
+        $('#sensor').empty().append('<option value="">-- All Sensors --</option>');
+        $.each(data, function (i, item) {
+          $('#sensor').append($('<option>', { 
+            value: item.id,
+            text : item.name 
+          }));
+        });
       });
-    });      
+      }
+    });     
   });
    
 </script>

@@ -24,7 +24,19 @@ class GraphController extends Controller
         }
         
         $devices = Device::get();
-        $sensors = Sensor::get();
+        
+        if($selectedDeviceId) {
+            $selectedDevice = Device::find((int)$selectedDeviceId);
+        } else {
+            $selectedDevice = null;
+        }
+
+        if($selectedSensorId) {
+            $selectedSensor = Sensor::find((int)$selectedSensorId);
+        } else {
+            $selectedSensor = null;
+        }
+
 
         $constraints = [];
         
@@ -69,6 +81,9 @@ class GraphController extends Controller
         return View('graph.show', [
             'points' => $points,
             'selectedDeviceId' => $selectedDeviceId,
+            'selectedDevice' => $selectedDevice,
+            'selectedSensor' => $selectedSensor,
+            'selectedSensorId' => $selectedSensorId,
             'startDate' => $startDate,
             'endDate' => $endDate,
             'devices' => $devices,
