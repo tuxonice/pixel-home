@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Sensor;
+use App\Models\Sensor;
 
 class SensorController extends Controller
 {
@@ -40,11 +40,10 @@ class SensorController extends Controller
     public function store(Request $request)
     {
         $sensor = new Sensor;
-        $sensor->code = $request->code;
         $sensor->name = $request->name;
-        $sensor->location = $request->location;
-        $sensor->type = $request->type;
-        $sensor->hash = $request->hash;
+        $sensor->unit = $request->unit;
+        $sensor->unit_symbol = $request->unit_symbol;
+        $sensor->active = $request->active === null ? 0 : 1;
         $sensor->save();
         
         return redirect()->route('sensor.list');
@@ -69,8 +68,7 @@ class SensorController extends Controller
      */
     public function edit(Sensor $sensor)
     {
-        $pushEndPoint = route('event.push', ['hash' => $sensor->hash, 'sensor' => $sensor->code]);
-        return View('sensors.edit', ['sensor' => $sensor, 'pushEndPoint' => $pushEndPoint]);
+        return View('sensors.edit', ['sensor' => $sensor]);
     }
 
     /**
@@ -82,11 +80,10 @@ class SensorController extends Controller
      */
     public function update(Request $request, Sensor $sensor)
     {
-        $sensor->code = $request->code;
         $sensor->name = $request->name;
-        $sensor->location = $request->location;
-        $sensor->type = $request->type;
-        $sensor->hash = $request->hash;
+        $sensor->unit = $request->unit;
+        $sensor->unit_symbol = $request->unit_symbol;
+        $sensor->active = $request->active === null ? 0 : 1;
         $sensor->update();
         
         return redirect()->route('sensor.list');

@@ -144,7 +144,7 @@ return [
 
     'password_reset_url' => null,
 
-    'password_email_url' => 'password/email',
+    'password_email_url' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -178,16 +178,11 @@ return [
             'search' => false,
             'topnav' => false,
         ],
-        ['header' => 'events'],
+        ['header' => 'devices'],
         [
-            'text' => 'List Events',
-            'url'  => 'event/list',
+            'text' => 'List Devices',
+            'url'  => 'device/list',
             'icon' => 'fas fa-fw fa-list-ul',
-        ],
-        [
-            'text' => 'Events Graph',
-            'url'  => 'graph/show',
-            'icon' => 'fas fa-fw fa-chart-area',
         ],
         [
             'text' => 'List Sensors',
@@ -195,9 +190,14 @@ return [
             'icon' => 'fas fa-fw fa-list-ul',
         ],
         [
-            'text' => 'List Alerts',
-            'url'  => 'alert/list',
+            'text' => 'Data Points',
+            'url'  => 'data-points/list',
             'icon' => 'fas fa-fw fa-list-ul',
+        ],
+        [
+            'text' => 'Events Graph',
+            'url'  => 'graph/show',
+            'icon' => 'fas fa-fw fa-chart-area',
         ],
         ['header' => 'settings'],
         [
@@ -223,7 +223,7 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\HrefFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\SearchFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\SubmenuFilter::class,
+        // JeroenNoten\LaravelAdminLte\Menu\Filters\SubmenuFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,

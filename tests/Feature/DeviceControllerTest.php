@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\User;
 
-class SensorControllerTest extends TestCase
+class DeviceControllerTest extends TestCase
 {
     
      use RefreshDatabase;
@@ -16,7 +16,7 @@ class SensorControllerTest extends TestCase
      *
      * @return void
      */
-    public function testUserCanViewSensorList()
+    public function testUserCanViewDeviceList()
     {
         $user = factory(User::class)->create([
             'password' => bcrypt($password = 'i-love-laravel'),
@@ -30,13 +30,13 @@ class SensorControllerTest extends TestCase
         $response->assertRedirect('/dashboard');
         $this->assertAuthenticatedAs($user);
         
-        $response = $this->get('/sensor/list');
+        $response = $this->get('/device/list');
         
         $response->assertStatus(200);
-        $response->assertSeeText('Sensors');
+        $response->assertSeeText('Devices');
     }
     
-    public function testUserCanViewNewSensorForm()
+    public function testUserCanViewNewDeviceForm()
     {
         $user = factory(User::class)->create([
             'password' => bcrypt($password = 'i-love-laravel'),
@@ -48,10 +48,10 @@ class SensorControllerTest extends TestCase
         ]);
 
         $this->assertAuthenticatedAs($user);
-        $response = $this->get('/sensor/create');
+        $response = $this->get('/device/create');
         
         $response->assertStatus(200);
-        $response->assertViewIs('sensors.create');
+        $response->assertViewIs('devices.create');
         
     }
 

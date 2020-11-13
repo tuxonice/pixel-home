@@ -14,14 +14,12 @@ class CreateSensorsTable extends Migration
     public function up()
     {
         Schema::create('sensors', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('code', 32);
-            $table->string('name', 64);
-            $table->string('location', 128)->nullable();
-            $table->string('type', 32);
-            $table->string('hash', 32)->nullable();
-            $table->unique('code');
-            $table->index('hash');
+            $table->bigIncrements('id');
+            $table->string('name', 128);
+            $table->string('unit', 64)->comment('i.e. temperature, humidity');
+            $table->string('unit_symbol', 64)->comment('i.e. ºC, %');
+            $table->boolean('active')->default(0);
+            $table->softDeletes('deleted_at');
         });
     }
 
@@ -32,6 +30,6 @@ class CreateSensorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sensor');
+        Schema::dropIfExists('sensors');
     }
 }

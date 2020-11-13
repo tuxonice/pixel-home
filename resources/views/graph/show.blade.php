@@ -18,13 +18,28 @@
               <form role="form" method="GET">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="sensor">Sensor</label>
-                    <select class="form-control" id="sensor-id" name="sensor-id">
-                        <option value=""> All sensors </option>
-                        @foreach($sensorList as $sensor)
-                          <option value="{{$sensor->id}}" {{ $selectedSensorId == $sensor->id ? 'selected="selected"' : '' }}>{{$sensor->name}} ({{$sensor->location}})</option>
+                    <label for="sensor">Device</label>
+                    <select class="form-control" id="device-id" name="device-id">
+                        <option value="0"> Select a device </option>
+                        @foreach($devices as $device)
+                          <option value="{{$device->id}}" {{ $selectedDeviceId == $device->id ? 'selected="selected"' : '' }}>{{$device->name}}</option>
                         @endforeach
                         </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="sensor">Sensor</label>
+                    <select class="form-control" id="sensor-id" name="sensor-id">
+                        <option value=""> Select a sensor </option>
+                        @if($selectedDevice) {
+                          @foreach($selectedDevice->sensors as $sensor)
+                            @if($selectedSensorId == $sensor->id)
+                            <option value="{{ $sensor->id }}" selected="selected"> {{ $sensor->name }} </option>
+                            @else
+                            <option value="{{ $sensor->id }}"> {{ $sensor->name }} </option>
+                            @endif
+                          @endforeach
+                        @endif
+                    </select>
                   </div>
                   
                   <div class="form-group">
@@ -63,29 +78,22 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- LINE CHART -->
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Temperature</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <canvas id="temperatureChart" height="100" width="500"></canvas>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
                 
-                @if($showHumidityGraph)
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Humidity</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <canvas id="humidityChart" height="100" width="500"></canvas>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-                @endif
+                  <div class="box box-info">
+                      @if($selectedDevice && $selectedSensor)
+                      <div class="box-header with-border">
+                          <h3 class="box-title">
+                            {{ $selectedDevice->name }}
+                          </h3>
+                      </div>
+                      <div class="box-body">
+                          <div class="chart">
+                              <canvas id="deviceChart" height="100" width="500"></canvas>
+                          </div>
+                      </div><!-- /.box-body -->
+                      @endif
+                  </div><!-- /.box -->
+                
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->
 
@@ -103,6 +111,25 @@
 <script src="/js/daterangepicker.js"></script>
 
     <script>
+      $(function () {
+    
+    $("#device-id").on('change',function(){
+      var deviceId = $("#device-id").val();
+      if(deviceId) {
+        $.get("/data-points/getSensor?device-id=" + deviceId, function(data, status){
+        $('#sensor-id').empty().append('<option value="0">-- Select a sensor --</option>');
+        $.each(data, function (i, item) {
+          $('#sensor-id').append($('<option>', { 
+            value: item.id,
+            text : item.name 
+          }));
+        });
+      });
+      }
+    });     
+  });
+
+  @if($selectedDevice && $selectedSensor)
         $(function () {
             $('#range-date').daterangepicker({
                 startDate: '{{ $startDate }}',
@@ -116,33 +143,27 @@
             });
             
             
-            let temperatureChartElem = document.getElementById('temperatureChart').getContext('2d');
+            let deviceChartElem = document.getElementById('deviceChart').getContext('2d');
             
-            @if($showHumidityGraph)
-            let humidityChartElem = document.getElementById('humidityChart').getContext('2d');
-            @endif
-            
-            let temperatureChart = new Chart(temperatureChartElem, {
+            let deviceChart = new Chart(deviceChartElem, {
                 // The type of chart we want to create
                 type: 'line',
 
                 // The data for our dataset
                 data: {
                     datasets: [
-                    @foreach($events as $key => $value)
                       {
-                        label: '{{$key}}',
-                        borderColor: "rgb(<?php echo(implode(',', $graphColor[$key])); ?>)",
+                        label: '@if($selectedSensor) {{ $selectedSensor->name }} ({{ $selectedSensor->unit_symbol }}) @endif',
+                        borderColor: "rgb(0,0,255)",
                         data: [
-                            @foreach($value as $data)
+                            @foreach($points as $point)
                             {
-                                x: '{{$data->added_on}}',
-                                y: '{{$data->temperature}}'
+                                x: '{{$point->added_on}}',
+                                y: '{{$point->value}}'
                             },
                             @endforeach
                         ]
                       },
-                    @endforeach
                     ]
                 },
 
@@ -162,47 +183,7 @@
                 }
             });
             
-            @if($showHumidityGraph)
-            let humidityChart = new Chart(humidityChartElem, {
-                // The type of chart we want to create
-                type: 'line',
-
-                // The data for our dataset
-                data: {
-                    datasets: [
-                    @foreach($events as $key => $value)
-                      {
-                        label: '{{$key}}',
-                        borderColor: "rgb(<?php echo(implode(',', $graphColor[$key])); ?>)",
-                        data: [
-                            @foreach($value as $data)
-                            {
-                                x: '{{$data->added_on}}',
-                                y: '{{$data->humidity}}'
-                            },
-                            @endforeach
-                        ]
-                      },
-                    @endforeach
-                    ]
-                },
-
-                // Configuration options go here
-                options: {
-                    scales: {
-                        xAxes: [
-                            {
-                                type: 'time',
-                                distribution: '{{ $timeDistribution }}',
-                                time: {
-                                    unit: 'day'
-                                }
-                            }
-                        ]
-                    }
-                }
-            });
-            @endif
       });
+      @endif
     </script>
 @stop

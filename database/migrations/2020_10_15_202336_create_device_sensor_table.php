@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class SoftDeleteSensor extends Migration
+class CreateDeviceSensorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class SoftDeleteSensor extends Migration
      */
     public function up()
     {
-        Schema::table('sensors', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::create('device_sensor', function (Blueprint $table) {
+            $table->unsignedBigInteger('device_id');
+            $table->unsignedBigInteger('sensor_id');
+            $table->unique(['device_id', 'sensor_id']);
         });
     }
 
@@ -25,6 +27,6 @@ class SoftDeleteSensor extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('device_sensor');
     }
 }

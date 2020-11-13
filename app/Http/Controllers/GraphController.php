@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Sensor;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Sensor;
+use App\Models\Device;
 
 class GraphController extends Controller
 {
     public function show(Request $request)
     {
         $timeDistribution = $request->query('time-distribution', 'series');
+        $selectedDeviceId = $request->query('device-id', null);
         $selectedSensorId = $request->query('sensor-id', null);
         $startDate = $request->query('start-date', date("Y-m-d",
             mktime(0, 0, 0, date("m"), date("d")-3, date("Y"))));
@@ -21,15 +21,30 @@ class GraphController extends Controller
         if(!in_array($timeDistribution , ['series','linear'])) {
             $timeDistribution = 'series';
         }
+        
+        $devices = Device::get();
+        
+        if($selectedDeviceId) {
+            $selectedDevice = Device::find((int)$selectedDeviceId);
+        } else {
+            $selectedDevice = null;
+        }
 
-        $sensorList = Sensor::get();
+        if($selectedSensorId) {
+            $selectedSensor = Sensor::find((int)$selectedSensorId);
+        } else {
+            $selectedSensor = null;
+        }
+
 
         $constraints = [];
-        $showHumidityGraph = false;
         
+        if ($selectedDeviceId) {
+            $constraints[] = ['device_id', $selectedDeviceId];
+        }
+
         if ($selectedSensorId) {
             $constraints[] = ['sensor_id', $selectedSensorId];
-            $showHumidityGraph = Sensor::find($selectedSensorId)->type === 'HT';
         }
 
         if ($startDate) {
@@ -40,81 +55,19 @@ class GraphController extends Controller
             $constraints[] = ['added_on', '<=', $endDate . ' 23:59:59'];
         }
 
-        $events = DB::table('events')->where($constraints)
-        ->select('events.*','sensors.name AS sensorName')
-        ->join('sensors', 'events.sensor_id', '=', 'sensors.id')
+        $points = DB::table('points')->where($constraints)
         ->orderBy('added_on', 'asc')->get();
         
-        $userTimezone = Auth::user()->timezone;
-
-        $events->map(function ($item, $key) use($userTimezone){
-            $item->added_on = Carbon::createFromFormat('Y-m-d H:i:s', $item->added_on, timezone_open('UTC'))
-                ->setTimezone($userTimezone)
-                ->toDateTimeString();
-            return $item;
-        });
-        
-        $grouped = $events->mapToGroups(function ($item, $key) {
-            return [$item->sensorName => $item];
-        });
-        
-        $graphColor = [];
-        $index = 1;
-        foreach ($grouped as $key => $value) {
-            $graphColor[$key] = $this->HSVtoRGB([(($index++)/count($grouped)), 0.8, 0.8]);
-        }
-
         return View('graph.show', [
-            'showHumidityGraph' => $showHumidityGraph,
-            'events' => $grouped,
+            'points' => $points,
+            'selectedDeviceId' => $selectedDeviceId,
+            'selectedDevice' => $selectedDevice,
+            'selectedSensor' => $selectedSensor,
             'selectedSensorId' => $selectedSensorId,
             'startDate' => $startDate,
             'endDate' => $endDate,
-            'graphColor' => $graphColor,
-            'sensorList' => $sensorList,
+            'devices' => $devices,
             'timeDistribution' => $timeDistribution
             ]);
-    }
-
-    
-   
-    
-    
-    private function HSVtoRGB(array $hsv)
-    {
-        list($H, $S, $V) = $hsv;
-        //1
-        $H *= 6;
-        //2
-        $I = floor($H);
-        $F = $H - $I;
-        //3
-        $M = $V * (1 - $S);
-        $N = $V * (1 - $S * $F);
-        $K = $V * (1 - $S * (1 - $F));
-        //4
-        switch ($I) {
-            case 0:
-                list($R, $G, $B) = [$V, $K, $M];
-                break;
-            case 1:
-                list($R, $G, $B) = [$N, $V, $M];
-                break;
-            case 2:
-                list($R, $G, $B) = [$M, $V, $K];
-                break;
-            case 3:
-                list($R, $G, $B) = [$M, $N, $V];
-                break;
-            case 4:
-                list($R, $G, $B) = [$K, $M, $V];
-                break;
-            case 5:
-            case 6: //for when $H=1 is given
-                list($R, $G, $B) = [$V, $M, $N];
-                break;
-        }
-
-        return [floor($R * 255), floor($G * 255), floor($B * 255)];
     }
 }

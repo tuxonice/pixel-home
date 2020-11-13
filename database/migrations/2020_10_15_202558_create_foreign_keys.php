@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateEventsTable extends Migration
+class CreateForeignKeys extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,18 @@ class UpdateEventsTable extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->integer('sensor_id')->unsigned()->after('sensor')->nullable();
-            $table->string('location', 128)->after('battery')->nullable();
+        
+        Schema::table('points', function (Blueprint $table) {
             $table->foreign('sensor_id')->references('id')->on('sensors');
+            $table->foreign('device_id')->references('id')->on('devices');
         });
+        
+
+        Schema::table('device_sensor', function (Blueprint $table) {
+            $table->foreign('sensor_id')->references('id')->on('sensors');
+            $table->foreign('device_id')->references('id')->on('devices');
+        });
+
     }
 
     /**
