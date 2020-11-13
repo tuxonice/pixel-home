@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Sensor;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Sensor;
+use App\Models\Device;
 
 class GraphController extends Controller
 {
@@ -59,25 +58,6 @@ class GraphController extends Controller
         $points = DB::table('points')->where($constraints)
         ->orderBy('added_on', 'asc')->get();
         
-        $userTimezone = Auth::user()->timezone;
-
-        $events->map(function ($item, $key) use($userTimezone){
-            $item->added_on = Carbon::createFromFormat('Y-m-d H:i:s', $item->added_on, timezone_open('UTC'))
-                ->setTimezone($userTimezone)
-                ->toDateTimeString();
-            return $item;
-        });
-        
-        $grouped = $events->mapToGroups(function ($item, $key) {
-            return [$item->sensorName => $item];
-        });
-        
-        $graphColor = [];
-        $index = 1;
-        foreach ($grouped as $key => $value) {
-            $graphColor[$key] = $this->HSVtoRGB([(($index++)/count($grouped)), 0.8, 0.8]);
-        }
-
         return View('graph.show', [
             'points' => $points,
             'selectedDeviceId' => $selectedDeviceId,
