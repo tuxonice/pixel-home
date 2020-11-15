@@ -73,6 +73,7 @@
                             <th>Name</th>
                             <th>Unit</th>
                             <th>Active</th>
+                            <th>Link</th>
                             <th>&nbsp</th>
                         </tr>
                         </thead>
@@ -82,7 +83,8 @@
                                 <th scope="row">{{ $sensor->id }}</th>
                                 <td>{{ $sensor->name }}</td>
                                 <td>{{ $sensor->unit }} ({{ $sensor->unit_symbol }})</td>
-                                <td>{{ $sensor->active }}</td>
+                                <td><i class="fas fa-{{ $sensor->active ? 'check text-success': 'times text-danger' }}"></i></td>
+                                <td class="text-secondary">{{ route('point.push', ['code' => $device->code, 'deviceId' => $device->id, 'sensorId' => $sensor->id]) }}?value=</td>
                                 <td><button type="submit" name="sensor_id" value="{{ $sensor->id }}" class="btn btn-danger">Remove Sensor</button></td>
                             </tr>
                         @endforeach

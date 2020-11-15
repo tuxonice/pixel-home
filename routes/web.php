@@ -21,7 +21,7 @@ Route::get('/', function () {
     return redirect('dashboard');
 });
 
-Route::get('/point/push/{code}/{deviceId}/{sensorId}', 'PointController@push');
+Route::get('/point/push/{code}/{deviceId}/{sensorId}', 'PointController@push')->name('point.push');
 
 Route::middleware('auth')->group(function () {
 
