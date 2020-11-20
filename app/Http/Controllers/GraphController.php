@@ -52,7 +52,7 @@ class GraphController extends Controller
         }
 
         if ($endDate) {
-            $constraints[] = ['added_on', '<=', $endDate . ' 23:59:59'];
+            $constraints[] = ['added_on', '<=', $endDate];
         }
 
         $points = DB::table('points')->where($constraints)
