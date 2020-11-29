@@ -135,11 +135,14 @@
                 startDate: '{{ $startDate }}',
                 endDate: '{{ $endDate }}',
                 locale: {
-                    format: 'YYYY-MM-DD'
-                }
+                    format: 'YYYY-MM-DD kk:mm'
+                },
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerIncrement: 30
         }, function(start, end, label) {
-            $("#start-date").val(start.format('YYYY-MM-DD'));
-            $("#end-date").val(end.format('YYYY-MM-DD'));
+            $("#start-date").val(start.format('YYYY-MM-DD kk:mm:ss'));
+            $("#end-date").val(end.format('YYYY-MM-DD kk:mm:ss'));
             });
             
             
