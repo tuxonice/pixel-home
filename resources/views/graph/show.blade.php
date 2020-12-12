@@ -72,28 +72,25 @@
             </div>
             <!-- /.card -->
 </div>
-        
-        
-        
         <div class="row">
             <div class="col-md-12">
                 <!-- LINE CHART -->
-                
                   <div class="box box-info">
                       @if($selectedDevice && $selectedSensor)
-                      <div class="box-header with-border">
-                          <h3 class="box-title">
-                            {{ $selectedDevice->name }}
-                          </h3>
-                      </div>
-                      <div class="box-body">
-                          <div class="chart">
-                              <canvas id="deviceChart" height="100" width="500"></canvas>
-                          </div>
-                      </div><!-- /.box-body -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">
+                              {{ $selectedDevice->name }}
+                            </h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="deviceChart" height="100" width="500"></canvas>
+                            </div>
+                        </div><!-- /.box-body -->
+                      @else
+                        <p class="text-center mt-5 font-weight-bold">No data to show</p>
                       @endif
                   </div><!-- /.box -->
-                
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->
 
@@ -129,25 +126,25 @@
     });     
   });
 
-  @if($selectedDevice && $selectedSensor)
+  
         $(function () {
             $('#range-date').daterangepicker({
                 startDate: '{{ $startDate }}',
                 endDate: '{{ $endDate }}',
                 locale: {
-                    format: 'YYYY-MM-DD kk:mm'
+                    format: 'YYYY-MM-DD HH:mm'
                 },
                 timePicker: true,
                 timePicker24Hour: true,
                 timePickerIncrement: 30
         }, function(start, end, label) {
-            $("#start-date").val(start.format('YYYY-MM-DD kk:mm:ss'));
-            $("#end-date").val(end.format('YYYY-MM-DD kk:mm:ss'));
+            $("#start-date").val(start.format('YYYY-MM-DD HH:mm:ss'));
+            $("#end-date").val(end.format('YYYY-MM-DD HH:mm:ss'));
             });
             
             
+            @if(count($points))
             let deviceChartElem = document.getElementById('deviceChart').getContext('2d');
-            
             let deviceChart = new Chart(deviceChartElem, {
                 // The type of chart we want to create
                 type: 'line',
@@ -185,8 +182,7 @@
                     }
                 }
             });
-            
+            @endif
       });
-      @endif
     </script>
 @stop
