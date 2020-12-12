@@ -14,9 +14,10 @@ class GraphController extends Controller
         $timeDistribution = $request->query('time-distribution', 'series');
         $selectedDeviceId = $request->query('device-id', null);
         $selectedSensorId = $request->query('sensor-id', null);
-        $startDate = $request->query('start-date', date("Y-m-d",
+        $startDate = $request->query('start-date', date("Y-m-d H:i",
             mktime(0, 0, 0, date("m"), date("d")-3, date("Y"))));
-        $endDate = $request->query('end-date', date("Y-m-d"));
+        $endDate = $request->query('end-date', date("Y-m-d H:i", 
+            mktime(23, 59, 59, date("m"), date("d"), date("Y"))));
 
         if(!in_array($timeDistribution , ['series','linear'])) {
             $timeDistribution = 'series';
@@ -55,8 +56,11 @@ class GraphController extends Controller
             $constraints[] = ['added_on', '<=', $endDate];
         }
 
-        $points = DB::table('points')->where($constraints)
-        ->orderBy('added_on', 'asc')->get();
+        $points = [];
+        if ($selectedDeviceId && $selectedSensorId) {
+            $points = DB::table('points')->where($constraints)
+                ->orderBy('added_on', 'asc')->get();
+        }
         
         return View('graph.show', [
             'points' => $points,
