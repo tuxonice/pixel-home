@@ -47,6 +47,11 @@
 
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Search</button>
+                  @if($graphUrl)
+                  <a href="{{ $graphUrl }}" class="ml-2 btn bg-olive">
+                    <i class="fa fa-bell"></i> Graph
+                  </a>
+                  @endif
                 </div>
               </form>
             </div>

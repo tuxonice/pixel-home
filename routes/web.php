@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/users/list', 'UserController@list');
     Route::get('/dashboard', 'DashboardController@index');
-    Route::get('/graph/show', 'GraphController@show');
+    Route::get('/graph/show', 'GraphController@show')->name('graph.show');
     
     Route::get('/device/list', 'DeviceController@index')->name('device.list');
     Route::get('/device/create', 'DeviceController@create')->name('device.new');
