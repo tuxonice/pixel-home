@@ -29,12 +29,17 @@ class PointController extends Controller
             $constraints[] = ['sensor_id', $selectedSensorId];
         }
 
-        if($selectedDeviceId) {
+        if ($selectedDeviceId) {
             $selectedDevice = Device::find((int)$selectedDeviceId);
             $dataPoints = Point::where($constraints)->orderBy('added_on', 'DESC')->paginate(15);
         } else {
             $selectedDevice = null;
             $dataPoints = Point::orderBy('added_on', 'DESC')->paginate(15);
+        }
+
+        $graphUrl = null;
+        if ($selectedSensorId && $selectedDeviceId) {
+            $graphUrl = route('graph.show', ['device-id' => $selectedDeviceId, 'sensor-id' => $selectedSensorId]);
         }
         
         return View('points.index', [
@@ -43,6 +48,7 @@ class PointController extends Controller
             'selectedDevice' => $selectedDevice,
             'selectedSensorId' => $selectedSensorId,
             'selectedDeviceId' => $selectedDeviceId,
+            'graphUrl' => $graphUrl,
             ]
         );
     }
