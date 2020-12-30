@@ -56,12 +56,16 @@ class GraphController extends Controller
             $constraints[] = ['added_on', '<=', $endDate];
         }
 
-        $points = [];
+        $points = collect([]);
         if ($selectedDeviceId && $selectedSensorId) {
             $points = DB::table('points')->where($constraints)
                 ->orderBy('added_on', 'asc')->get();
         }
-        
+
+        $averageValue = round($points->avg('value'), 2);
+        $minValue = $points->min('value');
+        $maxValue = $points->max('value');
+
         return View('graph.show', [
             'points' => $points,
             'selectedDeviceId' => $selectedDeviceId,
@@ -71,7 +75,10 @@ class GraphController extends Controller
             'startDate' => $startDate,
             'endDate' => $endDate,
             'devices' => $devices,
-            'timeDistribution' => $timeDistribution
+            'timeDistribution' => $timeDistribution,
+            'minValue' => $minValue,
+            'maxValue' => $maxValue,
+            'averageValue' => $averageValue,
             ]);
     }
 }

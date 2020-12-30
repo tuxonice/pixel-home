@@ -72,6 +72,62 @@
             </div>
             <!-- /.card -->
 </div>
+
+@if($selectedDevice && $selectedSensor)
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-arrow-alt-circle-up"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Max</span>
+                <span class="info-box-number">
+                {{ $maxValue }}
+                  <small>{{ $selectedSensor->unit_symbol }}</small>
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-arrow-alt-circle-down"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Min</span>
+                <span class="info-box-number">{{ $minValue }}
+                <small>{{ $selectedSensor->unit_symbol }}</small>
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-chart-line"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Average</span>
+                <span class="info-box-number">{{ $averageValue }}
+                <small>{{ $selectedSensor->unit_symbol }}</small>
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+        </div>
+@endif
+
         <div class="row">
             <div class="col-md-12">
                 <!-- LINE CHART -->
