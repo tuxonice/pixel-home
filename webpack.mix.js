@@ -11,6 +11,12 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.copy('resources/img/', 'public/img');
+mix.copy('resources/js/init-alpine.js', 'public/js');
+mix.copy('resources/js/charts-pie.js', 'public/js');
+mix.copy('resources/js/charts-lines.js', 'public/js');
+mix.copy('resources/js/charts-bars.js', 'public/js');
+mix.copy('resources/js/focus-trap.js', 'public/js');
 mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'public/css', [
     require('postcss-import'),
     require('tailwindcss'),

@@ -1,4 +1,27 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/img/avatar.jpeg": "/img/avatar.jpeg",
+    "/img/avatar01.jpeg": "/img/avatar01.jpeg",
+    "/img/avatar02.jpeg": "/img/avatar02.jpeg",
+    "/img/avatar03.jpeg": "/img/avatar03.jpeg",
+    "/img/avatar04.jpeg": "/img/avatar04.jpeg",
+    "/img/avatar05.jpeg": "/img/avatar05.jpeg",
+    "/img/avatar06.jpeg": "/img/avatar06.jpeg",
+    "/img/avatar07.jpeg": "/img/avatar07.jpeg",
+    "/img/avatar08.jpeg": "/img/avatar08.jpeg",
+    "/img/create-account-office-dark.jpeg": "/img/create-account-office-dark.jpeg",
+    "/img/create-account-office.jpeg": "/img/create-account-office.jpeg",
+    "/img/dashboard.png": "/img/dashboard.png",
+    "/img/forgot-password-office-dark.jpeg": "/img/forgot-password-office-dark.jpeg",
+    "/img/forgot-password-office.jpeg": "/img/forgot-password-office.jpeg",
+    "/img/github.svg": "/img/github.svg",
+    "/img/login-office-dark.jpeg": "/img/login-office-dark.jpeg",
+    "/img/login-office.jpeg": "/img/login-office.jpeg",
+    "/img/twitter.svg": "/img/twitter.svg",
+    "/js/init-alpine.js": "/js/init-alpine.js",
+    "/js/charts-pie.js": "/js/charts-pie.js",
+    "/js/charts-lines.js": "/js/charts-lines.js",
+    "/js/charts-bars.js": "/js/charts-bars.js",
+    "/js/focus-trap.js": "/js/focus-trap.js"
 }
