@@ -13,13 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(
-            [
-                UsersTableSeeder::class,
-                DevicesTableSeeder::class,
-                SensorsTableSeeder::class,
-                DataPointsTableSeeder::class,
-            ]
-        );
+        // \App\Models\User::factory(10)->create();
     }
 }
