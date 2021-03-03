@@ -19,7 +19,7 @@ class DevicesTableSeeder extends Seeder
     {
         $this->faker = Factory::create();
         
-        for($i=1;$i<=10;$i++) {
+        for($i=1;$i<=100;$i++) {
             $record = $this->generateDevice();
             DB::table('devices')->insert($record);
         }

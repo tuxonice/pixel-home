@@ -16,7 +16,7 @@ class DeviceController extends Controller
     public function index()
     {
         $devices = Device::paginate(15);
-        return View('devices.index', ['devices' => $devices]);
+        return View('partials.device.index', ['devices' => $devices]);
     }
 
     /**

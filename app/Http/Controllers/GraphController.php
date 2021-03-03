@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Device;
-use App\Models\Sensor;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Sensor;
+use App\Models\Device;
 
 class GraphController extends Controller
 {
@@ -67,15 +65,6 @@ class GraphController extends Controller
         $averageValue = round($points->avg('value'), 2);
         $minValue = $points->min('value');
         $maxValue = $points->max('value');
-
-        $userTimezone = Auth::user()->timezone;
-
-        $points->map(function ($item, $key) use($userTimezone){
-            $item->added_on = Carbon::createFromFormat('Y-m-d H:i:s', $item->added_on, timezone_open('UTC'))
-                ->setTimezone($userTimezone)
-                ->toDateTimeString();
-            return $item;
-        });
 
         return View('graph.show', [
             'points' => $points,
