@@ -28,7 +28,7 @@ class DeviceController extends Controller
     {
         $code = rand(1000,9999);
         $sensors = Sensor::where('active', 1)->get();
-        return View('devices.create', ['code' => $code, 'sensors' => $sensors]);
+        return View('partials.device.create', ['code' => $code, 'sensors' => $sensors]);
     }
 
     /**
@@ -48,7 +48,7 @@ class DeviceController extends Controller
         $device->sensors()->attach($request->sensor_id);
         
         
-        return redirect()->route('device.list');
+        return redirect()->route('device.index');
     }
 
     /**
@@ -71,7 +71,7 @@ class DeviceController extends Controller
     public function edit(Device $device)
     {
         $sensors = Sensor::where('active', 1)->get();
-        return View('devices.edit', ['device' => $device, 'sensors' => $sensors]);
+        return View('partials.device.edit', ['device' => $device, 'sensors' => $sensors]);
     }
 
     /**
