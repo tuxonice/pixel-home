@@ -38,7 +38,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item {{ Illuminate\Support\Str::startsWith(Route::currentRouteName(), 'device') ? 'menu-open' : ''}}">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link {{ Illuminate\Support\Str::startsWith(Route::currentRouteName(), 'device') ? 'active' : ''}}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Devices
@@ -62,8 +62,9 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link active">
+          <li class="nav-item {{ Illuminate\Support\Str::startsWith(Route::currentRouteName(), 'sensor') ? 'menu-open' : ''}}">
+            <a href="#" 
+              class="nav-link {{ Illuminate\Support\Str::startsWith(Route::currentRouteName(), 'sensor') ? 'active' : ''}}">
               <i class="nav-icon fas fa-thermometer-half"></i>
               <p>
                 Sensors
@@ -72,21 +73,23 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('sensor.list') }}" class="nav-link active">
+                <a href="{{ route('sensor.list') }}" 
+                  class="nav-link {{ Illuminate\Support\Str::endsWith(Route::currentRouteName(), 'list') ? 'active' : ''}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>List</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('sensor.new') }}" class="nav-link">
+                <a href="{{ route('sensor.new') }}" 
+                  class="nav-link {{ Illuminate\Support\Str::endsWith(Route::currentRouteName(), 'new') ? 'active' : ''}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>New</p>
                 </a>
               </li>
             </ul>
           </li>
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-bar"></i>
               <p>
                 Statistics
@@ -95,7 +98,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Data points</p>
                 </a>

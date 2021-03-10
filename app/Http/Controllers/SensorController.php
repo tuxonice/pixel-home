@@ -17,7 +17,7 @@ class SensorController extends Controller
     {
         $sensors = Sensor::paginate(10);
         
-        return View('sensors.index', ['sensors' => $sensors]);
+        return View('partials.sensor.index', ['sensors' => $sensors]);
     }
 
     /**
@@ -28,7 +28,7 @@ class SensorController extends Controller
     public function create()
     {
         $hash = rand(1000,9999);
-        return View('sensors.create', ['hash' => $hash]);
+        return View('partials.sensor.create', ['hash' => $hash]);
     }
 
     /**
@@ -68,7 +68,7 @@ class SensorController extends Controller
      */
     public function edit(Sensor $sensor)
     {
-        return View('sensors.edit', ['sensor' => $sensor]);
+        return View('partials.sensor.edit', ['sensor' => $sensor]);
     }
 
     /**
