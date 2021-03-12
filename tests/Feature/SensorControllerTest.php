@@ -5,7 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\User;
+use App\Models\User;
+use Database\Factories\UserFactory;
 
 class SensorControllerTest extends TestCase
 {
@@ -18,7 +19,7 @@ class SensorControllerTest extends TestCase
      */
     public function testUserCanViewSensorList()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
 
@@ -38,7 +39,7 @@ class SensorControllerTest extends TestCase
     
     public function testUserCanViewNewSensorForm()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
 
@@ -51,7 +52,7 @@ class SensorControllerTest extends TestCase
         $response = $this->get('/sensor/create');
         
         $response->assertStatus(200);
-        $response->assertViewIs('sensors.create');
+        $response->assertViewIs('partials.sensor.create');
         
     }
 

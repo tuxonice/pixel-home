@@ -5,7 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\User;
+use App\Models\User;
+use Database\Factories\UserFactory;
 
 class DeviceControllerTest extends TestCase
 {
@@ -18,9 +19,10 @@ class DeviceControllerTest extends TestCase
      */
     public function testUserCanViewDeviceList()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
+        
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -38,7 +40,7 @@ class DeviceControllerTest extends TestCase
     
     public function testUserCanViewNewDeviceForm()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
 
@@ -51,7 +53,7 @@ class DeviceControllerTest extends TestCase
         $response = $this->get('/device/create');
         
         $response->assertStatus(200);
-        $response->assertViewIs('devices.create');
+        $response->assertViewIs('partials.device.create');
         
     }
 

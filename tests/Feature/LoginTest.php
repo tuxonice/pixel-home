@@ -3,9 +3,10 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Database\Factories\UserFactory;
 
 class LoginTest extends TestCase
 {
@@ -32,7 +33,7 @@ class LoginTest extends TestCase
     
     public function testUserCannotViewALoginFormWhenAuthenticated()
     {
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         $response = $this->actingAs($user)->get('/login');
 
@@ -41,7 +42,7 @@ class LoginTest extends TestCase
     
     public function testUserCanLoginWithCorrectCredentials()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
 
@@ -56,8 +57,8 @@ class LoginTest extends TestCase
     
     public function testUserCannotLoginWithIncorrectPassword()
     {
-        $user = factory(User::class)->create([
-            'password' => bcrypt('i-love-laravel'),
+        $user = User::factory()->create([
+            'password' => bcrypt($password = 'i-love-laravel'),
         ]);
         
         $response = $this->from('/login')->post('/login', [
@@ -74,7 +75,7 @@ class LoginTest extends TestCase
     
     public function testRememberMeFunctionality()
     {
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'id' => random_int(1, 100),
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
