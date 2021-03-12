@@ -42,7 +42,7 @@ class PointController extends Controller
             $graphUrl = route('graph.show', ['device-id' => $selectedDeviceId, 'sensor-id' => $selectedSensorId]);
         }
         
-        return View('points.index', [
+        return View('partials.point.index', [
             'dataPoints' => $dataPoints, 
             'devices' => $devices, 
             'selectedDevice' => $selectedDevice,

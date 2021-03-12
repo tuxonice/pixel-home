@@ -88,8 +88,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item {{ Illuminate\Support\Str::startsWith(Route::currentRouteName(), 'data-points') ? 'menu-open' : ''}}">
+            <a href="#" class="nav-link {{ Illuminate\Support\Str::startsWith(Route::currentRouteName(), 'data-points') ? 'active' : ''}}">
               <i class="nav-icon fas fa-chart-bar"></i>
               <p>
                 Statistics
@@ -98,7 +98,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('data-points.list') }}" class="nav-link {{ Illuminate\Support\Str::endsWith(Route::currentRouteName(), 'list') ? 'active' : ''}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Data points</p>
                 </a>
