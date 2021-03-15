@@ -49,14 +49,14 @@
               <li class="nav-item">
                 <a href="{{ route('device.list') }}" 
                 class="nav-link {{ Illuminate\Support\Str::endsWith(Route::currentRouteName(), 'list') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-bars nav-icon icon-small"></i>
                   <p>List</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('device.new') }}" 
                 class="nav-link {{ Illuminate\Support\Str::endsWith(Route::currentRouteName(), 'new') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="far fa-file nav-icon icon-small"></i>
                   <p>New</p>
                 </a>
               </li>
@@ -75,14 +75,14 @@
               <li class="nav-item">
                 <a href="{{ route('sensor.list') }}" 
                   class="nav-link {{ Illuminate\Support\Str::endsWith(Route::currentRouteName(), 'list') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-bars nav-icon icon-small"></i>
                   <p>List</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('sensor.new') }}" 
                   class="nav-link {{ Illuminate\Support\Str::endsWith(Route::currentRouteName(), 'new') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="far fa-file nav-icon icon-small"></i>
                   <p>New</p>
                 </a>
               </li>
@@ -99,13 +99,13 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ route('data-points.list') }}" class="nav-link {{ Illuminate\Support\Str::endsWith(Route::currentRouteName(), 'list') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-bars nav-icon icon-small"></i>
                   <p>Data points</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-chart-pie nav-icon icon-small"></i>
                   <p>Graph</p>
                 </a>
               </li>

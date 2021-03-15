@@ -66,7 +66,7 @@ class GraphController extends Controller
         $minValue = $points->min('value');
         $maxValue = $points->max('value');
 
-        return View('graph.show', [
+        return View('partials.graph.show', [
             'points' => $points,
             'selectedDeviceId' => $selectedDeviceId,
             'selectedDevice' => $selectedDevice,
