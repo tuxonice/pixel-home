@@ -1,9 +1,13 @@
 {
     "/css/all.min.css": "/css/all.min.css",
     "/css/adminlte.min.css": "/css/adminlte.min.css",
+    "/css/custom.css": "/css/custom.css",
+    "/css/daterangepicker.css": "/css/daterangepicker.css",
     "/js/jquery.min.js": "/js/jquery.min.js",
     "/js/bootstrap.bundle.min.js": "/js/bootstrap.bundle.min.js",
     "/js/adminlte.min.js": "/js/adminlte.min.js",
+    "/js/daterangepicker.js": "/js/daterangepicker.js",
+    "/js/moment.min.js": "/js/moment.min.js",
     "/webfonts/fa-brands-400.eot": "/webfonts/fa-brands-400.eot",
     "/webfonts/fa-brands-400.svg": "/webfonts/fa-brands-400.svg",
     "/webfonts/fa-brands-400.ttf": "/webfonts/fa-brands-400.ttf",

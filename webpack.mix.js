@@ -21,13 +21,17 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
 
 mix.copy([
     'resources/plugins/fontawesome-free/css/all.min.css',
-    'resources/css/adminlte.min.css'
+    'resources/css/adminlte.min.css',
+    'resources/css/custom.css',
+    'resources/css/daterangepicker.css'
 ], 'public/css');
 
 mix.copy([
     'resources/plugins/jquery/jquery.min.js',
     'resources/plugins/bootstrap/js/bootstrap.bundle.min.js',
-    'resources/js/adminlte.min.js'
+    'resources/js/adminlte.min.js',
+    'resources/js/daterangepicker.js',
+    'resources/js/moment.min.js',
 ], 'public/js');
 
 mix.copyDirectory('resources/plugins/fontawesome-free/webfonts', 'public/webfonts');
