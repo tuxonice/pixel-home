@@ -23,11 +23,6 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
-/*
-Route::get('/dashboard', function () {
-    return view('partials.sample');
-})->middleware(['auth'])->name('dashboard');
-*/
 Route::get('/point/push/{code}/{deviceId}/{sensorId}', [PointController::class, 'push'])->name('point.push');
 
 Route::middleware('auth')->group(function () {
