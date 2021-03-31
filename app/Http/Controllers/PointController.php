@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Point;
 use App\Models\Device;
 use App\Models\Sensor;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PointController extends Controller
 {
@@ -41,6 +43,15 @@ class PointController extends Controller
         if ($selectedSensorId && $selectedDeviceId) {
             $graphUrl = route('graph.show', ['device-id' => $selectedDeviceId, 'sensor-id' => $selectedSensorId]);
         }
+
+        $userTimezone = Auth::user()->timezone;
+
+        $dataPoints->setCollection($dataPoints->getCollection()->map(function ($item, $key) use($userTimezone) {
+            $item->added_on = Carbon::createFromFormat('Y-m-d H:i:s', $item->added_on, timezone_open('UTC'))
+                ->setTimezone($userTimezone)
+                ->toDateTimeString();
+            return $item;
+        }));
         
         return View('points.index', [
             'dataPoints' => $dataPoints, 
