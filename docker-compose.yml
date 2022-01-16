@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/application/Dockerfile
+    working_dir: /var/www/html
+    tty: true
+    ports:
+      - 8090:80
+    links:
+      - database
+      - mailcatcher
+    depends_on:
+      - mailcatcher
+      - database
+    volumes:
+      - ./:/var/www/html
+
+  database:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: pixel
+      MYSQL_USER: pixel_user
+      MYSQL_PASSWORD: pixel_secret
+      MYSQL_ROOT_PASSWORD: root_secret
+    ports:
+      - 3307:3306
+    
+  phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: database
+    ports:
+      - 8002:80
+    links:
+      - database
+  mailcatcher:
+    image:  tophfr/mailcatcher
+    ports:
+      - "1025:80"
