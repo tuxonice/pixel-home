@@ -1,5 +1,5 @@
 
-![Laravel](https://github.com/tuxonice/pixel-home/workflows/tests/badge.svg)
+![Laravel](https://github.com/tuxonice/pixel-home/workflows/tests/badge.svg?branch=upgrade/laravel-8)
 
 ## About Pixel Home
 
