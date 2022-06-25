@@ -2,23 +2,21 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\User;
 
 class DeviceControllerTest extends TestCase
 {
-    
-     use RefreshDatabase;
-    /**
-     * User Can View Sensor List.
-     *
-     * @return void
-     */
-    public function testUserCanViewDeviceList()
+
+    use RefreshDatabase;
+
+    public function setUp(): void
     {
-        $user = factory(User::class)->create([
+        parent::setUp();
+
+        /** @var User $user */
+        $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
 
@@ -29,30 +27,37 @@ class DeviceControllerTest extends TestCase
 
         $response->assertRedirect('/dashboard');
         $this->assertAuthenticatedAs($user);
-        
+    }
+
+    public function testUserCanViewDeviceList(): void
+    {
         $response = $this->get('/device/list');
-        
+
         $response->assertStatus(200);
         $response->assertSeeText('Devices');
     }
-    
-    public function testUserCanViewNewDeviceForm()
+
+    public function testUserCanViewNewDeviceForm(): void
     {
-        $user = factory(User::class)->create([
-            'password' => bcrypt($password = 'i-love-laravel'),
-        ]);
-
-        $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => $password,
-        ]);
-
-        $this->assertAuthenticatedAs($user);
         $response = $this->get('/device/create');
-        
+
         $response->assertStatus(200);
         $response->assertViewIs('devices.create');
-        
     }
 
+    public function testUserCanCreateNewDevice(): void
+    {
+        $response = $this->post('/device', [
+            'name' => 'Test device',
+            'location' => 'test location',
+            'code' => '1234',
+            'active' => true,
+        ]);
+        $response->assertRedirect('/device/list');
+
+        $response = $this->get('/device/list');
+        $response->assertStatus(200);
+        $response->assertSeeText('Test device');
+        $response->assertSeeText('test location');
+    }
 }

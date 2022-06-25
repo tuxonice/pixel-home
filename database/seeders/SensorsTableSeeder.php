@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -74,7 +76,7 @@ class SensorsTableSeeder extends Seeder
                 'active' => rand(1,100) > 20 ? 1 : 0,
             ],
         ];
-        
+
         DB::table('sensors')->insert($records);
     }
 }

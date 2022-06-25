@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -15,15 +17,15 @@ class DataPointsTableSeeder extends Seeder
     {
 
         $this->associateDeviceSensor();
-        
+
         $deviceSensorList = DB::table('device_sensor')->get();
-        
+
         foreach($deviceSensorList as $deviceSensor) {
             $record = [];
             for($i=0;$i<=50;$i++) {
                 $dataPointTime = Carbon::now();
                 $dataPointTime->subDays(rand(1,60))->subHours(rand(0,23))->subMinutes(rand(0,59))->subSeconds(rand(0,59));
-                
+
                 $record[] = [
                 'device_id' => $deviceSensor->device_id,
                 'sensor_id' => $deviceSensor->sensor_id,
@@ -31,7 +33,7 @@ class DataPointsTableSeeder extends Seeder
                 'added_on' => $dataPointTime->toDateTimeString()
                 ];
             }
-            
+
             DB::table('points')->insert($record);
         }
     }
@@ -44,7 +46,7 @@ class DataPointsTableSeeder extends Seeder
             $records = [];
             $sensorCount = rand(1,3);
             $sensors = $sensorList->random($sensorCount)->all();
-            
+
             foreach($sensors as $sensor) {
                 $records[] = [
                     'device_id' => $device->id,
