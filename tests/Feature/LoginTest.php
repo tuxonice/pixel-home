@@ -2,46 +2,43 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
     use RefreshDatabase;
-    
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testNotLoggedInUserRedirectToLogin()
+
+    public function testNotLoggedInUserRedirectToLogin(): void
     {
         $response = $this->get('/dashboard');
         $response->assertRedirect('/login');
     }
-    
-    public function testUserCanViewALoginForm()
+
+    public function testUserCanViewALoginForm(): void
     {
         $response = $this->get('/login');
 
         $response->assertSuccessful();
         $response->assertViewIs('auth.login');
     }
-    
-    public function testUserCannotViewALoginFormWhenAuthenticated()
+
+    public function testUserCannotViewALoginFormWhenAuthenticated(): void
     {
-        $user = factory(User::class)->make();
+        /** @var User $user */
+        $user = User::factory()->make();
 
         $response = $this->actingAs($user)->get('/login');
 
         $response->assertRedirect('/dashboard');
     }
-    
-    public function testUserCanLoginWithCorrectCredentials()
+
+    public function testUserCanLoginWithCorrectCredentials(): void
     {
-        $user = factory(User::class)->create([
+        /** @var User $user */
+        $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
 
@@ -53,38 +50,40 @@ class LoginTest extends TestCase
         $response->assertRedirect('/dashboard');
         $this->assertAuthenticatedAs($user);
     }
-    
-    public function testUserCannotLoginWithIncorrectPassword()
+
+    public function testUserCannotLoginWithIncorrectPassword(): void
     {
-        $user = factory(User::class)->create([
-            'password' => bcrypt('i-love-laravel'),
+        /** @var User $user */
+        $user = User::factory()->create([
+            'password' => bcrypt($password = 'i-love-laravel'),
         ]);
-        
+
         $response = $this->from('/login')->post('/login', [
             'email' => $user->email,
             'password' => 'invalid-password',
         ]);
-        
+
         $response->assertRedirect('/login');
         $response->assertSessionHasErrors('email');
         $this->assertTrue(session()->hasOldInput('email'));
         $this->assertFalse(session()->hasOldInput('password'));
         $this->assertGuest();
     }
-    
-    public function testRememberMeFunctionality()
+
+    public function testRememberMeFunctionality(): void
     {
-        $user = factory(User::class)->create([
+        /** @var User $user */
+        $user = User::factory()->create([
             'id' => random_int(1, 100),
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
-        
+
         $response = $this->post('/login', [
             'email' => $user->email,
             'password' => $password,
             'remember' => 'on',
         ]);
-        
+
         $response->assertRedirect('/dashboard');
         $response->assertCookie(Auth::guard()->getRecallerName(), vsprintf('%s|%s|%s', [
             $user->id,
