@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Sensors</h1>
+            <h1 class="m-0">Create Sensor</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Sensors</li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+              <li class="breadcrumb-item active">Create Sensor</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -32,7 +32,7 @@
               <!-- /.card-header -->
               <!-- form start -->
               <form role="form" method="POST" action="{{ route('sensor.save') }}">
-                @csrf  
+                @csrf
                 <div class="card-body">
                   <div class="form-group">
                     <label for="code">Name</label>
@@ -44,7 +44,7 @@
                   </div>
                   <div class="form-group">
                     <label for="location">Unit Symbol</label>
-                    <input type="text" class="form-control" name="unit_symbol" id="unit_symbol" placeholder="Symbol" required> 
+                    <input type="text" class="form-control" name="unit_symbol" id="unit_symbol" placeholder="Symbol" required>
                   </div>
                   <div class="form-group">
                     <input type="checkbox" name="active" id="active" value="1" checked="checked"/>

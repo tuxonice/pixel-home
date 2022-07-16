@@ -5,12 +5,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">New Devices</h1>
+            <h1 class="m-0">New Device</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Devices</li>
+              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+              <li class="breadcrumb-item active">Create device</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -27,7 +27,7 @@
         <!-- /.card-header -->
         <!-- form start -->
         <form role="form" method="POST" action="{{ route('device.save') }}">
-        @csrf  
+        @csrf
         <div class="card-body">
             <div class="form-group">
             <label for="name">Name</label>
@@ -35,7 +35,7 @@
             </div>
             <div class="form-group">
             <label for="location">Location</label>
-            <input type="text" class="form-control" name="location" id="location" placeholder="Sensor Location" required> 
+            <input type="text" class="form-control" name="location" id="location" placeholder="Sensor Location" required>
             </div>
             <div class="form-group">
             <label for="code">Code</label>

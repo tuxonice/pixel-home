@@ -49,16 +49,6 @@
           <!-- /.col -->
         </div>
       </form>
-
-      @if (Route::has('password.request'))
-      <p class="mb-1">
-        <a href="{{ route('password.request') }}">{{ __('Forgot your password?') }}</a>
-      </p>
-      @endif
-      
-      <p class="mb-0">
-        <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
-      </p>
     </div>
     <!-- /.login-card-body -->
   </div>

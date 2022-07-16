@@ -10,7 +10,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
               <li class="breadcrumb-item active">Sensors</li>
             </ol>
           </div><!-- /.col -->
@@ -27,7 +27,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Sensors</h3>
                     <div class="card-tools">
-                        {{ $sensors->links() }}
+                        {{ $sensors->links('pagination.bootstrap-4') }}
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -58,8 +58,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                        
-                  <a href="/sensor/create" class="btn btn-primary">Add Sensor</a>
+                  <a href="{{ route('sensor.new') }}" class="btn btn-primary">Add Sensor</a>
                 </div>
                 <!-- /.card-body -->
             </div>

@@ -46,8 +46,8 @@ class DeviceController extends Controller
         $device->active = $request->active;
         $device->save();
         $device->sensors()->attach($request->sensor_id);
-        
-        
+
+
         return redirect()->route('device.index');
     }
 
@@ -90,9 +90,9 @@ class DeviceController extends Controller
         if((int)$request->sensor_id) {
             $device->sensors()->attach((int)$request->sensor_id);
         }
-        
+
         $device->update();
-        
+
         return redirect()->route('device.edit', ['device' => $device]);
     }
 
@@ -107,7 +107,7 @@ class DeviceController extends Controller
     {
         $device->sensors()->detach($request->sensor_id);
         return redirect()->route('device.edit', ['device' => $device]);
-        
+
     }
 
     /**
@@ -120,7 +120,7 @@ class DeviceController extends Controller
     {
         $device->sensors()->detach();
         $device->delete();
-        
+
         return redirect()->route('device.list');
     }
 }

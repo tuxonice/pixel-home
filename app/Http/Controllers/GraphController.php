@@ -16,15 +16,15 @@ class GraphController extends Controller
         $selectedSensorId = $request->query('sensor-id', null);
         $startDate = $request->query('start-date', date("Y-m-d H:i",
             mktime(0, 0, 0, date("m"), date("d")-3, date("Y"))));
-        $endDate = $request->query('end-date', date("Y-m-d H:i", 
+        $endDate = $request->query('end-date', date("Y-m-d H:i",
             mktime(23, 59, 59, date("m"), date("d"), date("Y"))));
 
         if(!in_array($timeDistribution , ['series','linear'])) {
             $timeDistribution = 'series';
         }
-        
+
         $devices = Device::get();
-        
+
         if($selectedDeviceId) {
             $selectedDevice = Device::find((int)$selectedDeviceId);
         } else {
@@ -39,7 +39,7 @@ class GraphController extends Controller
 
 
         $constraints = [];
-        
+
         if ($selectedDeviceId) {
             $constraints[] = ['device_id', $selectedDeviceId];
         }
@@ -66,8 +66,14 @@ class GraphController extends Controller
         $minValue = $points->min('value');
         $maxValue = $points->max('value');
 
+
+
+        $jsonData = json_encode(array_map(function($elem) {
+            return ['date' => $elem->added_on, 'value' => $elem->value];
+        }, $points->toArray()));
+
         return View('partials.graph.show', [
-            'points' => $points,
+            'points' => json_encode($jsonData),
             'selectedDeviceId' => $selectedDeviceId,
             'selectedDevice' => $selectedDevice,
             'selectedSensor' => $selectedSensor,

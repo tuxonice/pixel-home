@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Devices</h1>
+            <h1 class="m-0">Graph</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Devices</li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+              <li class="breadcrumb-item active">Graph</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -24,7 +24,7 @@
         <div class="container-fluid">
 
         <section class="content">
-        
+
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="card card-primary">
@@ -59,7 +59,7 @@
                         @endif
                     </select>
                   </div>
-                  
+
                   <div class="form-group">
                   <label>Date range:</label>
 
@@ -73,13 +73,13 @@
                   </div>
                   <!-- /.input group -->
                 </div>
-                
+
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" name="time-distribution" value="linear" {{ $timeDistribution === 'linear' ? 'checked="checked"' : '' }}/> Linear Time Distribution
                   </label>
                 </div>
-                
+
                 </div>
                 <!-- /.card-body -->
 
@@ -158,7 +158,7 @@
                         </div>
                         <div class="box-body">
                             <div class="chart">
-                                <canvas id="deviceChart" height="100" width="500"></canvas>
+                                <div id="deviceChart"></div>
                             </div>
                         </div><!-- /.box-body -->
                       @else
@@ -171,39 +171,50 @@
     </section><!-- /.content -->
 
 
-        </div><!-- container-fluid -->  
+        </div><!-- container-fluid -->
     </div><!-- /.content -->
 
 </div> <!-- content-wrapper -->
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/daterangepicker.css') }}">
+    <style>
+        #deviceChart {
+            width: 100%;
+            height: 500px;
+            max-width: 100%
+        }
+    </style>
 @stop
 
 @section('js')
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <script src="{{ asset('js/daterangepicker.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
 
     <script>
       $(function () {
-    
+
     $("#device-id").on('change',function(){
       var deviceId = $("#device-id").val();
       if(deviceId) {
         $.get("/data-points/getSensor?device-id=" + deviceId, function(data, status){
         $('#sensor-id').empty().append('<option value="0">-- Select a sensor --</option>');
         $.each(data, function (i, item) {
-          $('#sensor-id').append($('<option>', { 
+          $('#sensor-id').append($('<option>', {
             value: item.id,
-            text : item.name 
+            text : item.name
           }));
         });
       });
       }
-    });     
+    });
   });
 
-  
+
         $(function () {
             $('#range-date').daterangepicker({
                 startDate: '{{ $startDate }}',
@@ -218,49 +229,104 @@
             $("#start-date").val(start.format('YYYY-MM-DD HH:mm:ss'));
             $("#end-date").val(end.format('YYYY-MM-DD HH:mm:ss'));
             });
-            
-            
-            @if(count($points))
-            let deviceChartElem = document.getElementById('deviceChart').getContext('2d');
-            let deviceChart = new Chart(deviceChartElem, {
-                // The type of chart we want to create
-                type: 'line',
 
-                // The data for our dataset
-                data: {
-                    datasets: [
-                      {
-                        label: '@if($selectedSensor) {{ $selectedSensor->name }} ({{ $selectedSensor->unit_symbol }}) @endif',
-                        borderColor: "rgb(0,0,255)",
-                        data: [
-                            @foreach($points as $point)
-                            {
-                                x: '{{$point->added_on}}',
-                                y: '{{$point->value}}'
-                            },
-                            @endforeach
-                        ]
-                      },
-                    ]
-                },
 
-                // Configuration options go here
-                options: {
-                    scales: {
-                        xAxes: [
-                            {
-                                type: 'time',
-                                distribution: '{{ $timeDistribution }}',
-                                time: {
-                                    unit: 'day'
-                                }
-                            }
-                        ]
-                    }
-                }
-            });
-            @endif
+
       });
+
+      am5.ready(function() {
+
+          // Create root element
+          // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+          var root = am5.Root.new("deviceChart");
+
+
+          // Set themes
+          // https://www.amcharts.com/docs/v5/concepts/themes/
+          root.setThemes([
+              am5themes_Animated.new(root)
+          ]);
+
+
+          // Create chart
+          // https://www.amcharts.com/docs/v5/charts/xy-chart/
+          var chart = root.container.children.push(am5xy.XYChart.new(root, {
+              panX: true,
+              panY: true,
+              wheelX: "panX",
+              wheelY: "zoomX",
+              pinchZoomX:true
+          }));
+
+
+          // Add cursor
+          // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+          var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+              behavior: "none"
+          }));
+          cursor.lineY.set("visible", false);
+
+          function generateDatas() {
+              return JSON.parse({!! $points !!});
+          }
+
+
+          // Create axes
+          // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+          var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
+              //maxDeviation: 0.2,
+              baseInterval: {
+                  timeUnit: "minute",
+                  count: 1
+              },
+              renderer: am5xy.AxisRendererX.new(root, {}),
+              tooltip: am5.Tooltip.new(root, {})
+          }));
+
+          var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+              renderer: am5xy.AxisRendererY.new(root, {})
+          }));
+
+
+          // Add series
+          // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+          var series = chart.series.push(am5xy.LineSeries.new(root, {
+              name: "Series",
+              xAxis: xAxis,
+              yAxis: yAxis,
+              valueYField: "value",
+              valueXField: "date",
+              tooltip: am5.Tooltip.new(root, {
+                  labelText: "{valueY}"
+              })
+          }));
+
+          series.data.processor = am5.DataProcessor.new(root, {
+              numericFields: ["value"],
+              dateFields: ["date"],
+              dateFormat: "yyyy-MM-dd H:m:s"
+          });
+
+
+          // Add scrollbar
+          // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
+          chart.set("scrollbarX", am5.Scrollbar.new(root, {
+              orientation: "horizontal"
+          }));
+
+
+          // Set data
+          var data = generateDatas();
+          console.log(data);
+          series.data.setAll(data);
+
+
+          // Make stuff animate on load
+          // https://www.amcharts.com/docs/v5/concepts/animations/
+          series.appear(100);
+          chart.appear(100, 100);
+
+      }); // end am5.ready()
     </script>
 @stop
 <!-- /.content-wrapper -->

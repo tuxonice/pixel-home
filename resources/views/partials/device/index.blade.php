@@ -10,7 +10,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
               <li class="breadcrumb-item active">Devices</li>
             </ol>
           </div><!-- /.col -->
@@ -59,6 +59,9 @@
                   </tbody>
                 </table>
               </div>
+              <div class="card-footer">
+                  <a href="{{ route('device.new') }}" class="btn btn-primary">Add Device</a>
+              </div>
               <!-- /.card-body -->
             </div>
           </div>
@@ -71,4 +74,3 @@
   </div>
   <!-- /.content-wrapper -->
   </x-app-layout>
-  

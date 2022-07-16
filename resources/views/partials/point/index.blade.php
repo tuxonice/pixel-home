@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Devices</h1>
+            <h1 class="m-0">Data Points</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Devices</li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+              <li class="breadcrumb-item active">Data Points</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -119,7 +119,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                  
+
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -135,23 +135,23 @@
 @section('js')
 <script>
   $(function () {
-    
+
     $("#device").on('change',function(){
       var deviceId = $("#device").val();
       if(deviceId) {
         $.get("/data-points/getSensor?device-id=" + deviceId, function(data, status){
         $('#sensor').empty().append('<option value="">-- All Sensors --</option>');
         $.each(data, function (i, item) {
-          $('#sensor').append($('<option>', { 
+          $('#sensor').append($('<option>', {
             value: item.id,
-            text : item.name 
+            text : item.name
           }));
         });
       });
       }
-    });     
+    });
   });
-   
+
 </script>
 @stop
 <!-- /.content-wrapper -->

@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Sensors</h1>
+            <h1 class="m-0">Edit Sensor</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Sensors</li>
+              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+              <li class="breadcrumb-item active">Edit Sensor</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -78,7 +78,7 @@
                   <div class="form-group">
                     <input type="checkbox" onchange='handleChange(this);'/>
                     <label>Yes, I want to delete this sensor</label>
-                    
+
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -102,10 +102,10 @@
         document.getElementById("delete-sensor").removeAttribute("disabled");
         return;
     }
-    
+
     document.getElementById("delete-sensor").setAttribute("disabled", "disabled");
    }
-   
+
 </script>
 @stop
 <!-- /.content-wrapper -->
