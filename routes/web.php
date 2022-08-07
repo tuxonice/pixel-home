@@ -1,5 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PointController;
+use App\Http\Controllers\GraphController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\SensorController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,39 +19,25 @@
 |
 */
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DeviceController;
-use App\Http\Controllers\GraphController;
-use App\Http\Controllers\PointController;
-use App\Http\Controllers\SensorController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-
-Auth::routes([
-  'register' => false, // Registration Routes...
-  'reset' => false, // Password Reset Routes...
-  'verify' => false, // Email Verification Routes...
-]);
-
 Route::get('/', function () {
-    return redirect('dashboard');
+    return redirect('/dashboard');
 });
 
 Route::get('/point/push/{code}/{deviceId}/{sensorId}', [PointController::class, 'push'])->name('point.push');
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/users/list', [UserController::class, 'list']);
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/graph/show', [GraphController::class, 'show'])->name('graph.show');
 
     Route::get('/device/list', [DeviceController::class, 'index'])->name('device.list');
-    Route::get('/device/create', [DeviceController::class,'create'])->name('device.new');
-    Route::post('/device', [DeviceController::class,'store'])->name('device.save');
-    Route::get('/device/{device}/edit', [DeviceController::class,'edit'])->name('device.edit');
-    Route::patch('/device/{device}', [DeviceController::class,'update'])->name('device.update');
-    Route::delete('/device/{device}', [DeviceController::class,'destroy'])->name('device.delete');
-    Route::patch('/device/{device}/sensor/delete', [DeviceController::class,'deleteSensor'])->name('device.delete.sensor');
+    Route::get('/device/create', [DeviceController::class, 'create'])->name('device.new');
+    Route::post('/device', [DeviceController::class, 'store'])->name('device.save');
+    Route::get('/device/{device}/edit', [DeviceController::class, 'edit'])->name('device.edit');
+    Route::patch('/device/{device}', [DeviceController::class, 'update'])->name('device.update');
+    Route::delete('/device/{device}', [DeviceController::class, 'destroy'])->name('device.delete');
+    Route::patch('/device/{device}/sensor/delete', [DeviceController::class, 'deleteSensor'])->name('device.delete.sensor');
 
     Route::get('/sensor/list', [SensorController::class, 'index'])->name('sensor.list');
     Route::get('/sensor/create', [SensorController::class, 'create'])->name('sensor.new');
@@ -54,4 +48,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/data-points/list', [PointController::class, 'index'])->name('data-points.list');
     Route::get('/data-points/getSensor', [PointController::class, 'getSensor'])->name('data-points.get-sensor');
+
 });
+
+require __DIR__.'/auth.php';

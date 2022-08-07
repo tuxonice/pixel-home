@@ -2,20 +2,44 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
+use Database\Factories\UserFactory;
 
 class DeviceControllerTest extends TestCase
 {
-
-    use RefreshDatabase;
-
-    public function setUp(): void
+    
+     use RefreshDatabase;
+    /**
+     * User Can View Sensor List.
+     *
+     * @return void
+     */
+    public function testUserCanViewDeviceList()
     {
-        parent::setUp();
+        $user = User::factory()->create([
+            'password' => bcrypt($password = 'i-love-laravel'),
+        ]);
+        
 
-        /** @var User $user */
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => $password,
+        ]);
+
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticatedAs($user);
+        
+        $response = $this->get('/device/list');
+        
+        $response->assertStatus(200);
+        $response->assertSeeText('Devices');
+    }
+    
+    public function testUserCanViewNewDeviceForm()
+    {
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
@@ -25,39 +49,12 @@ class DeviceControllerTest extends TestCase
             'password' => $password,
         ]);
 
-        $response->assertRedirect('/dashboard');
         $this->assertAuthenticatedAs($user);
-    }
-
-    public function testUserCanViewDeviceList(): void
-    {
-        $response = $this->get('/device/list');
-
-        $response->assertStatus(200);
-        $response->assertSeeText('Devices');
-    }
-
-    public function testUserCanViewNewDeviceForm(): void
-    {
         $response = $this->get('/device/create');
-
+        
         $response->assertStatus(200);
-        $response->assertViewIs('devices.create');
+        $response->assertViewIs('partials.device.create');
+        
     }
 
-    public function testUserCanCreateNewDevice(): void
-    {
-        $response = $this->post('/device', [
-            'name' => 'Test device',
-            'location' => 'test location',
-            'code' => '1234',
-            'active' => true,
-        ]);
-        $response->assertRedirect('/device/list');
-
-        $response = $this->get('/device/list');
-        $response->assertStatus(200);
-        $response->assertSeeText('Test device');
-        $response->assertSeeText('test location');
-    }
 }

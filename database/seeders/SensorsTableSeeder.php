@@ -76,7 +76,7 @@ class SensorsTableSeeder extends Seeder
                 'active' => rand(1,100) > 20 ? 1 : 0,
             ],
         ];
-
+        
         DB::table('sensors')->insert($records);
     }
 }

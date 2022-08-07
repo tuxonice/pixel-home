@@ -3,11 +3,12 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Faker\Factory;
 use Illuminate\Support\Facades\DB;
 
 class DevicesTableSeeder extends Seeder
 {
-
+    
     private $faker;
     /**
      * Run the database seeds.
@@ -16,14 +17,14 @@ class DevicesTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->faker = \Faker\Factory::create();
-
-        for($i=1;$i<=10;$i++) {
+        $this->faker = Factory::create();
+        
+        for($i=1;$i<=100;$i++) {
             $record = $this->generateDevice();
             DB::table('devices')->insert($record);
         }
     }
-
+    
     protected function generateDevice()
     {
         return [

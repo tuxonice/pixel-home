@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Device;
-use App\Models\Sensor;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Sensor;
+use App\Models\Device;
 
 class GraphController extends Controller
 {
@@ -18,15 +16,15 @@ class GraphController extends Controller
         $selectedSensorId = $request->query('sensor-id', null);
         $startDate = $request->query('start-date', date("Y-m-d H:i",
             mktime(0, 0, 0, date("m"), date("d")-3, date("Y"))));
-        $endDate = $request->query('end-date', date("Y-m-d H:i", 
+        $endDate = $request->query('end-date', date("Y-m-d H:i",
             mktime(23, 59, 59, date("m"), date("d"), date("Y"))));
 
         if(!in_array($timeDistribution , ['series','linear'])) {
             $timeDistribution = 'series';
         }
-        
+
         $devices = Device::get();
-        
+
         if($selectedDeviceId) {
             $selectedDevice = Device::find((int)$selectedDeviceId);
         } else {
@@ -41,7 +39,7 @@ class GraphController extends Controller
 
 
         $constraints = [];
-        
+
         if ($selectedDeviceId) {
             $constraints[] = ['device_id', $selectedDeviceId];
         }
@@ -68,17 +66,14 @@ class GraphController extends Controller
         $minValue = $points->min('value');
         $maxValue = $points->max('value');
 
-        $userTimezone = Auth::user()->timezone;
 
-        $points->map(function ($item, $key) use($userTimezone){
-            $item->added_on = Carbon::createFromFormat('Y-m-d H:i:s', $item->added_on, timezone_open('UTC'))
-                ->setTimezone($userTimezone)
-                ->toDateTimeString();
-            return $item;
-        });
 
-        return View('graph.show', [
-            'points' => $points,
+        $jsonData = json_encode(array_map(function($elem) {
+            return ['date' => $elem->added_on, 'value' => $elem->value];
+        }, $points->toArray()));
+
+        return View('partials.graph.show', [
+            'points' => json_encode($jsonData),
             'selectedDeviceId' => $selectedDeviceId,
             'selectedDevice' => $selectedDevice,
             'selectedSensor' => $selectedSensor,
