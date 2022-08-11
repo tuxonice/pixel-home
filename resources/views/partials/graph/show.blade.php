@@ -314,6 +314,27 @@
               orientation: "horizontal"
           }));
 
+          series.fills.template.setAll({
+              fillOpacity: 0.2,
+              visible: true
+          });
+
+          series.strokes.template.setAll({
+              strokeWidth: 2
+          });
+
+          series.bullets.push(function() {
+              var circle = am5.Circle.new(root, {
+                  radius: 2,
+                  fill: root.interfaceColors.get("background"),
+                  stroke: series.get("fill"),
+                  strokeWidth: 2
+              })
+
+              return am5.Bullet.new(root, {
+                  sprite: circle
+              })
+          });
 
           // Set data
           var data = generateDatas();

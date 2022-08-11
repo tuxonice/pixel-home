@@ -11,18 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
- /*
-mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'public/css', [
-    require('postcss-import'),
-    require('tailwindcss'),
-    require('autoprefixer'),
-]);
-*/
-
 mix.copy([
     'resources/plugins/fontawesome-free/css/all.min.css',
     'resources/css/adminlte.min.css',
-    'resources/css/custom.css',
     'resources/css/daterangepicker.css'
 ], 'public/css');
 
