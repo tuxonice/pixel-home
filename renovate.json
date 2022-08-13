@@ -2,5 +2,13 @@
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
         "config:base"
+    ],
+    "rangeStrategy": "pin",
+    "baseBranches": ["main"],
+    "packageRules": [
+        {
+            "updateTypes": ["patch", "pin", "digest"],
+            "automerge": true
+        }
     ]
 }
