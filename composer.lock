@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2a78f393fb307393208405a7bffb5f2",
+    "content-hash": "f985d0894a1fc04f9e3e3fbae7fdb69d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5629,22 +5629,23 @@
         },
         {
             "name": "laravel/breeze",
-            "version": "v1.11.0",
+            "version": "v1.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/breeze.git",
-                "reference": "7c515a554bb22665e6fd9775bf8c8b2a433c5840"
+                "reference": "a6817a45c9f49e2bf342c4a38e27a610cbda787a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/breeze/zipball/7c515a554bb22665e6fd9775bf8c8b2a433c5840",
-                "reference": "7c515a554bb22665e6fd9775bf8c8b2a433c5840",
+                "url": "https://api.github.com/repos/laravel/breeze/zipball/a6817a45c9f49e2bf342c4a38e27a610cbda787a",
+                "reference": "a6817a45c9f49e2bf342c4a38e27a610cbda787a",
                 "shasum": ""
             },
             "require": {
-                "illuminate/filesystem": "^9.0",
-                "illuminate/support": "^9.0",
-                "illuminate/validation": "^9.0",
+                "illuminate/console": "^9.21",
+                "illuminate/filesystem": "^9.21",
+                "illuminate/support": "^9.21",
+                "illuminate/validation": "^9.21",
                 "php": "^8.0.2"
             },
             "conflict": {
@@ -5685,7 +5686,7 @@
                 "issues": "https://github.com/laravel/breeze/issues",
                 "source": "https://github.com/laravel/breeze"
             },
-            "time": "2022-07-11T11:46:36+00:00"
+            "time": "2022-08-08T13:25:54+00:00"
         },
         {
             "name": "laravel/sail",
