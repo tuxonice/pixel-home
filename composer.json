@@ -23,7 +23,7 @@
         "laravel/telescope": "4.9.2",
         "mockery/mockery": "1.5.0",
         "nunomaduro/collision": "6.3.0",
-        "phpunit/phpunit": "9.5.23"
+        "phpunit/phpunit": "9.5.24"
     },
     "config": {
         "optimize-autoloader": true,
