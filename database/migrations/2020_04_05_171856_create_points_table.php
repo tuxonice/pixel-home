@@ -18,7 +18,7 @@ class CreatePointsTable extends Migration
             $table->unsignedBigInteger('device_id');
             $table->unsignedBigInteger('sensor_id');
             $table->float('value',8,2)->default(0.0);
-            $table->timestampTz('added_on');
+            $table->dateTime('added_on');
         });
     }
 
