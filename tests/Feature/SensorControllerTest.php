@@ -2,16 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\Models\User;
-use Database\Factories\UserFactory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class SensorControllerTest extends TestCase
 {
-    
-     use RefreshDatabase;
+    use RefreshDatabase;
+
     /**
      * User Can View Sensor List.
      *
@@ -30,13 +28,13 @@ class SensorControllerTest extends TestCase
 
         $response->assertRedirect('/dashboard');
         $this->assertAuthenticatedAs($user);
-        
+
         $response = $this->get('/sensor/list');
-        
+
         $response->assertStatus(200);
         $response->assertSeeText('Sensors');
     }
-    
+
     public function testUserCanViewNewSensorForm()
     {
         $user = User::factory()->create([
@@ -50,10 +48,8 @@ class SensorControllerTest extends TestCase
 
         $this->assertAuthenticatedAs($user);
         $response = $this->get('/sensor/create');
-        
+
         $response->assertStatus(200);
         $response->assertViewIs('partials.sensor.create');
-        
     }
-
 }

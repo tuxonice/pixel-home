@@ -11,6 +11,6 @@ $factory->define(Devices::class, function (Faker $faker) {
         'location' => $faker->word,
         'type_id' => 1,
         'code' => 'ABC123',
-        'active' => 1
+        'active' => 1,
     ];
 });

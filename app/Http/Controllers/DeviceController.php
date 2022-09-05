@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Device;
 use App\Models\Sensor;
+use Illuminate\Http\Request;
 
 class DeviceController extends Controller
 {
@@ -16,6 +16,7 @@ class DeviceController extends Controller
     public function index()
     {
         $devices = Device::paginate(15);
+
         return View('partials.device.index', ['devices' => $devices]);
     }
 
@@ -26,8 +27,9 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        $code = rand(1000,9999);
+        $code = rand(1000, 9999);
         $sensors = Sensor::where('active', 1)->get();
+
         return View('partials.device.create', ['code' => $code, 'sensors' => $sensors]);
     }
 
@@ -46,7 +48,6 @@ class DeviceController extends Controller
         $device->active = $request->active;
         $device->save();
         $device->sensors()->attach($request->sensor_id);
-
 
         return redirect()->route('device.index');
     }
@@ -71,6 +72,7 @@ class DeviceController extends Controller
     public function edit(Device $device)
     {
         $sensors = Sensor::where('active', 1)->get();
+
         return View('partials.device.edit', ['device' => $device, 'sensors' => $sensors]);
     }
 
@@ -87,8 +89,8 @@ class DeviceController extends Controller
         $device->location = $request->location;
         $device->code = $request->code;
         $device->active = $request->has('active') ? 1 : 0;
-        if((int)$request->sensor_id) {
-            $device->sensors()->attach((int)$request->sensor_id);
+        if ((int) $request->sensor_id) {
+            $device->sensors()->attach((int) $request->sensor_id);
         }
 
         $device->update();
@@ -106,8 +108,8 @@ class DeviceController extends Controller
     public function deleteSensor(Request $request, Device $device)
     {
         $device->sensors()->detach($request->sensor_id);
-        return redirect()->route('device.edit', ['device' => $device]);
 
+        return redirect()->route('device.edit', ['device' => $device]);
     }
 
     /**

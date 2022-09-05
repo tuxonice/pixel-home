@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -14,7 +13,6 @@ class UserController extends Controller
      */
     public function list()
     {
-
         $users = DB::table('users')->paginate();
 
         return view('users.list', ['users' => $users]);

@@ -3,10 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\EventSaving;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class UpdateEventDiffValues
 {
@@ -32,9 +30,9 @@ class UpdateEventDiffValues
             ->where('events.sensor_id', $eventSaving->event->sensor_id)
             ->select('events.*', 'sensors.type')
             ->orderBy('events.added_on', 'desc')
-            ->first();       
+            ->first();
 
-        if(is_null($lastEvent)) {
+        if (is_null($lastEvent)) {
             return;
         }
 

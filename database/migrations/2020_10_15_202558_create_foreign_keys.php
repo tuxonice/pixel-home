@@ -13,18 +13,15 @@ class CreateForeignKeys extends Migration
      */
     public function up()
     {
-        
         Schema::table('points', function (Blueprint $table) {
             $table->foreign('sensor_id')->references('id')->on('sensors');
             $table->foreign('device_id')->references('id')->on('devices');
         });
-        
 
         Schema::table('device_sensor', function (Blueprint $table) {
             $table->foreign('sensor_id')->references('id')->on('sensors');
             $table->foreign('device_id')->references('id')->on('devices');
         });
-
     }
 
     /**

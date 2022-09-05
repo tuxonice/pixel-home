@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Sensor;
+use Illuminate\Http\Request;
 
 class SensorController extends Controller
 {
@@ -16,7 +15,7 @@ class SensorController extends Controller
     public function index()
     {
         $sensors = Sensor::paginate(10);
-        
+
         return View('partials.sensor.index', ['sensors' => $sensors]);
     }
 
@@ -27,7 +26,8 @@ class SensorController extends Controller
      */
     public function create()
     {
-        $hash = rand(1000,9999);
+        $hash = rand(1000, 9999);
+
         return View('partials.sensor.create', ['hash' => $hash]);
     }
 
@@ -45,7 +45,7 @@ class SensorController extends Controller
         $sensor->unit_symbol = $request->unit_symbol;
         $sensor->active = $request->active === null ? 0 : 1;
         $sensor->save();
-        
+
         return redirect()->route('sensor.list');
     }
 
@@ -85,7 +85,7 @@ class SensorController extends Controller
         $sensor->unit_symbol = $request->unit_symbol;
         $sensor->active = $request->active === null ? 0 : 1;
         $sensor->update();
-        
+
         return redirect()->route('sensor.list');
     }
 
@@ -98,6 +98,7 @@ class SensorController extends Controller
     public function destroy(Sensor $sensor)
     {
         $sensor->delete();
+
         return redirect()->route('sensor.list');
     }
 }

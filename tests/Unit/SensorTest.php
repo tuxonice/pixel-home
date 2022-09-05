@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class SensorTest extends TestCase
 {
-
     /** @var Sensor */
     protected $sensor;
 
@@ -38,5 +37,4 @@ class SensorTest extends TestCase
     {
         $this->assertEquals('Celsius degree', $this->sensor->unit);
     }
-
 }

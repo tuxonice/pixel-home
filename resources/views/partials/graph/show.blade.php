@@ -73,13 +73,6 @@
                   </div>
                   <!-- /.input group -->
                 </div>
-
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" name="time-distribution" value="linear" {{ $timeDistribution === 'linear' ? 'checked="checked"' : '' }}/> Linear Time Distribution
-                  </label>
-                </div>
-
                 </div>
                 <!-- /.card-body -->
 

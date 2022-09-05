@@ -2,11 +2,10 @@
 
 namespace App\Mail;
 
+use App\Event;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Event;
 
 class EventAlert extends Mailable
 {
@@ -42,7 +41,7 @@ class EventAlert extends Mailable
                 'location' => $this->event->location,
                 'temperature' => $this->event->temperature,
                 'timestamp' => $this->event->added_on,
-                    ]
+            ]
             );
     }
 }

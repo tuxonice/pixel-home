@@ -2,41 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
+use App\Models\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Sensor;
-use App\Models\Device;
 
 class GraphController extends Controller
 {
     public function show(Request $request)
     {
-        $timeDistribution = $request->query('time-distribution', 'series');
         $selectedDeviceId = $request->query('device-id', null);
         $selectedSensorId = $request->query('sensor-id', null);
-        $startDate = $request->query('start-date', date("Y-m-d H:i",
-            mktime(0, 0, 0, date("m"), date("d")-3, date("Y"))));
-        $endDate = $request->query('end-date', date("Y-m-d H:i",
-            mktime(23, 59, 59, date("m"), date("d"), date("Y"))));
-
-        if(!in_array($timeDistribution , ['series','linear'])) {
-            $timeDistribution = 'series';
-        }
+        $startDate = $request->query('start-date', date('Y-m-d H:i',
+            mktime(0, 0, 0, date('m'), date('d') - 3, date('Y'))));
+        $endDate = $request->query('end-date', date('Y-m-d H:i',
+            mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
 
         $devices = Device::get();
 
-        if($selectedDeviceId) {
-            $selectedDevice = Device::find((int)$selectedDeviceId);
+        if ($selectedDeviceId) {
+            $selectedDevice = Device::find((int) $selectedDeviceId);
         } else {
             $selectedDevice = null;
         }
 
-        if($selectedSensorId) {
-            $selectedSensor = Sensor::find((int)$selectedSensorId);
+        if ($selectedSensorId) {
+            $selectedSensor = Sensor::find((int) $selectedSensorId);
         } else {
             $selectedSensor = null;
         }
-
 
         $constraints = [];
 
@@ -66,9 +60,7 @@ class GraphController extends Controller
         $minValue = $points->min('value');
         $maxValue = $points->max('value');
 
-
-
-        $jsonData = json_encode(array_map(function($elem) {
+        $jsonData = json_encode(array_map(function ($elem) {
             return ['date' => $elem->added_on, 'value' => $elem->value];
         }, $points->toArray()));
 
@@ -81,10 +73,9 @@ class GraphController extends Controller
             'startDate' => $startDate,
             'endDate' => $endDate,
             'devices' => $devices,
-            'timeDistribution' => $timeDistribution,
             'minValue' => $minValue,
             'maxValue' => $maxValue,
             'averageValue' => $averageValue,
-            ]);
+        ]);
     }
 }

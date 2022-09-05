@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Device extends Model
 {
     use SoftDeletes;
-    
+
     public $timestamps = false;
 
     public function sensors()
@@ -20,5 +20,4 @@ class Device extends Model
     {
         return $this->hasMany('App\Models\Point');
     }
-    
 }

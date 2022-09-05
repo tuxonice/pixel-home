@@ -1,12 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PointController;
-use App\Http\Controllers\GraphController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\GraphController;
+use App\Http\Controllers\PointController;
 use App\Http\Controllers\SensorController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,6 @@ Route::get('/', function () {
 Route::get('/point/push/{code}/{deviceId}/{sensorId}', [PointController::class, 'push'])->name('point.push');
 
 Route::middleware('auth')->group(function () {
-
     Route::get('/users/list', [UserController::class, 'list']);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/graph/show', [GraphController::class, 'show'])->name('graph.show');
@@ -48,7 +47,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/data-points/list', [PointController::class, 'index'])->name('data-points.list');
     Route::get('/data-points/getSensor', [PointController::class, 'getSensor'])->name('data-points.get-sensor');
-
 });
 
 require __DIR__.'/auth.php';

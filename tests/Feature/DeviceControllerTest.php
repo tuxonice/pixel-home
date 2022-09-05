@@ -2,16 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\Models\User;
-use Database\Factories\UserFactory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DeviceControllerTest extends TestCase
 {
-    
-     use RefreshDatabase;
+    use RefreshDatabase;
+
     /**
      * User Can View Sensor List.
      *
@@ -22,7 +20,6 @@ class DeviceControllerTest extends TestCase
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
-        
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -31,13 +28,13 @@ class DeviceControllerTest extends TestCase
 
         $response->assertRedirect('/dashboard');
         $this->assertAuthenticatedAs($user);
-        
+
         $response = $this->get('/device/list');
-        
+
         $response->assertStatus(200);
         $response->assertSeeText('Devices');
     }
-    
+
     public function testUserCanViewNewDeviceForm()
     {
         $user = User::factory()->create([
@@ -51,10 +48,8 @@ class DeviceControllerTest extends TestCase
 
         $this->assertAuthenticatedAs($user);
         $response = $this->get('/device/create');
-        
+
         $response->assertStatus(200);
         $response->assertViewIs('partials.device.create');
-        
     }
-
 }
