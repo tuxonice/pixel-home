@@ -20,7 +20,7 @@
         "laravel/breeze": "1.14.0",
         "laravel/pint": "1.2.0",
         "laravel/sail": "1.16.2",
-        "laravel/telescope": "4.9.4",
+        "laravel/telescope": "4.9.5",
         "mockery/mockery": "1.5.1",
         "nunomaduro/collision": "6.3.1",
         "phpunit/phpunit": "9.5.25",
