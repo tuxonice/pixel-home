@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c842b45546612f4fc8667a66818deff",
+    "content-hash": "155a3574a9f322cbba9bf213f31a00fb",
     "packages": [
         {
             "name": "brick/math",
@@ -7876,16 +7876,16 @@
         },
         {
             "name": "spatie/laravel-ignition",
-            "version": "1.5.2",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ignition.git",
-                "reference": "f2336fc79d99aab5cf27fa4aebe5e9c9ecf3808a"
+                "reference": "c21309ebf6657e0c38083afac8af9baa12885676"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/f2336fc79d99aab5cf27fa4aebe5e9c9ecf3808a",
-                "reference": "f2336fc79d99aab5cf27fa4aebe5e9c9ecf3808a",
+                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/c21309ebf6657e0c38083afac8af9baa12885676",
+                "reference": "c21309ebf6657e0c38083afac8af9baa12885676",
                 "shasum": ""
             },
             "require": {
@@ -7962,7 +7962,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-10-14T12:24:21+00:00"
+            "time": "2022-10-25T08:38:04+00:00"
         },
         {
             "name": "theseer/tokenizer",
