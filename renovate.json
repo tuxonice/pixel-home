@@ -9,6 +9,13 @@
         {
             "updateTypes": ["patch", "pin", "digest"],
             "automerge": true
+        },
+        {
+            "matchManagers": ["composer"],
+            "matchPackageNames": [
+                "php"
+            ],
+            "enabled": false
         }
     ]
 }
