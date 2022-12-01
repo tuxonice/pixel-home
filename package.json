@@ -16,7 +16,7 @@
         "laravel-mix": "6.0.49",
         "lodash": "4.17.21",
         "postcss": "8.4.19",
-        "postcss-import": "15.0.0"
+        "postcss-import": "15.0.1"
     },
     "dependencies": {
         "admin-lte": "3.2.0"
