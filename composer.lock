@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d588e8ce7768690dcc71bb7b5d1d166d",
+    "content-hash": "6c239906ae0cf2295393828296235d44",
     "packages": [
         {
             "name": "brick/math",
@@ -5711,16 +5711,16 @@
         },
         {
             "name": "laravel/breeze",
-            "version": "v1.15.3",
+            "version": "v1.15.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/breeze.git",
-                "reference": "0c047d56be6163ba6df6e0f7971734baa18225c2"
+                "reference": "5dd0f8766c1a9de25a5699230fe9f2bf290952e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/breeze/zipball/0c047d56be6163ba6df6e0f7971734baa18225c2",
-                "reference": "0c047d56be6163ba6df6e0f7971734baa18225c2",
+                "url": "https://api.github.com/repos/laravel/breeze/zipball/5dd0f8766c1a9de25a5699230fe9f2bf290952e0",
+                "reference": "5dd0f8766c1a9de25a5699230fe9f2bf290952e0",
                 "shasum": ""
             },
             "require": {
@@ -5768,7 +5768,7 @@
                 "issues": "https://github.com/laravel/breeze/issues",
                 "source": "https://github.com/laravel/breeze"
             },
-            "time": "2022-11-28T14:36:07+00:00"
+            "time": "2022-12-05T15:16:03+00:00"
         },
         {
             "name": "laravel/pint",
