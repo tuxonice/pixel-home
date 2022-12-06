@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c239906ae0cf2295393828296235d44",
+    "content-hash": "04b729f338200f5c96a0f5aeaf67b005",
     "packages": [
         {
             "name": "brick/math",
@@ -5093,16 +5093,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v6.2.0",
+            "version": "v6.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "6228b11059d7b279be699682f164a107ba9a268d"
+                "reference": "1e7544c8698627b908657e5276854d52ab70087a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/6228b11059d7b279be699682f164a107ba9a268d",
-                "reference": "6228b11059d7b279be699682f164a107ba9a268d",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/1e7544c8698627b908657e5276854d52ab70087a",
+                "reference": "1e7544c8698627b908657e5276854d52ab70087a",
                 "shasum": ""
             },
             "require": {
@@ -5161,7 +5161,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v6.2.0"
+                "source": "https://github.com/symfony/var-dumper/tree/v6.2.1"
             },
             "funding": [
                 {
@@ -5177,7 +5177,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-11-28T13:41:56+00:00"
+            "time": "2022-12-03T22:32:58+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -5898,16 +5898,16 @@
         },
         {
             "name": "laravel/telescope",
-            "version": "v4.9.6",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/telescope.git",
-                "reference": "017eaf1b6d19392d196adcb4151bdf6d59612d66"
+                "reference": "e4b16dd22db3e8a8b52e3a03343b11ffcee2aaaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/telescope/zipball/017eaf1b6d19392d196adcb4151bdf6d59612d66",
-                "reference": "017eaf1b6d19392d196adcb4151bdf6d59612d66",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/e4b16dd22db3e8a8b52e3a03343b11ffcee2aaaa",
+                "reference": "e4b16dd22db3e8a8b52e3a03343b11ffcee2aaaa",
                 "shasum": ""
             },
             "require": {
@@ -5960,9 +5960,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/telescope/issues",
-                "source": "https://github.com/laravel/telescope/tree/v4.9.6"
+                "source": "https://github.com/laravel/telescope/tree/v4.10.0"
             },
-            "time": "2022-11-08T07:00:35+00:00"
+            "time": "2022-12-05T15:34:49+00:00"
         },
         {
             "name": "mockery/mockery",
