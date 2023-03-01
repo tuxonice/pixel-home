@@ -331,7 +331,6 @@
 
           // Set data
           var data = generateDatas();
-          console.log(data);
           series.data.setAll(data);
 
 

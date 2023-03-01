@@ -14,6 +14,7 @@ const mix = require('laravel-mix');
 mix.copy([
     'resources/plugins/fontawesome-free/css/all.min.css',
     'resources/css/adminlte.min.css',
+    'resources/css/custom.css',
     'resources/css/daterangepicker.css'
 ], 'public/css');
 
