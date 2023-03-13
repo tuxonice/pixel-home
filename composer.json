@@ -21,7 +21,7 @@
         "laravel/telescope": "4.14.0",
         "mockery/mockery": "1.5.1",
         "nunomaduro/collision": "7.1.0",
-        "phpunit/phpunit": "10.0.15",
+        "phpunit/phpunit": "10.0.16",
         "spatie/laravel-ignition": "2.0.0"
     },
     "config": {
