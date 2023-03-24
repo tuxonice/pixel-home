@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b47cda6cc7fb83c6864d2c96079e2c9f",
+    "content-hash": "34cdc25621b5f2027456ed62883a3d9a",
     "packages": [
         {
             "name": "brick/math",
@@ -5929,16 +5929,16 @@
         },
         {
             "name": "nunomaduro/collision",
-            "version": "v7.3.2",
+            "version": "v7.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/collision.git",
-                "reference": "9e111c8d8e88862d334879853dc849542e4b015a"
+                "reference": "c680af93e414110b36056029f63120e6bc78f6e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/9e111c8d8e88862d334879853dc849542e4b015a",
-                "reference": "9e111c8d8e88862d334879853dc849542e4b015a",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/c680af93e414110b36056029f63120e6bc78f6e3",
+                "reference": "c680af93e414110b36056029f63120e6bc78f6e3",
                 "shasum": ""
             },
             "require": {
@@ -6021,7 +6021,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-03-21T21:02:58+00:00"
+            "time": "2023-03-23T21:41:35+00:00"
         },
         {
             "name": "phar-io/manifest",
