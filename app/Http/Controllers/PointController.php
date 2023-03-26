@@ -6,6 +6,7 @@ use App\Models\Device;
 use App\Models\Point;
 use App\Models\Sensor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PointController extends Controller
 {
@@ -42,6 +43,8 @@ class PointController extends Controller
             $graphUrl = route('graph.show', ['device-id' => $selectedDeviceId, 'sensor-id' => $selectedSensorId]);
         }
 
+        $user = Auth::user();
+
         return View('partials.point.index', [
             'dataPoints' => $dataPoints,
             'devices' => $devices,
@@ -49,6 +52,7 @@ class PointController extends Controller
             'selectedSensorId' => $selectedSensorId,
             'selectedDeviceId' => $selectedDeviceId,
             'graphUrl' => $graphUrl,
+            'userTimeZone' => $user->timezone,
         ]
         );
     }

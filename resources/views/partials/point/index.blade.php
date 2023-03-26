@@ -112,7 +112,7 @@
                                 <td>{{ $dataPoint->device()->first()->location }}</td>
                                 <td>{{ $dataPoint->sensor()->first()->name }}</td>
                                 <td>{{ $dataPoint->value }} {{ $dataPoint->sensor()->first()->unit_symbol }}</td>
-                                <td>{{ $dataPoint->added_on }}</td>
+                                <td>{{ $dataPoint->added_on->setTimezone($userTimeZone) }}</td>
                             </tr>
                         @endforeach
                         </tbody>
