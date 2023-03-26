@@ -21,7 +21,6 @@ class UpdateEventDiffValues
     /**
      * Handle the event.
      *
-     * @param  EventSaving  $eventSaving
      * @return void
      */
     public function handle(EventSaving $eventSaving)

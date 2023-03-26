@@ -36,8 +36,8 @@ class DeviceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -49,7 +49,7 @@ class DeviceController extends Controller
         $device->save();
         $device->sensors()->attach($request->sensor_id);
 
-        return redirect()->route('device.index');
+        return redirect()->route('device.list');
     }
 
     /**
@@ -79,9 +79,8 @@ class DeviceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Device $device)
     {
@@ -101,9 +100,8 @@ class DeviceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Device  $device
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteSensor(Request $request, Device $device)
     {
@@ -115,8 +113,8 @@ class DeviceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Device  $device
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Device $device)
     {
