@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Device;
+use App\Models\Point;
 use App\Models\Sensor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class GraphController extends Controller
 {
@@ -52,7 +53,7 @@ class GraphController extends Controller
 
         $points = collect([]);
         if ($selectedDeviceId && $selectedSensorId) {
-            $points = DB::table('points')->where($constraints)
+            $points = Point::where($constraints)
                 ->orderBy('added_on', 'asc')->get();
         }
 
@@ -60,9 +61,14 @@ class GraphController extends Controller
         $minValue = $points->min('value');
         $maxValue = $points->max('value');
 
-        $jsonData = json_encode(array_map(function ($elem) {
-            return ['date' => $elem->added_on, 'value' => $elem->value];
-        }, $points->toArray()));
+        $user = Auth::user();
+        $userTimeZone = $user->timezone;
+
+        $data = [];
+        foreach ($points as $point) {
+            $data[] = ['date' => $point->added_on->setTimezone($userTimeZone)->format('Y-m-d H:i:s'), 'value' => $point->value];
+        }
+        $jsonData = json_encode($data);
 
         return View('partials.graph.show', [
             'points' => json_encode($jsonData),
