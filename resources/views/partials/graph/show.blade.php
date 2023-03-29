@@ -283,7 +283,7 @@
 
           // Add series
           // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-          var series = chart.series.push(am5xy.LineSeries.new(root, {
+          var series = chart.series.push(am5xy.{!! $chartType !!}.new(root, {
               name: "Series",
               xAxis: xAxis,
               yAxis: yAxis,

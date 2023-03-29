@@ -7,6 +7,7 @@ use App\Models\Point;
 use App\Models\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class GraphController extends Controller
 {
@@ -52,9 +53,18 @@ class GraphController extends Controller
         }
 
         $points = collect([]);
+        $chartType = 'LineSeries';
         if ($selectedDeviceId && $selectedSensorId) {
             $points = Point::where($constraints)
                 ->orderBy('added_on', 'asc')->get();
+
+            $chartType = DB::table('device_sensor')
+                ->where(
+                    [
+                        ['device_id', $selectedDeviceId],
+                        ['sensor_id', $selectedSensorId],
+                    ]
+                )->first()->chart_type;
         }
 
         $averageValue = round($points->avg('value'), 2);
@@ -82,6 +92,7 @@ class GraphController extends Controller
             'minValue' => $minValue,
             'maxValue' => $maxValue,
             'averageValue' => $averageValue,
+            'chartType' => $chartType,
         ]);
     }
 }
