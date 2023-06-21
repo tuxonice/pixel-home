@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3c4caaf70dca8d75c9d3fc62f93e9353",
+    "content-hash": "a0a6330d552e261af0d8ede12dcf4e23",
     "packages": [
         {
             "name": "brick/math",
@@ -5762,16 +5762,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.22.0",
+            "version": "v1.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "923e1e112b6a8598664dbb0ee79dd3137f1c9d56"
+                "reference": "a2e046f748e87d3ef8b2b381e0e5c5a11f34e46b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/923e1e112b6a8598664dbb0ee79dd3137f1c9d56",
-                "reference": "923e1e112b6a8598664dbb0ee79dd3137f1c9d56",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/a2e046f748e87d3ef8b2b381e0e5c5a11f34e46b",
+                "reference": "a2e046f748e87d3ef8b2b381e0e5c5a11f34e46b",
                 "shasum": ""
             },
             "require": {
@@ -5823,7 +5823,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2023-05-04T14:52:56+00:00"
+            "time": "2023-06-16T21:20:12+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -7808,16 +7808,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v6.2.10",
+            "version": "v6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "61916f3861b1e9705b18cfde723921a71dd1559d"
+                "reference": "a9a8337aa641ef2aa39c3e028f9107ec391e5927"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/61916f3861b1e9705b18cfde723921a71dd1559d",
-                "reference": "61916f3861b1e9705b18cfde723921a71dd1559d",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/a9a8337aa641ef2aa39c3e028f9107ec391e5927",
+                "reference": "a9a8337aa641ef2aa39c3e028f9107ec391e5927",
                 "shasum": ""
             },
             "require": {
@@ -7829,9 +7829,6 @@
             },
             "require-dev": {
                 "symfony/console": "^5.4|^6.0"
-            },
-            "suggest": {
-                "symfony/console": "For validating YAML files using the lint command"
             },
             "bin": [
                 "Resources/bin/yaml-lint"
@@ -7862,7 +7859,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v6.2.10"
+                "source": "https://github.com/symfony/yaml/tree/v6.3.0"
             },
             "funding": [
                 {
@@ -7878,7 +7875,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-28T13:25:36+00:00"
+            "time": "2023-04-28T13:28:14+00:00"
         },
         {
             "name": "theseer/tokenizer",
