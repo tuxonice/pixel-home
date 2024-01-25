@@ -12,7 +12,7 @@
     "devDependencies": {
         "alpinejs": "3.13.5",
         "autoprefixer": "10.4.17",
-        "axios": "1.6.6",
+        "axios": "1.6.7",
         "laravel-mix": "6.0.49",
         "lodash": "4.17.21",
         "postcss": "8.4.33",
