@@ -10,7 +10,7 @@ jobs:
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Setup PHP
-      uses: shivammathur/setup-php@88841d1465a6792bd2428eb9e67f05bfbb15c304
+      uses: shivammathur/setup-php@48e0de2ea6fe020804fef2c54f7730e83c24e30d
       with:
         php-version: '8.2'
     - name: Install Dependencies
