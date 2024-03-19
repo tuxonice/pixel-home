@@ -15,7 +15,7 @@
         "axios": "1.6.8",
         "laravel-mix": "6.0.49",
         "lodash": "4.17.21",
-        "postcss": "8.4.36",
+        "postcss": "8.4.37",
         "postcss-import": "16.0.1"
     },
     "dependencies": {
