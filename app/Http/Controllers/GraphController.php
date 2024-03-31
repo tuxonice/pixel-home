@@ -20,7 +20,7 @@ class GraphController extends Controller
         $endDate = $request->query('end-date', date('Y-m-d H:i',
             mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
 
-        $devices = Device::get();
+        $devices = Device::where('active', 1)->orderBy('name', 'ASC')->get();
 
         if ($selectedDeviceId) {
             $selectedDevice = Device::find((int) $selectedDeviceId);

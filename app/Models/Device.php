@@ -13,7 +13,7 @@ class Device extends Model
 
     public function sensors()
     {
-        return $this->belongsToMany('App\Models\Sensor');
+        return $this->belongsToMany('App\Models\Sensor')->orderBy('name');
     }
 
     public function points()
