@@ -10,7 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "alpinejs": "3.13.7",
+        "alpinejs": "3.13.8",
         "autoprefixer": "10.4.19",
         "axios": "1.6.8",
         "laravel-mix": "6.0.49",
