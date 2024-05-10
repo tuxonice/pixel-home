@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\GraphController;
+use App\Http\Controllers\PingController;
 use App\Http\Controllers\PointController;
 use App\Http\Controllers\SensorController;
 use App\Http\Controllers\UserController;
@@ -24,6 +25,8 @@ Route::get('/', function () {
 });
 
 Route::get('/point/push/{code}/{deviceId}/{sensorId}', [PointController::class, 'push'])->name('point.push');
+Route::get('/ping/push', [PingController::class, 'push'])->name('ping.push');
+Route::get('/ping/pull', [PingController::class, 'pull'])->name('ping.pull');
 
 Route::middleware('auth')->group(function () {
     Route::get('/users/list', [UserController::class, 'list']);
