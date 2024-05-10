@@ -1,0 +1,42 @@
+{
+    "transfers": [
+        {
+            "name": "MailMessage",
+            "properties": [
+                {
+                    "name": "from",
+                    "type": "MailRecipientTransfer"
+                },
+                {
+                    "name": "to",
+                    "type": "MailRecipientTransfer"
+                },
+                {
+                    "name": "subject",
+                    "type": "string"
+                },
+                {
+                    "name": "htmlBody",
+                    "type": "string"
+                },
+                {
+                    "name": "textBody",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "MailRecipient",
+            "properties": [
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "email",
+                    "type": "string"
+                }
+            ]
+        }
+    ]
+}
