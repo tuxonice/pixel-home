@@ -20,7 +20,7 @@
         "laravel/sail": "1.31.3",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "7.10.0",
-        "phpunit/phpunit": "10.5.32",
+        "phpunit/phpunit": "10.5.33",
         "spatie/laravel-ignition": "2.8.0"
     },
     "config": {
