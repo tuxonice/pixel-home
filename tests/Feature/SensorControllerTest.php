@@ -15,7 +15,7 @@ class SensorControllerTest extends TestCase
      *
      * @return void
      */
-    public function testUserCanViewSensorList()
+    public function test_user_can_view_sensor_list()
     {
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
@@ -35,7 +35,7 @@ class SensorControllerTest extends TestCase
         $response->assertSeeText('Sensors');
     }
 
-    public function testUserCanViewNewSensorForm()
+    public function test_user_can_view_new_sensor_form()
     {
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),

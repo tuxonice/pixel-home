@@ -12,7 +12,7 @@ class SensorTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->sensor = new Sensor();
+        $this->sensor = new Sensor;
         $this->sensor->name = 'Temperature';
         $this->sensor->unit = 'Celsius degree';
         $this->sensor->unit_symbol = 'ºC';
@@ -23,7 +23,7 @@ class SensorTest extends TestCase
      *
      * @return void
      */
-    public function testCanSetAndGetSensorName()
+    public function test_can_set_and_get_sensor_name()
     {
         $this->assertEquals('Temperature', $this->sensor->name);
     }
@@ -33,7 +33,7 @@ class SensorTest extends TestCase
      *
      * @return void
      */
-    public function testCanSetAndGetSensorUnit()
+    public function test_can_set_and_get_sensor_unit()
     {
         $this->assertEquals('Celsius degree', $this->sensor->unit);
     }

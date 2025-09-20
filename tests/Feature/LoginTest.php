@@ -16,13 +16,13 @@ class LoginTest extends TestCase
      *
      * @return void
      */
-    public function testNotLoggedInUserRedirectToLogin()
+    public function test_not_logged_in_user_redirect_to_login()
     {
         $response = $this->get('/dashboard');
         $response->assertRedirect('/login');
     }
 
-    public function testUserCanViewALoginForm()
+    public function test_user_can_view_a_login_form()
     {
         $response = $this->get('/login');
 
@@ -30,7 +30,7 @@ class LoginTest extends TestCase
         $response->assertViewIs('auth.login');
     }
 
-    public function testUserCannotViewALoginFormWhenAuthenticated()
+    public function test_user_cannot_view_a_login_form_when_authenticated()
     {
         $user = User::factory()->make();
 
@@ -39,7 +39,7 @@ class LoginTest extends TestCase
         $response->assertRedirect('/dashboard');
     }
 
-    public function testUserCanLoginWithCorrectCredentials()
+    public function test_user_can_login_with_correct_credentials()
     {
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
@@ -54,7 +54,7 @@ class LoginTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    public function testUserCannotLoginWithIncorrectPassword()
+    public function test_user_cannot_login_with_incorrect_password()
     {
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
@@ -72,7 +72,7 @@ class LoginTest extends TestCase
         $this->assertGuest();
     }
 
-    public function testRememberMeFunctionality()
+    public function test_remember_me_functionality()
     {
         $user = User::factory()->create([
             'id' => random_int(1, 100),

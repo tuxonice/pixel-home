@@ -24,11 +24,11 @@ class EventController extends Controller
         $selectedLocation = $request->input('location', null);
 
         $sensorList = DB::table('events')->select('sensors.id', 'sensors.name')
-        ->join('sensors', 'events.sensor_id', '=', 'sensors.id')
-        ->distinct()->orderBy('sensors.name', 'asc')->get();
+            ->join('sensors', 'events.sensor_id', '=', 'sensors.id')
+            ->distinct()->orderBy('sensors.name', 'asc')->get();
 
         $locationList = DB::table('events')->select('events.location AS name')
-        ->where('events.location', '!=', 'null')->distinct()->get();
+            ->where('events.location', '!=', 'null')->distinct()->get();
 
         $events = DB::table('events');
         if ($selectedSensor) {

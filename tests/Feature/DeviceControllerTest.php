@@ -15,7 +15,7 @@ class DeviceControllerTest extends TestCase
      *
      * @return void
      */
-    public function testUserCanViewDeviceList()
+    public function test_user_can_view_device_list()
     {
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
@@ -35,7 +35,7 @@ class DeviceControllerTest extends TestCase
         $response->assertSeeText('Devices');
     }
 
-    public function testUserCanViewNewDeviceForm()
+    public function test_user_can_view_new_device_form()
     {
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
@@ -53,7 +53,7 @@ class DeviceControllerTest extends TestCase
         $response->assertViewIs('partials.device.create');
     }
 
-    public function testUserCanCreateNewDevice()
+    public function test_user_can_create_new_device()
     {
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
