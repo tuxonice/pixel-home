@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Point extends Model
 {
@@ -12,13 +13,13 @@ class Point extends Model
         'added_on' => 'immutable_datetime',
     ];
 
-    public function sensor()
+    public function sensor(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Sensor');
+        return $this->belongsTo(Sensor::class);
     }
 
-    public function device()
+    public function device(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Device');
+        return $this->belongsTo(Device::class);
     }
 }

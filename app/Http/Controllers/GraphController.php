@@ -8,10 +8,11 @@ use App\Models\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class GraphController extends Controller
 {
-    public function show(Request $request)
+    public function show(Request $request): View
     {
         $selectedDeviceId = $request->query('device-id', null);
         $selectedSensorId = $request->query('sensor-id', null);
