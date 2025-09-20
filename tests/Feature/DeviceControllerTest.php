@@ -74,7 +74,7 @@ class DeviceControllerTest extends TestCase
             'name' => 'test-sensor',
             'location' => 'test-location',
             'code' => '12345',
-            'sensor_id' => '1',
+            'sensor_id' => 1,
             'active' => 1,
         ]);
 
