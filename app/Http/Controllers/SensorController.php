@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sensor;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SensorController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $sensors = Sensor::paginate(10);
 
@@ -22,9 +24,9 @@ class SensorController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         $hash = rand(1000, 9999);
 
@@ -34,9 +36,10 @@ class SensorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $sensor = new Sensor;
         $sensor->name = $request->name;
@@ -49,23 +52,12 @@ class SensorController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Sensor  $sensor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Sensor $sensor)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Sensor  $sensor
-     * @return \Illuminate\Http\Response
+     * @param Sensor $sensor
+     * @return View
      */
-    public function edit(Sensor $sensor)
+    public function edit(Sensor $sensor): View
     {
         return View('partials.sensor.edit', ['sensor' => $sensor]);
     }
@@ -73,10 +65,11 @@ class SensorController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Sensor  $sensor
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Sensor $sensor
+     * @return RedirectResponse
      */
-    public function update(Request $request, Sensor $sensor)
+    public function update(Request $request, Sensor $sensor): RedirectResponse
     {
         $sensor->name = $request->name;
         $sensor->unit = $request->unit;
@@ -90,10 +83,10 @@ class SensorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Sensor  $sensor
-     * @return \Illuminate\Http\Response
+     * @param Sensor $sensor
+     * @return RedirectResponse
      */
-    public function destroy(Sensor $sensor)
+    public function destroy(Sensor $sensor): RedirectResponse
     {
         $sensor->delete();
 

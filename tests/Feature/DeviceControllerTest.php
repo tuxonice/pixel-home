@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Sensor;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -15,8 +16,9 @@ class DeviceControllerTest extends TestCase
      *
      * @return void
      */
-    public function testUserCanViewDeviceList()
+    public function test_user_can_view_device_list()
     {
+        /** @var User $user */
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
@@ -35,8 +37,9 @@ class DeviceControllerTest extends TestCase
         $response->assertSeeText('Devices');
     }
 
-    public function testUserCanViewNewDeviceForm()
+    public function test_user_can_view_new_device_form()
     {
+        /** @var User $user */
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
@@ -53,11 +56,14 @@ class DeviceControllerTest extends TestCase
         $response->assertViewIs('partials.device.create');
     }
 
-    public function testUserCanCreateNewDevice()
+    public function test_user_can_create_new_device()
     {
+        /** @var User $user */
         $user = User::factory()->create([
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
+
+        $sensor = Sensor::factory()->create();
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -74,7 +80,7 @@ class DeviceControllerTest extends TestCase
             'name' => 'test-sensor',
             'location' => 'test-location',
             'code' => '12345',
-            'sensor_id' => '1',
+            'sensor_id' => $sensor->id,
             'active' => 1,
         ]);
 

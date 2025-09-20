@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\Point;
 use App\Models\Sensor;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class PointController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $selectedDeviceId = $request->input('device', null);
         $selectedSensorId = $request->input('sensor', null);
@@ -57,7 +60,7 @@ class PointController extends Controller
         );
     }
 
-    public function getSensor(Request $request)
+    public function getSensor(Request $request): JsonResponse
     {
         $deviceId = $request->query('device-id', null);
         $device = Device::where('id', $deviceId)->first();
@@ -65,7 +68,7 @@ class PointController extends Controller
         return response()->json($device->sensors);
     }
 
-    public function push(Request $request, $code, $deviceId, $sensorId)
+    public function push(Request $request, string $code, int $deviceId, int $sensorId): void
     {
         // /point/push/{code}/{deviceId}/{sensorId}?value=10.4
         $sensorValue = $request->query('value', null);
