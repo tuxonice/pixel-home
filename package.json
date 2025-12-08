@@ -19,6 +19,6 @@
         "postcss-import": "16.1.1"
     },
     "dependencies": {
-        "admin-lte": "4.0.0-rc3"
+        "admin-lte": "4.0.0-rc6"
     }
 }
