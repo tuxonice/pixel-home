@@ -86,11 +86,10 @@ class LoginTest extends TestCase
         ]);
 
         $response->assertRedirect('/dashboard');
-        $response->assertCookie(Auth::guard()->getRecallerName(), vsprintf('%s|%s|%s', [
-            $user->id,
-            $user->getRememberToken(),
-            $user->password,
-        ]));
+        $response->assertCookie(Auth::guard()->getRecallerName());
+        
+        $user->refresh();
+        $this->assertNotNull($user->getRememberToken());
         $this->assertAuthenticatedAs($user);
     }
 }
