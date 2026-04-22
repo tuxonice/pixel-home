@@ -10,7 +10,7 @@
     "require": {
         "php": "^8.2",
         "guzzlehttp/guzzle": "7.10.0",
-        "laravel/framework": "12.56.0",
+        "laravel/framework": "12.57.0",
         "laravel/tinker": "3.0.2"
     },
     "require-dev": {
