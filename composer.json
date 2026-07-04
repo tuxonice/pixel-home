@@ -57,6 +57,15 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "post-install-cmd": [
+            "@php tools/build-assets.php"
+        ],
+        "post-update-cmd": [
+            "@php tools/build-assets.php"
+        ],
+        "build-assets": [
+            "@php tools/build-assets.php"
         ]
     }
 }

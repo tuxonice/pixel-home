@@ -12,8 +12,6 @@ class DeviceController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return View
      */
     public function index(): View
     {
@@ -24,8 +22,6 @@ class DeviceController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return View
      */
     public function create(): View
     {
@@ -37,10 +33,6 @@ class DeviceController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     *
-     * @param Request $request
-     * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
@@ -57,9 +49,6 @@ class DeviceController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param Device $device
-     * @return View
      */
     public function edit(Device $device): View
     {
@@ -70,10 +59,6 @@ class DeviceController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param Device $device
-     * @return RedirectResponse
      */
     public function update(Request $request, Device $device): RedirectResponse
     {
@@ -92,10 +77,6 @@ class DeviceController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param Device $device
-     * @return RedirectResponse
      */
     public function deleteSensor(Request $request, Device $device): RedirectResponse
     {
@@ -106,9 +87,6 @@ class DeviceController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param Device $device
-     * @return RedirectResponse
      */
     public function destroy(Device $device): RedirectResponse
     {
