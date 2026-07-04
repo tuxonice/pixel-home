@@ -24,8 +24,6 @@ if [[ $# -eq 0 ]] ; then
 fi
 
 composer install --no-dev
-npm install
-npm run prod
 
 rm .dockerignore .editorconfig .env.example .gitattributes .gitignore .styleci.yml docker-compose.yml phpunit.xml renovate.json server.php README.md
 rm -rf tests .github .git storage tools docker
