@@ -22,6 +22,8 @@ class PointController extends Controller
 
         $devices = Device::where('active', 1)->orderBy('name', 'ASC')->get();
 
+        $constraints = [];
+
         if ($selectedDeviceId) {
             $constraints[] = ['device_id', $selectedDeviceId];
         }
@@ -84,8 +86,7 @@ class PointController extends Controller
             abort(401);
         }
 
-        $deviceSensors = $device->sensors()->get();
-        if (! $deviceSensors->contains($sensorId)) {
+        if (! $device->sensors()->where('sensors.id', $sensorId)->exists()) {
             abort(401);
         }
 
