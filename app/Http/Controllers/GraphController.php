@@ -54,10 +54,19 @@ class GraphController extends Controller
         }
 
         $points = collect([]);
+        $averageValue = 0;
+        $minValue = null;
+        $maxValue = null;
         $chartType = 'LineSeries';
         if ($selectedDeviceId && $selectedSensorId) {
-            $points = Point::where($constraints)
-                ->orderBy('added_on', 'asc')->get();
+            $pointQuery = Point::where($constraints);
+
+            $aggregates = $pointQuery->clone()->selectRaw('ROUND(AVG(value), 2) as avg_value, MIN(value) as min_value, MAX(value) as max_value')->first();
+            $averageValue = $aggregates->avg_value ?? 0;
+            $minValue = $aggregates->min_value;
+            $maxValue = $aggregates->max_value;
+
+            $points = $pointQuery->orderBy('added_on', 'asc')->get();
 
             $chartType = DB::table('device_sensor')
                 ->where(
@@ -67,10 +76,6 @@ class GraphController extends Controller
                     ]
                 )->first()->chart_type;
         }
-
-        $averageValue = round($points->avg('value'), 2);
-        $minValue = $points->min('value');
-        $maxValue = $points->max('value');
 
         $user = Auth::user();
         $userTimeZone = $user->timezone;
