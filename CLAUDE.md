@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## About
 
-Pixel Home is a Laravel 12 (PHP 8.2+) web app that acts as a data-collection and dashboard UI for Shelly
+Pixel Home is a Laravel 12 (PHP 8.4+) web app that acts as a data-collection and dashboard UI for Shelly
 IoT devices (smart plugs/sensors). Devices push sensor readings over HTTP; the app stores them and renders
 graphs/dashboards. It is a work in progress, single-maintainer project.
 
@@ -45,7 +45,7 @@ automatically. Run it manually with `composer build-assets` if you edit a vendor
 
 ### CI vs. local
 - CI (`.github/workflows/tests.yml`) runs PHPUnit directly on the host (no Sail/Docker) against SQLite
-  (`DB_CONNECTION=sqlite`, `database/database.sqlite`) on PHP 8.2 — Sail's containers are a local-dev
+  (`DB_CONNECTION=sqlite`, `database/database.sqlite`) on PHP 8.4 — Sail's containers are a local-dev
   convenience, not what CI uses.
 - Deployment is a bare `tools/deploy.sh` script (clones repo into `releases/<name>`, runs `composer install`
   which triggers the asset-copy hook, strips dev-only files, symlinks shared `.env`/`storage`, and re-points
